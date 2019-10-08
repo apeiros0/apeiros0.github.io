@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.ico">
+    
+    <title>語法解析器、執行環境與詞彙環境 | apeiros0 Blog</title>
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/libs/fancybox/jquery.fancybox.css" charset="utf-8">
+    
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="site">
+    <header class="site-header">
+        <h1 class="site-title"><a href="/">apeiros0 Blog</a></h1>
+        <nav class="site-nav">
+            <ul class="nav">
+                
+                <li><a href="/archives">Archives</a></li>
+                
+                
+                <li><a class="toggle-search" href="#search">search</a></li>
+            </ul>
+        </nav>
+        <div class="site-search" id="search">
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="https://apeiros0.github.io"></form>
+        </div>
+        
+            <div class="site-header-background" style="background-image:url(http://reumia.github.io/hexo-theme-zzoman2015/images/background-zzoman2015.jpg)"></div>
+        
+    </header>
+    <div class="site-body">
+        <div class="global-width">
+    <article class="article" data-layout="post" data-slug="execution&amp;lexical-environment">
+        <div class="article-content">
+            
+            
+            <header class="article-header">
+                <div class="article-meta">
+                    <a href="/JavaScript/2019/10/04/execution&lexical-environment/" class="article-date">
+  <time datetime="2019-10-03T16:00:00.000Z">2019-10-04</time>
+</a>
+                    
+  <div class="article-category categories">
+    <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+                    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/克服-JavaScript-奇怪部分筆記/">克服 JavaScript 奇怪部分筆記</a></li></ul>
+
+                </div>
+                
+    <h1 class="article-title" itemprop="name">
+      <a href="/JavaScript/2019/10/04/execution&lexical-environment/">語法解析器、執行環境與詞彙環境</a>
+    </h1>
+
+            </header>
+            
+            <div class="article-body">
+                <hr>
+<p>今天是第一次寫有關部落格的文章，我想重新複習有關 JavaScript 的觀念，如果有任何錯，還請麻煩指正，謝謝!</p>
+<p>課程來源：<a href="https://www.udemy.com/course/javascriptjs/" target="_blank" rel="noopener">JavaScript 全攻略：克服 JS 的奇怪部分</a></p>
+<hr>
+<p>要了解 JavaScript，就必須得先從他是如何解讀程式碼，以及如何運作開始了解，首先先從一些名詞解釋開始</p>
+<h2 id="語法解析器-Syntax-Parsers"><a href="#語法解析器-Syntax-Parsers" class="headerlink" title="語法解析器 (Syntax Parsers)"></a>語法解析器 (Syntax Parsers)</h2><p>語法解析器，又稱編譯器 (compiler)，能夠讀取你的程式碼，並將程式碼轉換成電腦能看懂的指令。</p>
+<p>他會逐行逐字讀取你的程式碼，如果你程式的語法是有效的，便會將你的程式轉換成電腦看得懂的指令。</p>
+<p>舉例來說：<br>假設我今天的程式是下方的樣子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function a() &#123;</span><br><span class="line">  var b = &apos;Hello World!&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>透過語法解析器 (編譯器) 解析，會轉變成類似下方的電腦指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 電腦指令(Computer Instructions)</span><br><span class="line">function, variable ...</span><br></pre></td></tr></table></figure>
+
+<h2 id="詞彙環境-Lexical-Environments"><a href="#詞彙環境-Lexical-Environments" class="headerlink" title="詞彙環境 (Lexical Environments)"></a>詞彙環境 (Lexical Environments)</h2><p>詞彙環境指的是程式碼在程式中的位置。</p>
+<p>以上一段的程式碼舉例：<br>在 function a 中有一個變數 b，也就是說變數 b 的位置在 function a 的裡面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function a() &#123;</span><br><span class="line">  // b 在 function 裡面</span><br><span class="line">  var b = &apos;Hello World!&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是，程式被寫在哪個位置是很重要的事，這可能會影響程式執行後的結果。</p>
+<h2 id="執行環境-Execution-Contexts"><a href="#執行環境-Execution-Contexts" class="headerlink" title="執行環境 (Execution Contexts)"></a>執行環境 (Execution Contexts)</h2><p>執行環境負責管理正在執行的程式，一個程式有許多不同位置的程式碼 (詞彙環境)，但哪個才是正在執行的程式碼呢? 這部分就是由執行環境所管理。</p>
+<p>而執行環境除了管理你寫的程式碼，以及正在執行的程式碼外，也會做其他的事，這部分後面的章節便能看到。</p>
+
+            </div>
+        </div>
+    </article>
+
+    
+    
+<nav class="article-nav">
+  
+    <a href="/JavaScript/2019/10/06/name_value_pairs_and_object/" id="article-nav-newer" class="article-nav-link-wrap prev">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Name/Value 配對和物件
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+    
+
+    
+    <section id="comments" class="article-comments">
+        <div id="disqus_thread"></div>
+        <script>
+        
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://https-apeiros0-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+    
+</div>
+    </div>
+    <footer class="site-footer">
+        <div class="global-width">
+            <ul class="site-widget">
+                
+                <li class="widget widget-tag">
+                    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/克服-JavaScript-奇怪部分筆記/">克服 JavaScript 奇怪部分筆記</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+                </li>
+                
+                <li class="widget widget-category">
+                    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a><span class="category-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+                </li>
+                
+                <li class="widget widget-recent_posts">
+                    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-body">
+      <ul>
+        
+          <li>
+            <a href="/JavaScript/2019/10/08/creation_and_hoisiting/">創造和提升 (Hoisiting)</a>
+          </li>
+        
+          <li>
+            <a href="/JavaScript/2019/10/07/global_environment&object/">全域執行環境和全域物件</a>
+          </li>
+        
+          <li>
+            <a href="/JavaScript/2019/10/06/name_value_pairs_and_object/">Name/Value 配對和物件</a>
+          </li>
+        
+          <li>
+            <a href="/JavaScript/2019/10/04/execution&lexical-environment/">語法解析器、執行環境與詞彙環境</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+                </li>
+                
+            </ul>
+        </div>
+        <div class="site-info">
+            <address>
+                &copy; 2019 <a href="https://apeiros0.github.io">apeiros0 Blog</a> All Right Reserved. <br>
+                Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="http://zzoman.com">ZZOMAN</a>
+            </address>
+        </div>
+    </footer>
+    
+    <script src="/libs/jquery-1.11.3.min.js" type="text/javascript"></script>
+    
+    <script src="/libs/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+    
+    <script src="/js/site_init.js" type="text/javascript"></script>
+    <!--  -->
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149403450-1');
+    </script>
+    
+</body>
+</html>
