@@ -1,7 +1,7 @@
 ---
 title: 全域執行環境和全域物件
 date: 2019-10-07
-category: JavaScript
+categories: JavaScript
 tags:
   - 克服 JavaScript 奇怪部分筆記
 comments: true

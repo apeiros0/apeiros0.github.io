@@ -1,7 +1,7 @@
 ---
 title: 創造和提升 (Hoisiting)
 date: 2019-10-08
-category: JavaScript
+categories: JavaScript
 tags:
   - 克服 JavaScript 奇怪部分筆記
 comments: true
@@ -66,7 +66,7 @@ function a() {
 
 JavaScript 這種沒有先宣告，就能取用的情況，是因為執行環境分為**創造階段 (Creation Phase)**和**執行階段 (Execution Phase)**
 
-#### 創造階段 (Creation Phase)
+### 創造階段 (Creation Phase)
 在這個階段，會建立：
 * 全域物件
 * this 變數
@@ -91,6 +91,6 @@ console.log(d);
 var d = 'Called d';
 ```
 
-#### 執行階段 (Execution Phase)
+### 執行階段 (Execution Phase)
 
 執行階段 (Execution Phase) 會逐行執行程式碼，在這個階段，會透過 `=` 賦予值給變數。

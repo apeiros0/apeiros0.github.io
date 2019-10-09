@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: apeiros0 Blog
+title: apeiros0's Blog
 subtitle:
 description:
 keywords: "notes, coding, blog"
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

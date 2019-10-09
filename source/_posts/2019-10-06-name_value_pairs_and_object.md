@@ -1,7 +1,7 @@
 ---
 title: Name/Value 配對和物件
 date: 2019-10-06
-category: JavaScript
+categories: JavaScript
 tags:
   - 克服 JavaScript 奇怪部分筆記
 comments: true
