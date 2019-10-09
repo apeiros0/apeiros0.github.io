@@ -57,15 +57,18 @@
   };
 </script>
 
-  <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
+  <meta name="description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
+<meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript 和 undefined">
 <meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
+<meta property="og:description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-09T05:11:24.051Z">
+<meta property="og:updated_time" content="2019-10-09T08:05:21.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 和 undefined">
+<meta name="twitter:description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
   <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/">
 
 
@@ -256,7 +259,7 @@
                 
               
 
-              <time title="創建時間：2019-10-09 00:00:00 / 修改時間：13:11:24" itemprop="dateCreated datePublished" datetime="2019-10-09T00:00:00+08:00">2019-10-09</time>
+              <time title="創建時間：2019-10-09 00:00:00 / 修改時間：16:05:21" itemprop="dateCreated datePublished" datetime="2019-10-09T00:00:00+08:00">2019-10-09</time>
             </span>
           
             
@@ -288,7 +291,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>在上一回中，我們有提到 <code>undefined</code>，今天我們來詳細了解 <code>undefined</code> 是什麼吧 !</p><h2 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h2><blockquote>
+<p>undefined 是 JavaScript 內建的一個<strong>特殊的值</strong>，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。</p>
+</blockquote><p>我們可以用下方的範例來驗證 <code>undefined</code> 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 <code>a is undefined</code>，這也代表 a 與 <code>undefined</code> 都是在指 <code>undefined</code> 這個特殊值。</p><a id="more"></a>
+
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="comment">// === 代表比較嚴謹的判斷</span></span><br><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：這裡的 undefined 並非字串，是一個特殊的值。</p>
+</blockquote>
+<p>如果我們賦予值給變數 a，會發現結果為 <code>a is defined</code>，代表現在的 a 並不是 <code>undefined</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"Called a"</span>;</span><br><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：永遠不要在宣告變數時，設定值為 <code>undefined</code>，這會很難分辨是 JavaScript 幫你設定的，還是是你自己設定的。</strong></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="literal">undefined</span>; <span class="comment">// Bad</span></span><br><span class="line"><span class="keyword">var</span> a; <span class="comment">// Good，永遠保持這樣設定</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="is-not-defined"><a href="#is-not-defined" class="headerlink" title="is not defined"></a>is not defined</h2><p>如果我們把上面範例的 <code>var a;</code> 拿掉，執行時會顯示 <code>Uncaught ReferenceError: a is not defined</code> 的錯誤訊息。</p>
+<p>這是因為在創造階段時，沒有找到 <code>var a</code>，所以 a 沒有被加入到記憶體中，而在執行階段時，便會跳出「參照不到這個值：a 沒有被定義」的錯誤訊息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="undefined-與-is-not-defined-有什麼不同"><a href="#undefined-與-is-not-defined-有什麼不同" class="headerlink" title="undefined 與 is not defined 有什麼不同 ?"></a>undefined 與 is not defined 有什麼不同 ?</h2><ul>
+<li><code>undefined</code> 是 JavaScript 中一個特殊的值。</li>
+<li><code>is not defined</code> 代表變數沒有被加入到記憶體中，導致在執行階段跳出錯誤訊息。</li>
+</ul>
+
     </div>
 
     
@@ -376,6 +405,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">undefined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-not-defined"><span class="nav-number">2.</span> <span class="nav-text">is not defined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined-與-is-not-defined-有什麼不同"><span class="nav-number">3.</span> <span class="nav-text">undefined 與 is not defined 有什麼不同 ?</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
