@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
+  <meta name="description" content="之前我們有提到，在 JavaScript 產生執行環境時，會有創造階段與執行階段，創造階段是將變數 和 function 加入到記憶體中，那執行階段呢?今天我們就來談談執行階段會做什麼。執行階段 (Execution Phase)先前我們知道，創造階段會建立全域物件、this 變數和外部環境，而你的程式碼中的變數和 function 會被加入到記憶體中 (提升 Hoisiting)，並且變數會被賦">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript 和 undefined">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/index.html">
+<meta property="og:title" content="程式執行">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/10/code_execution/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
+<meta property="og:description" content="之前我們有提到，在 JavaScript 產生執行環境時，會有創造階段與執行階段，創造階段是將變數 和 function 加入到記憶體中，那執行階段呢?今天我們就來談談執行階段會做什麼。執行階段 (Execution Phase)先前我們知道，創造階段會建立全域物件、this 變數和外部環境，而你的程式碼中的變數和 function 會被加入到記憶體中 (提升 Hoisiting)，並且變數會被賦">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-09T08:05:21.801Z">
+<meta property="og:updated_time" content="2019-10-10T03:47:38.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript 和 undefined">
-<meta name="twitter:description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/">
+<meta name="twitter:title" content="程式執行">
+<meta name="twitter:description" content="之前我們有提到，在 JavaScript 產生執行環境時，會有創造階段與執行階段，創造階段是將變數 和 function 加入到記憶體中，那執行階段呢?今天我們就來談談執行階段會做什麼。執行階段 (Execution Phase)先前我們知道，創造階段會建立全域物件、this 變數和外部環境，而你的程式碼中的變數和 function 會被加入到記憶體中 (提升 Hoisiting)，並且變數會被賦">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/10/code_execution/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>JavaScript 和 undefined | apeiros0's Blog</title>
+  <title>程式執行 | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -231,7 +231,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/10/code_execution/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -243,7 +243,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">JavaScript 和 undefined
+        <h2 class="post-title" itemprop="name headline">程式執行
 
           
         </h2>
@@ -259,7 +259,7 @@
                 
               
 
-              <time title="創建時間：2019-10-09 00:00:00 / 修改時間：16:05:21" itemprop="dateCreated datePublished" datetime="2019-10-09T00:00:00+08:00">2019-10-09</time>
+              <time title="創建時間：2019-10-10 00:00:00 / 修改時間：11:47:38" itemprop="dateCreated datePublished" datetime="2019-10-10T00:00:00+08:00">2019-10-10</time>
             </span>
           
             
@@ -291,32 +291,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>在上一回中，我們有提到 <code>undefined</code>，今天我們來詳細了解 <code>undefined</code> 是什麼吧 !</p><h2 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h2><blockquote>
-<p>undefined 是 JavaScript 內建的一個<strong>特殊的值</strong>，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。</p>
-</blockquote><p>我們可以用下方的範例來驗證 <code>undefined</code> 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 <code>a is undefined</code>，這也代表 a 與 <code>undefined</code> 都是在指 <code>undefined</code> 這個特殊值。</p><a id="more"></a>
+        <p>之前我們有提到，在 JavaScript 產生執行環境時，會有創造階段與執行階段，創造階段是將變數 和 function 加入到記憶體中，那執行階段呢?</p><p>今天我們就來談談執行階段會做什麼。</p><h2 id="執行階段-Execution-Phase"><a href="#執行階段-Execution-Phase" class="headerlink" title="執行階段 (Execution Phase)"></a>執行階段 (Execution Phase)</h2><p>先前我們知道，創造階段會建立全域物件、this 變數和外部環境，而你的程式碼中的變數和 function 會被加入到記憶體中 (提升 Hoisiting)，並且變數會被賦予 <code>undefined</code> 的值。</p><a id="more"></a>
 
 
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="comment">// === 代表比較嚴謹的判斷</span></span><br><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等這些都建立完後，就到執行階段開始執行你式碼，你的程式碼會被<strong>逐行</strong>編譯、轉換成電腦的指令，我們用之前在<a href="https://apeiros0.github.io/JavaScript/2019/10/08/creation_and_hoisiting/">創造和提升 (Hoisiting)</a>中的範例來驗證。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保持良好習慣，不要去依賴提升 (Hoisiting)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called function a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="string">"Called b"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>注意：這裡的 undefined 並非字串，是一個特殊的值。</p>
-</blockquote>
-<p>如果我們賦予值給變數 a，會發現結果為 <code>a is defined</code>，代表現在的 a 並不是 <code>undefined</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"Called a"</span>;</span><br><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>注意：永遠不要在宣告變數時，設定值為 <code>undefined</code>，這會很難分辨是 JavaScript 幫你設定的，還是是你自己設定的。</strong></p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="literal">undefined</span>; <span class="comment">// Bad</span></span><br><span class="line"><span class="keyword">var</span> a; <span class="comment">// Good，永遠保持這樣設定</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="is-not-defined"><a href="#is-not-defined" class="headerlink" title="is not defined"></a>is not defined</h2><p>如果我們把上面範例的 <code>var a;</code> 拿掉，執行時會顯示 <code>Uncaught ReferenceError: a is not defined</code> 的錯誤訊息。</p>
-<p>這是因為在創造階段時，沒有找到 <code>var a</code>，所以 a 沒有被加入到記憶體中，而在執行階段時，便會跳出「參照不到這個值：a 沒有被定義」的錯誤訊息。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="undefined-與-is-not-defined-有什麼不同"><a href="#undefined-與-is-not-defined-有什麼不同" class="headerlink" title="undefined 與 is not defined 有什麼不同 ?"></a>undefined 與 is not defined 有什麼不同 ?</h2><ul>
-<li><code>undefined</code> 是 JavaScript 中一個特殊的值。</li>
-<li><code>is not defined</code> 代表變數沒有被加入到記憶體中，導致在執行階段跳出錯誤訊息。</li>
-</ul>
+<p>上方結果依序為 <code>Called function a</code>、<code>undefined</code> 和 <code>Called b</code>。</p>
+<p>這裡我們知道在執行階段程式會逐行編譯、轉換，所以程式從最上面的 function a 開始往下執行，呼叫 a，印出 <code>Called function a</code>，到了第一個印出變數 b 的時候，由於在創造階段 b 被賦予 <code>undefined</code> 的值，所以會印出 <code>undefined</code>，接著 b 被賦予值，在最後一行便會印出 <code>Called b</code>。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>在執行階段 (Execution Phase) 會逐行編譯、轉換程式碼，並會賦予真正的值給變數。</p>
 
     </div>
 
@@ -342,8 +325,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/08/creation_and_hoisiting/" rel="next" title="創造和提升 (Hoisiting)">
-                  <i class="fa fa-chevron-left"></i> 創造和提升 (Hoisiting)
+                <a href="/JavaScript/2019/10/09/js_and_undefined/" rel="next" title="JavaScript 和 undefined">
+                  <i class="fa fa-chevron-left"></i> JavaScript 和 undefined
                 </a>
               
             </div>
@@ -351,10 +334,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/10/code_execution/" rel="prev" title="程式執行">
-                  程式執行 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -409,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">undefined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-not-defined"><span class="nav-number">2.</span> <span class="nav-text">is not defined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined-與-is-not-defined-有什麼不同"><span class="nav-number">3.</span> <span class="nav-text">undefined 與 is not defined 有什麼不同 ?</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#執行階段-Execution-Phase"><span class="nav-number">1.</span> <span class="nav-text">執行階段 (Execution Phase)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -555,9 +534,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/";
-    this.page.identifier = "JavaScript/2019/10/09/js_and_undefined/";
-    this.page.title = 'JavaScript 和 undefined';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/10/code_execution/";
+    this.page.identifier = "JavaScript/2019/10/10/code_execution/";
+    this.page.title = '程式執行';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({

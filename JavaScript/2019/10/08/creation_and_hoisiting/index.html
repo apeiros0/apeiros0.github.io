@@ -65,7 +65,7 @@
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
 <meta property="og:description" content="今天我們要來了解 JavaScript 在建立執行環境時做了什麼。提升 (Hoisiting)首先我們來做在別的程式語言沒辦法做到，但在 JavaScript 中卻能辦到的行為，以下是今天的範例程式碼。12345678910var b = &quot;Called b&quot;;function a() &amp;#123;  console.log(&apos;Called function a&apos;);&amp;#125;a();conso">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-09T05:18:08.388Z">
+<meta property="og:updated_time" content="2019-10-10T03:08:19.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="創造和提升 (Hoisiting)">
 <meta name="twitter:description" content="今天我們要來了解 JavaScript 在建立執行環境時做了什麼。提升 (Hoisiting)首先我們來做在別的程式語言沒辦法做到，但在 JavaScript 中卻能辦到的行為，以下是今天的範例程式碼。12345678910var b = &quot;Called b&quot;;function a() &amp;#123;  console.log(&apos;Called function a&apos;);&amp;#125;a();conso">
@@ -270,7 +270,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2019-10-09 13:18:08" itemprop="dateModified" datetime="2019-10-09T13:18:08+08:00">2019-10-09</time>
+                <time title="修改時間：2019-10-10 11:08:19" itemprop="dateModified" datetime="2019-10-10T11:08:19+08:00">2019-10-10</time>
               </span>
             
           
@@ -329,12 +329,12 @@
 <p>也就是說，在執行程式碼前，JavaScript 引擎已經為變數和 function 建立空間給它們，所以在這個階段它們已經存在於記憶體中，因此在逐行執行時，便能找到變數和 function。</p>
 <p>我們從上面的範例可以知道，function 已經全部被設定在記憶體中，因此我們能直接取用，然而，變數的情況卻有些不同，變數會透過 <code>=</code> 來賦予值，但這要在執行階段才會賦予，因此<strong>在創造階段會先賦予 <code>undefined</code> 作為值的替代</strong>。</p>
 <p>補充：<code>undefined</code>表示<strong>我還不知道它的值是什麼</strong>，如果我一開始沒有設值給變數，也會得到一樣的結果，這也代表<strong>所有的 JavaScript 變數一開始都會被設定為 <code>undefined</code></strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c;</span><br><span class="line"><span class="built_in">console</span>.log(c); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b;</span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 
 <p>然而，依賴提升 (Hoisiting) 並非一件好事，這可能會造成程式執行上的錯誤，以下方的例子來說，假設我要透過 console.log 查看 d 的值，但由於提升的特性，會顯示 <code>undefined</code>，並不會顯示 <code>Called d</code>，所以寫程式時，我們<strong>要盡量把變數和 function 寫在最上面</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(d); </span><br><span class="line"><span class="keyword">var</span> d = <span class="string">'Called d'</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="string">"Called b"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called function a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
 
-<h3 id="執行階段-Execution-Phase"><a href="#執行階段-Execution-Phase" class="headerlink" title="執行階段 (Execution Phase)"></a>執行階段 (Execution Phase)</h3><p>執行階段 (Execution Phase) 會逐行執行程式碼，在這個階段，會透過 <code>=</code> 賦予值給變數。</p>
+<h3 id="執行階段-Execution-Phase"><a href="#執行階段-Execution-Phase" class="headerlink" title="執行階段 (Execution Phase)"></a>執行階段 (Execution Phase)</h3><p>執行階段 (Execution Phase) 會逐行編譯、轉換你的程式碼，詳細情形之後我們便會談到。</p>
 
     </div>
 
@@ -443,7 +443,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
