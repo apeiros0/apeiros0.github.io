@@ -81,16 +81,22 @@ JavaScript 這種沒有先宣告，就能取用的情況，是因為執行環境
 
 補充：`undefined`表示**我還不知道它的值是什麼**，如果我一開始沒有設值給變數，也會得到一樣的結果，這也代表**所有的 JavaScript 變數一開始都會被設定為 `undefined`**。
 ``` JavaScript
-var c;
-console.log(c); // undefined
+var b;
+console.log(b); // undefined
 ```
 
 然而，依賴提升 (Hoisiting) 並非一件好事，這可能會造成程式執行上的錯誤，以下方的例子來說，假設我要透過 console.log 查看 d 的值，但由於提升的特性，會顯示 `undefined`，並不會顯示 `Called d`，所以寫程式時，我們**要盡量把變數和 function 寫在最上面**。
 ``` JavaScript
-console.log(d); 
-var d = 'Called d';
+var b = "Called b";
+
+function a() {
+  console.log('Called function a');
+}
+
+a();
+console.log(b);
 ```
 
 ### 執行階段 (Execution Phase)
 
-執行階段 (Execution Phase) 會逐行執行程式碼，在這個階段，會透過 `=` 賦予值給變數。
+執行階段 (Execution Phase) 會逐行編譯、轉換你的程式碼，詳細情形之後我們便會談到。
