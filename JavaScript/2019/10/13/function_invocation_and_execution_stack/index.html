@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '複製',
+      copy_success: '複製成功',
+      copy_failure: '複製失敗'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="今天我們要來了解 function 是如何被呼叫，以及是如何執行的，這對了解 JavaScript 進階的觀念有很大的幫助。function 呼叫 (function invocation)在來了解 function 呼叫前，我們先來談談什麼是呼叫 (invocation)。 呼叫 (invocation) 表示執行 function。">
+<meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="function 呼叫和執行堆">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/13/function_invocation_and_execution_stack/index.html">
+<meta property="og:site_name" content="apeiros0&#39;s Blog">
+<meta property="og:description" content="今天我們要來了解 function 是如何被呼叫，以及是如何執行的，這對了解 JavaScript 進階的觀念有很大的幫助。function 呼叫 (function invocation)在來了解 function 呼叫前，我們先來談談什麼是呼叫 (invocation)。 呼叫 (invocation) 表示執行 function。">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2019-10-13T16:25:31.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="function 呼叫和執行堆">
+<meta name="twitter:description" content="今天我們要來了解 function 是如何被呼叫，以及是如何執行的，這對了解 JavaScript 進階的觀念有很大的幫助。function 呼叫 (function invocation)在來了解 function 呼叫前，我們先來談談什麼是呼叫 (invocation)。 呼叫 (invocation) 表示執行 function。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/13/function_invocation_and_execution_stack/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>function 呼叫和執行堆 | apeiros0's Blog</title>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-149403450-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">apeiros0's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔<span class="badge">8</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/apeiros0" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/13/function_invocation_and_execution_stack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="apeiros0">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="apeiros0's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">function 呼叫和執行堆
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              
+                
+              
+
+              <time title="創建時間：2019-10-13 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-13T00:00:00+08:00">2019-10-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2019-10-14 00:25:31" itemprop="dateModified" datetime="2019-10-14T00:25:31+08:00">2019-10-14</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天我們要來了解 function 是如何被呼叫，以及是如何執行的，這對了解 JavaScript 進階的觀念有很大的幫助。</p><h2 id="function-呼叫-function-invocation"><a href="#function-呼叫-function-invocation" class="headerlink" title="function 呼叫 (function invocation)"></a>function 呼叫 (function invocation)</h2><p>在來了解 function 呼叫前，我們先來談談什麼是<strong>呼叫 (invocation)</strong>。</p><blockquote>
+<p>呼叫 (invocation) 表示執行 function。</p>
+</blockquote><a id="more"></a>
+
+
+<p>也就是說當我們說 function 呼叫或是呼叫 function，都在表示執行這個 function，而在 JavaScript 中，我們是<strong>用 <code>()</code> 來執行 function</strong>，只要 function 名稱 + <code>()</code>，就是在執行 function。</p>
+<p>舉例來說，我有一個 function a，我想要呼叫它，可以這麼做。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 呼叫 function a，開始執行</span></span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
+
+<h2 id="執行堆-execution-stack"><a href="#執行堆-execution-stack" class="headerlink" title="執行堆 (execution stack)"></a>執行堆 (execution stack)</h2><p>在了解 function 是如何呼叫後，我們來看看在 JavaScript 中，呼叫 function 後會發生什麼事。</p>
+<p>我們用簡單的例子來了解 function 的執行過程。在這裡我分別有 function a 和 function b，function b 不會做任何事，而 function a 則會去呼叫 function b 執行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
+
+<p><strong>現在我們來了解 function 的執行過程吧 !</strong></p>
+<h3 id="執行過程"><a href="#執行過程" class="headerlink" title="執行過程"></a>執行過程</h3><p>在執行上面的程式碼後，我們知道程式會被語法解析器解析，再透過編譯器編譯，然後全域執行環境會被建立，全域執行環境建立時，會建立全域物件、this 變數、外部環境，而程式中的 function a 和 b 會加入到記憶體中，之後再逐行執行程式碼，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">----------------------------</span><br><span class="line">|       全域執行環境        |</span><br><span class="line">----------------------------</span><br></pre></td></tr></table></figure>
+
+<p>當程式執行到 <code>a();</code> 時，會去呼叫 function a，建立一個新的執行環境，並加入到執行堆 (execution stack) 中，也就是說，當我們<strong>每次呼叫 function 時，都會建立新的執行環境，並加入到執行堆中</strong>，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> 執行堆 (execution stack) ↓</span><br><span class="line"></span><br><span class="line">----------------------------</span><br><span class="line">|   function a 的執行環境   |</span><br><span class="line">----------------------------</span><br><span class="line">|       全域執行環境        |</span><br><span class="line">----------------------------</span><br></pre></td></tr></table></figure>
+
+<p>補充：堆 (stack) 是由一層一層所堆疊起來的東西，在最上層的是我們正在執行的東西。</p>
+<p>新的執行環境被建立，就像全域執行環境一樣，有屬於自己 this 變數、外部環境和記憶體空間放置變數和 function，一樣會經歷創造階段和執行階段。如果呼叫新的 function，便會停止正在執行的程式，再建立新的執行環境。</p>
+<p>我們在 function a 中有呼叫 function b，所以 b 的執行環境被建立，而 a 的程式現已經停止執行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> 執行堆 (execution stack) ↓</span><br><span class="line"></span><br><span class="line">----------------------------</span><br><span class="line">|   function b 的執行環境   |</span><br><span class="line">----------------------------</span><br><span class="line">|   function a 的執行環境   |</span><br><span class="line">----------------------------</span><br><span class="line">|       全域執行環境        |</span><br><span class="line">----------------------------</span><br></pre></td></tr></table></figure>
+
+<p>上述的便是 JavaScript 在呼叫 function 後的執行過程。</p>
+<h3 id="執行堆離開順序"><a href="#執行堆離開順序" class="headerlink" title="執行堆離開順序"></a>執行堆離開順序</h3><p>當 function 執行結束後，如果是在執行堆的最上層，會最先離開執行堆，之後依照順序離開，直到回到最下層的全域執行環境。</p>
+<p>當 function b 執行完時，會離開 (pop) 執行堆，之後是 function a 離開，最後回到全域執行環境。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">----------------------------</span><br><span class="line">|   function b 的執行環境   |  執行完離開執行堆</span><br><span class="line">----------------------------</span><br><span class="line">             .</span><br><span class="line">             .</span><br><span class="line">             .</span><br><span class="line"> 執行堆 (execution stack) ↓</span><br><span class="line">----------------------------</span><br><span class="line">|   function a 的執行環境   |</span><br><span class="line">----------------------------</span><br><span class="line">|       全域執行環境        |</span><br><span class="line">----------------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="程式順序不影響執行順序"><a href="#程式順序不影響執行順序" class="headerlink" title="程式順序不影響執行順序"></a>程式順序不影響執行順序</h3><p>我們把上面的範例修改成以下這樣，來驗證程式順序並不影響執行的順序，在下方的範例中，我們知道在全域執行環境的創造階段會將 function a, b 和變數 d 加入到記憶體中，之後再依序執行程式碼。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 移到 function b 上面</span></span><br><span class="line">  b();</span><br><span class="line">  <span class="keyword">var</span> c; <span class="comment">// 加入 var c;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> d; <span class="comment">// 加入 var d;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"><span class="keyword">var</span> d;   <span class="comment">// 加入 var d;</span></span><br></pre></td></tr></table></figure>
+
+<p>當執行到呼叫 function a 時，建立 a 的執行環境，之後執行 a 的內容，遇到呼叫 b，建立 b 的執行環境，再執行 b，function b 執行完後，離開執行堆，之後回到 a 的執行環境，從還沒執行到的那一行再開始執行 (<code>var c;</code>)，a 執行完畢，離開執行堆，回到全域執行環境，再繼續執行 <code>a();</code> 的下一行 (<code>var d;</code>)。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>當我們呼叫 function 時，會建立執行環境，加入到執行堆中，並在創造階段建立屬於自己的 this 變數、外部環境和記憶體空間放置變數和 function，而在執行階段，會依照順序從上到下執行，當 function 執行完畢後，便會離開執行堆。</p>
+<p>補充：即使 function 是呼叫自己，執行環境也會建立。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/克服-JavaScript-奇怪部分筆記/" rel="tag"><i class="fa fa-tag"></i> 克服 JavaScript 奇怪部分筆記</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/JavaScript/2019/10/11/single_threaded_and_synchronous_execution/" rel="next" title="單執行緒和同步執行">
+                  <i class="fa fa-chevron-left"></i> 單執行緒和同步執行
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#function-呼叫-function-invocation"><span class="nav-number">1.</span> <span class="nav-text">function 呼叫 (function invocation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#執行堆-execution-stack"><span class="nav-number">2.</span> <span class="nav-text">執行堆 (execution stack)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#執行過程"><span class="nav-number">2.1.</span> <span class="nav-text">執行過程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#執行堆離開順序"><span class="nav-number">2.2.</span> <span class="nav-text">執行堆離開順序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程式順序不影響執行順序"><span class="nav-number">2.3.</span> <span class="nav-text">程式順序不影響執行順序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">apeiros0</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分類</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">標籤</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/apeiros0" title="GitHub &rarr; https://github.com/apeiros0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">apeiros0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function disqus_config() {
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/13/function_invocation_and_execution_stack/";
+    this.page.identifier = "JavaScript/2019/10/13/function_invocation_and_execution_stack/";
+    this.page.title = 'function 呼叫和執行堆';};
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-apeiros0-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+</body>
+</html>
