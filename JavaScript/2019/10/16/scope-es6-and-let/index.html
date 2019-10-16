@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天我們要來了解 JavaScript 在建立執行環境時做了什麼。提升 (Hoisiting)首先我們來做在別的程式語言沒辦法做到，但在 JavaScript 中卻能辦到的行為，以下是今天的範例程式碼。12345678910var b = &quot;Called b&quot;;function a() &amp;#123;  console.log(&apos;Called function a&apos;);&amp;#125;a();conso">
+  <meta name="description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="創造和提升 (Hoisiting)">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/08/creation_and_hoisiting/index.html">
+<meta property="og:title" content="Scope, ES6 和 let">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天我們要來了解 JavaScript 在建立執行環境時做了什麼。提升 (Hoisiting)首先我們來做在別的程式語言沒辦法做到，但在 JavaScript 中卻能辦到的行為，以下是今天的範例程式碼。12345678910var b = &quot;Called b&quot;;function a() &amp;#123;  console.log(&apos;Called function a&apos;);&amp;#125;a();conso">
+<meta property="og:description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-10T04:08:48.812Z">
+<meta property="og:updated_time" content="2019-10-16T03:32:47.910Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="創造和提升 (Hoisiting)">
-<meta name="twitter:description" content="今天我們要來了解 JavaScript 在建立執行環境時做了什麼。提升 (Hoisiting)首先我們來做在別的程式語言沒辦法做到，但在 JavaScript 中卻能辦到的行為，以下是今天的範例程式碼。12345678910var b = &quot;Called b&quot;;function a() &amp;#123;  console.log(&apos;Called function a&apos;);&amp;#125;a();conso">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/08/creation_and_hoisiting/">
+<meta name="twitter:title" content="Scope, ES6 和 let">
+<meta name="twitter:description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>創造和提升 (Hoisiting) | apeiros0's Blog</title>
+  <title>Scope, ES6 和 let | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/08/creation_and_hoisiting/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">創造和提升 (Hoisiting)
+        <h2 class="post-title" itemprop="name headline">Scope, ES6 和 let
 
           
         </h2>
@@ -301,19 +301,11 @@
                 
               
 
-              <time title="創建時間：2019-10-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-08T00:00:00+08:00">2019-10-08</time>
+              <time title="創建時間：2019-10-16 00:00:00 / 修改時間：11:32:47" itemprop="dateCreated datePublished" datetime="2019-10-16T00:00:00+08:00">2019-10-16</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2019-10-10 12:08:48" itemprop="dateModified" datetime="2019-10-10T12:08:48+08:00">2019-10-10</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -341,42 +333,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天我們要來了解 JavaScript 在建立執行環境時做了什麼。</p><h2 id="提升-Hoisiting"><a href="#提升-Hoisiting" class="headerlink" title="提升 (Hoisiting)"></a>提升 (Hoisiting)</h2><p>首先我們來做在別的程式語言沒辦法做到，但在 JavaScript 中卻能辦到的行為，以下是今天的範例程式碼。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="string">"Called b"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called function a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(...) 可以將 (...) 裡面的程式碼顯示在 Console 視窗中</span></span><br><span class="line"><span class="comment">// a() 是呼叫 function a 執行</span></span><br></pre></td></tr></table></figure><a id="more"></a>
+        <p>到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。</p><p>講了這麼多，你知道 Scope 是什麼嗎 ?</p><h2 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h2><blockquote>
+<p>Scope 表示變數可以被取用的範圍。</p>
+</blockquote><p>如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。</p><a id="more"></a>
 
 
 
-<p>我們把 <code>a()</code> 和 <code>console.log(b)</code> 移到程式的最上方，觀察 Console 視窗會出現什麼結果。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a();</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="string">"Called b"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called function a'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>舉例來說，在下方的程式碼中，function a 會分別建立各自的執行環境，而裡面的變數是不會互相影響，因為他們分別在不同的記憶體中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
 
-<p>一般而言，在別的程式語言這樣做會產生錯誤，因為在執行時，變數 b 還尚未宣告，所以會出現錯誤，但在 JavaScript 中，會顯示 <code>Called function a</code> 和 <code>undefined</code>，神奇的是，竟然沒有產生任何錯誤。</p>
-<p>透過這個例子，我們了解到，當 JavaScript 執行時，即使在 function 前面呼叫，function 仍會執行，而變數也會執行，只是它得到的結果是 <code>undefined</code>。</p>
+<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>ES6，又稱 ECMAScript 6 或 ECMAScript 2015，引用了新的宣告變數方法 <code>let</code>。</p>
+<h3 id="與-var-不同之處"><a href="#與-var-不同之處" class="headerlink" title="與 var 不同之處"></a>與 <code>var</code> 不同之處</h3><p><code>let</code> 可以像 <code>var</code> 一樣使用，但並沒有取代 <code>var</code>，它讓 JavaScript 引擎使用一個叫做<strong>區塊範圍 (block scoping)</strong> 的東西，而在宣告變數時，能像 <code>var</code> 一樣使用，變數仍會被放到記憶體中，設值為 <code>undefined</code>，不同的是，在執行階段直到 <code>let</code> 那一行被執行時，才能使用 <code>let</code> 所宣告的變數，如果在 <code>let</code> 之前取用便會出現錯誤 (他仍在記憶體中，只是 JavaScript 引擎 不讓你取用)。</p>
+<p>在下方的範例中，如果我在 <code>let c</code> 之前就取用 c 的話，此時便會出現錯誤。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(c); <span class="comment">// error</span></span><br><span class="line"><span class="keyword">let</span> c = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="在區塊中宣告"><a href="#在區塊中宣告" class="headerlink" title="在區塊中宣告"></a>在區塊中宣告</h3><p>當我們在區塊 (block) 中宣告 <code>let</code> 時，表示變數只能在這個區塊中使用，而在區塊外取用的話，便會出現錯誤訊息。如果我們有迴圈正在執行，使用 <code>let</code> 宣告變數，每次在迴圈中，<strong>變數在記憶體中都是不同的</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// error: a is not defined</span></span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p><strong>這種將尚未宣告的 function 或變數移到前方執行，程式仍可運作的現象，我們稱做 提升 (Hoisiting)。</strong></p>
+<p>補充：區塊指的是 <code>{ ... }</code>，像是在 <code>if () { ... }</code>、<code>for () { ... }</code>、<code>function () { ... }</code> 裡面。</p>
 </blockquote>
-<p>補充：如果我們移除 function a 或變數 b，執行時會出現 <code>a is not defined</code> 或是 <code>b is not defined</code> 的錯誤。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// error: a is not defined</span></span><br><span class="line">a();</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="string">"Called b"</span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a();</span><br><span class="line"><span class="comment">// error: b is not defined</span></span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called function a'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="如何產生提升-Hoisiting"><a href="#如何產生提升-Hoisiting" class="headerlink" title="如何產生提升 (Hoisiting) ?"></a>如何產生提升 (Hoisiting) ?</h2><p>現在有了 提升 (Hoisiting) 的概念後，我們來了解它是如何產生的。</p>
-<p>JavaScript 這種沒有先宣告，就能取用的情況，是因為執行環境分為<strong>創造階段 (Creation Phase)</strong>和<strong>執行階段 (Execution Phase)</strong></p>
-<h3 id="創造階段-Creation-Phase"><a href="#創造階段-Creation-Phase" class="headerlink" title="創造階段 (Creation Phase)"></a>創造階段 (Creation Phase)</h3><p>在這個階段，會建立：</p>
-<ul>
-<li>全域物件</li>
-<li>this 變數</li>
-<li>外部環境</li>
-<li>你的程式碼 (正在被轉換)</li>
-</ul>
-<p>你的程式碼在這個階段會透過語法解析器轉換，它會知道你在哪裡建立變數和 function，並設定到記憶體中，而這個步驟就叫 提升 (Hoisiting)。</p>
-<p>也就是說，在執行程式碼前，JavaScript 引擎已經為變數和 function 建立空間給它們，所以在這個階段它們已經存在於記憶體中，因此在逐行執行時，便能找到變數和 function。</p>
-<p>我們從上面的範例可以知道，function 已經全部被設定在記憶體中，因此我們能直接取用，然而，變數的情況卻有些不同，變數會透過 <code>=</code> 來賦予值，但這要在執行階段才會賦予，因此<strong>在創造階段會先賦予 <code>undefined</code> 作為值的替代</strong>。</p>
-<p>補充：<code>undefined</code>表示<strong>我還不知道它的值是什麼</strong>，如果我一開始沒有設值給變數，也會得到一樣的結果，這也代表<strong>所有的 JavaScript 變數一開始都會被設定為 <code>undefined</code></strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b;</span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
-
-<p>然而，依賴提升 (Hoisiting) 並非一件好事，這可能會造成程式執行上的錯誤，以下方的例子來說，假設我要透過 console.log 查看 d 的值，但由於提升的特性，會顯示 <code>undefined</code>，並不會顯示 <code>Called d</code>，所以寫程式時，我們<strong>要盡量把變數和 function 寫在最上面</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="string">"Called b"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called function a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
-
-<h3 id="執行階段-Execution-Phase"><a href="#執行階段-Execution-Phase" class="headerlink" title="執行階段 (Execution Phase)"></a>執行階段 (Execution Phase)</h3><p>執行階段 (Execution Phase) 會逐行編譯、轉換你的程式碼，詳細情形之後我們便會談到。</p>
 
     </div>
 
@@ -402,8 +378,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/07/global_environment&object/" rel="next" title="全域執行環境和全域物件">
-                  <i class="fa fa-chevron-left"></i> 全域執行環境和全域物件
+                <a href="/JavaScript/2019/10/15/the_scope_chain/" rel="next" title="範圍鏈 (The Scope Chain)">
+                  <i class="fa fa-chevron-left"></i> 範圍鏈 (The Scope Chain)
                 </a>
               
             </div>
@@ -411,10 +387,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/09/js_and_undefined/" rel="prev" title="JavaScript 和 undefined">
-                  JavaScript 和 undefined <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -469,7 +441,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#提升-Hoisiting"><span class="nav-number">1.</span> <span class="nav-text">提升 (Hoisiting)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何產生提升-Hoisiting"><span class="nav-number">2.</span> <span class="nav-text">如何產生提升 (Hoisiting) ?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#創造階段-Creation-Phase"><span class="nav-number">2.1.</span> <span class="nav-text">創造階段 (Creation Phase)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#執行階段-Execution-Phase"><span class="nav-number">2.2.</span> <span class="nav-text">執行階段 (Execution Phase)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scope"><span class="nav-number">1.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#let"><span class="nav-number">2.</span> <span class="nav-text">let</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#與-var-不同之處"><span class="nav-number">2.1.</span> <span class="nav-text">與 var 不同之處</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在區塊中宣告"><span class="nav-number">2.2.</span> <span class="nav-text">在區塊中宣告</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -615,9 +587,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/08/creation_and_hoisiting/";
-    this.page.identifier = "JavaScript/2019/10/08/creation_and_hoisiting/";
-    this.page.title = '創造和提升 (Hoisiting)';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/";
+    this.page.identifier = "JavaScript/2019/10/16/scope-es6-and-let/";
+    this.page.title = 'Scope, ES6 和 let';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
