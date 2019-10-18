@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '複製',
+      copy_success: '複製成功',
+      copy_failure: '複製失敗'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="我們先前有討論過 JavaScript 的同步，以及如何同步執行，今天我們就來討論什麼是非同步回呼 (asynchronous callbacks) 吧 !在了解非同步回呼之前，我們先來了解什麼是非同步 (asynchronous)。非同步 (asynchronous) 表示在同一個時間點不只有一個程式在執行。">
+<meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什麼是非同步回呼 ?">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/17/asynchronous-more-than-at-a-time/index.html">
+<meta property="og:site_name" content="apeiros0&#39;s Blog">
+<meta property="og:description" content="我們先前有討論過 JavaScript 的同步，以及如何同步執行，今天我們就來討論什麼是非同步回呼 (asynchronous callbacks) 吧 !在了解非同步回呼之前，我們先來了解什麼是非同步 (asynchronous)。非同步 (asynchronous) 表示在同一個時間點不只有一個程式在執行。">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2019-10-18T05:01:16.575Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="什麼是非同步回呼 ?">
+<meta name="twitter:description" content="我們先前有討論過 JavaScript 的同步，以及如何同步執行，今天我們就來討論什麼是非同步回呼 (asynchronous callbacks) 吧 !在了解非同步回呼之前，我們先來了解什麼是非同步 (asynchronous)。非同步 (asynchronous) 表示在同一個時間點不只有一個程式在執行。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/17/asynchronous-more-than-at-a-time/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>什麼是非同步回呼 ? | apeiros0's Blog</title>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-149403450-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">apeiros0's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔<span class="badge">13</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/apeiros0" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/17/asynchronous-more-than-at-a-time/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="apeiros0">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="apeiros0's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">什麼是非同步回呼 ?
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              
+                
+              
+
+              <time title="創建時間：2019-10-17 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-17T00:00:00+08:00">2019-10-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2019-10-18 13:01:16" itemprop="dateModified" datetime="2019-10-18T13:01:16+08:00">2019-10-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我們先前有討論過 JavaScript 的同步，以及如何同步執行，今天我們就來討論什麼是非同步回呼 (asynchronous callbacks) 吧 !</p><p>在了解非同步回呼之前，我們先來了解什麼是非同步 (asynchronous)。</p><h2 id="非同步-asynchronous"><a href="#非同步-asynchronous" class="headerlink" title="非同步 (asynchronous)"></a>非同步 (asynchronous)</h2><blockquote>
+<p>表示在同一個時間點不只有一個程式在執行。</p>
+</blockquote><a id="more"></a>
+
+
+<p>也就是說，JavaScript 可以在程式執行時，執行另一段程式碼，然後又再執行別的程式碼，但這與我們之前說的 JavaScript 是同步執行 (同一時間只執行一行) 不是完全不同嗎 ?</p>
+<p>還有像是 click 事件或是從遠端取得資料，有 callback function 可以執行，JavaScript 是如何處理這類的非同步事件而 callback function 又是什麼呢，讓我們來看看吧 !</p>
+<h2 id="如何處理非同步"><a href="#如何處理非同步" class="headerlink" title="如何處理非同步"></a>如何處理非同步</h2><p>首先，我們先來思考 JavaScript 引擎是位在哪裡吧，我們知道在瀏覽器中，不會只有 JavaScript 引擎在運作，還會有其他引擎在 JavaScript 外執行別的程式，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">         瀏覽器</span><br><span class="line">------------------------</span><br><span class="line">|    JavaScript 引擎    |</span><br><span class="line">------------------------</span><br></pre></td></tr></table></figure>
+
+<p>在瀏覽器中有需多不同引擎，我們先來看看比較常使用到的引擎，像是，</p>
+<ul>
+<li>Rendering 引擎：可以渲染或繪製畫面到網頁上</li>
+<li>HTTP Request：處理瀏覽器的 HTTP Request 和 Response，像是從伺服器取得資料</li>
+<li>其他引擎 …</li>
+</ul>
+<p>JavaScript 可以和這些引擎溝通，像是與 Rendering 引擎溝通，就能改變網頁的樣子，或是向 HTTP Request 請求遠端資料，這些引擎<strong>在瀏覽器內是非同步執行的</strong>，而 <strong>JavaScript 則是屬於同步執行</strong>，也就是說，瀏覽器會在同一時間執行不同的引擎，包括 JavaScript 引擎，而在 JavaScript 內則是逐行執行程式。</p>
+<blockquote>
+<p>補充：當我們在說引擎時，其實也只是別人寫的程式。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">                                  瀏覽器 (非同步)</span><br><span class="line"></span><br><span class="line">------------------------  </span><br><span class="line">|    Rendering 引擎    |  ←-----------  溝通</span><br><span class="line">------------------------             |</span><br><span class="line">                                     ↓</span><br><span class="line">                          -------------------------------  </span><br><span class="line">                          |    JavaScript 引擎 (同步)    |</span><br><span class="line">                          -------------------------------</span><br><span class="line">                                      ↑ </span><br><span class="line">                                      |               ------------------------</span><br><span class="line">                                溝通   ------------→  |      HTTP Request     |</span><br><span class="line">                                                      ------------------------</span><br></pre></td></tr></table></figure>
+
+<p>那當我們非同步向外請求，或是當某個人觸發 click 事件時，會發生什麼事 ? 這就與事件佇列有關了。</p>
+<h3 id="事件佇列-event-queue"><a href="#事件佇列-event-queue" class="headerlink" title="事件佇列 (event queue)"></a>事件佇列 (event queue)</h3><p>先前我們有學過執行堆的概念，在程式執行時，會建立全域執行環境，當 function 被呼叫，執行堆會加入 function 的執行環境，然而在 JavaScript 引擎中還有個<code>事件佇列 (event queue)</code>，<strong>負責處理可能會觸發的事件或事件的通知</strong>。</p>
+<p>當 JavaScript 引擎外有事件發生，在 JavaScript 中事件會被放到事件佇列裡，舉例來說，當有人在畫面上點擊時，或是我們從遠端取得資料等，在 JavaScript 內就會將這些事件加入到事件佇列中，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">         執行堆</span><br><span class="line"></span><br><span class="line">----------------------------</span><br><span class="line">|    function b 執行環境    |</span><br><span class="line">----------------------------</span><br><span class="line">|    function a 執行環境    |          事件佇列 (event queue)</span><br><span class="line">----------------------------      ----------------------------</span><br><span class="line">|        全域執行環境       |      |  click  |  HTTP Request  |</span><br><span class="line">----------------------------      ----------------------------</span><br></pre></td></tr></table></figure>
+
+<p>這邊要注意的是，<strong>當執行堆清空時，JavaScript 才會注意到事件佇列</strong>，這是什麼意思呢 ?</p>
+<p>就是當 function b 和 a 執行結束，離開執行堆，等到全域執行環境執行完裡面的程式，執行堆為空時，JavaScript 就會去檢查事件佇列，看是否有 function 被事件觸發。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">           JavaScript: 我來檢查囉 !</span><br><span class="line"></span><br><span class="line">     執行堆</span><br><span class="line">-----------------</span><br><span class="line">|               |</span><br><span class="line">|               |       事件佇列 (event queue)</span><br><span class="line">|               |    ----------------------------</span><br><span class="line">|               |    |  click  |  HTTP Request  |</span><br><span class="line">-----------------    ----------------------------</span><br></pre></td></tr></table></figure>
+
+<p>所以 JavaScript 看到 click 事件，知道有 function 需要執行，就會建立執行環境給這個 function，而當事件處理完畢，就會繼續執行下一個佇列的事件，像這樣不段的循環。</p>
+<blockquote>
+<p><strong>再次注意：事件佇列會直到執行堆為空才開始處理。</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">         執行堆</span><br><span class="line">                                      事件佇列 (event queue)</span><br><span class="line">----------------------------      ----------------------------</span><br><span class="line">|   clickHandler 執行環境   |      |  click  |  HTTP Request  |</span><br><span class="line">----------------------------      ----------------------------</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：這並不是真正的非同步，只是把瀏覽器非同步的東西放到事件佇列，原本的程式仍然是逐行在執行，當執行完，執行堆為空時，才會來處理事件，而事件所觸發的 function，會在執行堆中執行。</p>
+</blockquote>
+<h2 id="了解非同步回呼"><a href="#了解非同步回呼" class="headerlink" title="了解非同步回呼"></a>了解非同步回呼</h2><blockquote>
+<p>callback function 是指將 function 作為另一個 function 的參數使用，確保 function 能正常執行。</p>
+</blockquote>
+<p>我們來用範例程式了解 JavaScript 如何處理非同步回呼吧 !</p>
+<p>我們有 <code>waitThreeSeconds</code> function 和 <code>clickHandler</code> function (click 後觸發)，還有監聽 click 事件的 <code>addEventListener</code> (callback function)，現在如果我們在等待 3 秒期間，觸發 click 事件的話，會發生什麼事，而 console.log 出現的順序又是什麼呢 ?</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waitThreeSeconds</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ms = <span class="number">3000</span> + <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</span><br><span class="line">  <span class="keyword">while</span> (<span class="keyword">new</span> <span class="built_in">Date</span>() &lt; ms) &#123;&#125; <span class="comment">// 小於 3 秒，跑迴圈</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'finished function'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clickHandler</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'click event~'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 監聽 click 事件</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>, clickHandler);</span><br><span class="line"></span><br><span class="line">waitThreeSeconds();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'finished execution'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我們先不觸發 click 事件，來看看執行結果是如何。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">finished function</span><br><span class="line">finished execution</span><br></pre></td></tr></table></figure>
+
+<p>執行完後，會發現結果如上方所示，由於沒有觸發 click 事件，所以會呼叫 <code>waitThreeSeconds</code> 執行，建立執行環境，等待 3 秒後，印出 <code>finished function</code>，最後回到全域執行環境，執行 <code>console.log(&#39;finished execution&#39;);</code>，印出 <code>finished execution</code> 的結果。</p>
+<hr>
+<p>現在我們在等待 3 秒期間觸發 click 事件，看看會發生什麼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">finished function</span><br><span class="line">finished execution</span><br><span class="line">click event~</span><br></pre></td></tr></table></figure>
+
+<p>我們會發現結果分別為上方那樣，這是因為 JavaScript 引擎會等到執行堆為空，才來檢查事件佇列，所以當 <code>waitThreeSeconds();</code> 和 <code>console.log(&#39;finished execution&#39;);</code> 執行完就會執行事件佇列裡的 click 事件的 function。</p>
+<h2 id="持續檢查-continuous-check"><a href="#持續檢查-continuous-check" class="headerlink" title="持續檢查 (continuous check)"></a>持續檢查 (continuous check)</h2><p>上述就是 JavaScript 如何同步處理在瀏覽器別處的非同步事件發生，JavaScript 會執行執行堆的程式，執行完，到事件佇列檢查，而當事件佇列也執行完，會繼續看事件佇列的 loop，這稱之為<strong>持續檢查 (continuous check)</strong>，當有其他事件出現在事件佇列中，就會去執行對應的 function。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我們了解了 JavaScript 如何用同步的方式處理非同步事件，在引擎外所發生的事件會被放到事件佇列中，如果執行堆為空，JavaScript 就會來依事件發生順序來處理事件，所以非同步回呼在 JavaScript 是會發生的，只是非同步的部分是在 JavaScript 引擎外發生，而 JavaScript 會透過事件迴圈來持續檢查事件，用同步的方式處理。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/克服-JavaScript-奇怪部分筆記/" rel="tag"><i class="fa fa-tag"></i> 克服 JavaScript 奇怪部分筆記</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/JavaScript/2019/10/16/scope-es6-and-let/" rel="next" title="Scope, ES6 和 let">
+                  <i class="fa fa-chevron-left"></i> Scope, ES6 和 let
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/JavaScript/2019/10/18/type-and-javascript/" rel="prev" title="型別和 JavaScript">
+                  型別和 JavaScript <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#非同步-asynchronous"><span class="nav-number">1.</span> <span class="nav-text">非同步 (asynchronous)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何處理非同步"><span class="nav-number">2.</span> <span class="nav-text">如何處理非同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件佇列-event-queue"><span class="nav-number">2.1.</span> <span class="nav-text">事件佇列 (event queue)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解非同步回呼"><span class="nav-number">3.</span> <span class="nav-text">了解非同步回呼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持續檢查-continuous-check"><span class="nav-number">4.</span> <span class="nav-text">持續檢查 (continuous check)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">5.</span> <span class="nav-text">總結</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">apeiros0</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分類</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">標籤</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/apeiros0" title="GitHub &rarr; https://github.com/apeiros0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">apeiros0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function disqus_config() {
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/17/asynchronous-more-than-at-a-time/";
+    this.page.identifier = "JavaScript/2019/10/17/asynchronous-more-than-at-a-time/";
+    this.page.title = '什麼是非同步回呼 ?';};
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-apeiros0-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+</body>
+</html>
