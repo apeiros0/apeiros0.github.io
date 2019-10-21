@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。變數環境 (variables environment)何謂變數環境 變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，每個執行環境都有屬於自己的變數環境，">
+  <meta name="description" content="在上一篇中，我們已經探討過基本型別，今天我們來深入了解另一個觀念，可以幫助我們順利除錯 (debug) 和了解其他因為動態型別而產生的問題，我們就來聊聊什麼是運算子 (operators) 吧 !運算子 (Operators) 運算子是一個特殊的 function，和我們自己寫的 function 有很大的不同，通常來說，運算子需要參數來回傳一個結果。">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="function, context 和 變數環境">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/index.html">
+<meta property="og:title" content="運算子 (Operators)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/21/operators/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。變數環境 (variables environment)何謂變數環境 變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，每個執行環境都有屬於自己的變數環境，">
+<meta property="og:description" content="在上一篇中，我們已經探討過基本型別，今天我們來深入了解另一個觀念，可以幫助我們順利除錯 (debug) 和了解其他因為動態型別而產生的問題，我們就來聊聊什麼是運算子 (operators) 吧 !運算子 (Operators) 運算子是一個特殊的 function，和我們自己寫的 function 有很大的不同，通常來說，運算子需要參數來回傳一個結果。">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-15T03:02:18.017Z">
+<meta property="og:updated_time" content="2019-10-21T03:28:48.076Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="function, context 和 變數環境">
-<meta name="twitter:description" content="今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。變數環境 (variables environment)何謂變數環境 變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，每個執行環境都有屬於自己的變數環境，">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/">
+<meta name="twitter:title" content="運算子 (Operators)">
+<meta name="twitter:description" content="在上一篇中，我們已經探討過基本型別，今天我們來深入了解另一個觀念，可以幫助我們順利除錯 (debug) 和了解其他因為動態型別而產生的問題，我們就來聊聊什麼是運算子 (operators) 吧 !運算子 (Operators) 運算子是一個特殊的 function，和我們自己寫的 function 有很大的不同，通常來說，運算子需要參數來回傳一個結果。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/21/operators/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>function, context 和 變數環境 | apeiros0's Blog</title>
+  <title>運算子 (Operators) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/21/operators/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">function, context 和 變數環境
+        <h2 class="post-title" itemprop="name headline">運算子 (Operators)
 
           
         </h2>
@@ -301,19 +301,11 @@
                 
               
 
-              <time title="創建時間：2019-10-14 21:51:10" itemprop="dateCreated datePublished" datetime="2019-10-14T21:51:10+08:00">2019-10-14</time>
+              <time title="創建時間：2019-10-21 00:00:00 / 修改時間：11:28:48" itemprop="dateCreated datePublished" datetime="2019-10-21T00:00:00+08:00">2019-10-21</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2019-10-15 11:02:18" itemprop="dateModified" datetime="2019-10-15T11:02:18+08:00">2019-10-15</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -341,29 +333,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。</p><h2 id="變數環境-variables-environment"><a href="#變數環境-variables-environment" class="headerlink" title="變數環境 (variables environment)"></a>變數環境 (variables environment)</h2><h3 id="何謂變數環境"><a href="#何謂變數環境" class="headerlink" title="何謂變數環境"></a>何謂變數環境</h3><blockquote>
-<p>變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，<strong>每個執行環境都有屬於自己的變數環境</strong>，</p>
+        <p>在上一篇中，我們已經探討過基本型別，今天我們來深入了解另一個觀念，可以幫助我們順利除錯 (debug) 和了解其他因為動態型別而產生的問題，我們就來聊聊什麼是運算子 (operators) 吧 !</p><h2 id="運算子-Operators"><a href="#運算子-Operators" class="headerlink" title="運算子 (Operators)"></a>運算子 (Operators)</h2><blockquote>
+<p>運算子是一個特殊的 function，和我們自己寫的 function 有很大的不同，通常來說，運算子需要參數來回傳一個結果。</p>
 </blockquote><a id="more"></a>
 
-<p>簡單來說，就是每個執行環境都有一個建立變數的地方。</p>
-<h3 id="了解變數環境"><a href="#了解變數環境" class="headerlink" title="了解變數環境"></a>了解變數環境</h3><p>我們透過範例程式碼來了解變數環境吧 !</p>
-<p>在下方的程式碼中，分別有 function a 和 function b，而在全域環境有一個 myVar 變數，a 和 b 中也分別有屬於自己的 myVar，那麼在這段範例中 myVar 的值會是什麼呢 ?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar = <span class="number">2</span>;</span><br><span class="line">  b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myVar = <span class="number">1</span>;</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
+<p>讓我們來看看範例，我們宣告一個變數 a，讓他等於 3 + 4，再來印出結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span> + <span class="number">4</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
 
-<p>現在程式開始執行，全域執行環境被建立，myVar 變數被加入到記憶體中 (function 也是)，而<strong>對全域執行環境來說，變數環境就是指全域物件 (瀏覽器的 window)</strong>，所以 myVar 變數會被加入到全域物件中，當執行到 <code>myVar = 1</code> 時，myVar 便會得到 1 的值，接下來便是 function a 被呼叫，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---------------------------------------</span><br><span class="line">|     全域執行環境     |   myVar = 1   |</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+<p>我們都知道結果為 <code>7</code>，但 JavaScript 是怎麼知道我們要把 3 和 4 相加呢 ?</p>
+<p>這是因為語法解析器看到 <code>+</code> 後，會把兩個數字加起來，而這個 <code>+</code> 就是運算子，更準確地說，是加法運算子，是一個特殊的 function。</p>
+<p>就像下方的範例這樣，用 <code>+</code> 當作是 function 名稱，傳入兩個參數，再將兩數相加，回傳結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> + (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="comment">// 兩數相加</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>當 function a 被呼叫時，建立新的執行環境，變數環境也會一起生成，myVar 會被放到新建立的變數環境中，這是因為每個執行環境都有屬於自己的變數環境，接著執行到 <code>myVar = 2</code>，新的變數環境中的 myVar 便會被賦予 2 的值，接著呼叫 function b，b 也會做相同的事。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---------------------------------------</span><br><span class="line">|     a 的執行環境     |   myVar = 2   |</span><br><span class="line">---------------------------------------</span><br><span class="line">|     全域執行環境     |   myVar = 1   |</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+<p>下方範例就是 JavaScript 在處理運算子所做的事，但和我們平常呼叫 function 是不同的，因為這樣做會很麻煩，我們要打出 function 的名稱，再傳入參數呼叫，而且也不直觀。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> + (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="comment">// 兩數相加</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 平常呼叫 function 的方式，但運算子不是這樣呼叫</span></span><br><span class="line">+(<span class="number">3</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
 
-<p>而 function a 和 function b 唯一不同的地方是 b 的 myVar 沒有被賦予值，所以值為 <code>undefined</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-----------------------------------------------</span><br><span class="line">|     b 的執行環境     |   myVar = undefined   |</span><br><span class="line">-----------------------------------------------</span><br><span class="line">|     a 的執行環境     |   myVar = 2           |</span><br><span class="line">-----------------------------------------------</span><br><span class="line">|     全域執行環境     |   myVar = 1           |</span><br><span class="line">-----------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>所以，JavaScript 就和其他程式語言一樣，用中綴表示法來表達運算方式，但本質仍是一個傳入兩個參數的 function，並回傳一個值給你。</p>
+<blockquote>
+<p>表示法有分成三種：前綴、中綴、後綴表示法，中綴表示法是將運算符號 (function) 放在兩個參數中間，需要加上 <code>()</code> 來表指示運算順序。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> + (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="comment">// 兩數相加</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="number">3</span> + <span class="number">4</span>; <span class="comment">// 中綴，讀起來直觀易懂</span></span><br><span class="line">+ <span class="number">3</span> <span class="number">4</span>;   <span class="comment">// 前綴</span></span><br><span class="line"><span class="number">3</span> <span class="number">4</span> +;   <span class="comment">// 後綴 (舊式計算機的運算方式)</span></span><br></pre></td></tr></table></figure>
 
-<p>這裡的變數都被定義在自己的執行環境中，我們會分別在不同的執行環境看到不同變數，所以即使 myVar 被宣告三次，但他們分別都在不同的執行環境中，沒有任何關聯，現在我們分別把 myVar 印出來驗證看看吧。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar;</span><br><span class="line">  <span class="built_in">console</span>.log(myVar); <span class="comment">// undefined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(myVar); <span class="comment">// 2</span></span><br><span class="line">  b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myVar = <span class="number">1</span>; <span class="comment">// 會被加入到全域物件中</span></span><br><span class="line"><span class="built_in">console</span>.log(myVar); <span class="comment">// 1</span></span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
+<p>當然，運算子不只有一個，還有 <code>-</code>、<code>*</code>、<code>/</code> … 等許多運算子，其中也有幾個運算子比較特殊，像是 <code>&gt;</code> 和 <code>&lt;</code>，它們會回傳 boolean 值給你。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span> &gt; <span class="number">4</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
-<p>得到的結果分別為 <code>1</code>、<code>2</code>、<code>undefined</code>，代表每個執行環境都有自己的 myVar 變數，而且不會互相影響彼此。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>當執行環境建立時，都會生成變數環境，變數環境會存放我們所建立的變數，不同執行環境的變數即便名稱相同，也不會影響彼此，因為他們分別在不同的地方執行，自然也不會互相影響，了解變數環境的概念後，我們就能了解後面其他的 JavaScript 觀念囉。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>說了這麼多，我們只要謹記一個觀念</p>
+<blockquote>
+<p><strong>運算子只是一個特殊的 function，參數會被傳入到 function，然後回傳一個結果給你。</strong></p>
+</blockquote>
 
     </div>
 
@@ -389,8 +386,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/13/function_invocation_and_execution_stack/" rel="next" title="function 呼叫和執行堆">
-                  <i class="fa fa-chevron-left"></i> function 呼叫和執行堆
+                <a href="/JavaScript/2019/10/20/primitive-types/" rel="next" title="純值 (Primitive Types)">
+                  <i class="fa fa-chevron-left"></i> 純值 (Primitive Types)
                 </a>
               
             </div>
@@ -398,10 +395,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/15/the_scope_chain/" rel="prev" title="範圍鏈 (The Scope Chain)">
-                  範圍鏈 (The Scope Chain) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -456,7 +449,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#變數環境-variables-environment"><span class="nav-number">1.</span> <span class="nav-text">變數環境 (variables environment)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#何謂變數環境"><span class="nav-number">1.1.</span> <span class="nav-text">何謂變數環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解變數環境"><span class="nav-number">1.2.</span> <span class="nav-text">了解變數環境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#運算子-Operators"><span class="nav-number">1.</span> <span class="nav-text">運算子 (Operators)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -602,9 +595,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/";
-    this.page.identifier = "JavaScript/2019/10/14/function_context_and_variable_environments/";
-    this.page.title = 'function, context 和 變數環境';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/21/operators/";
+    this.page.identifier = "JavaScript/2019/10/21/operators/";
+    this.page.title = '運算子 (Operators)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
