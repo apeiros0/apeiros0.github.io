@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="關於執行環境我們在之前已經有一小部分的認識，今天要來了解執行環境中的全域執行環境及其所建立的全域物件。在開始了解全域執行環境及全域物件時，我們先來了解什麼是全域? 什麼是全域 (Global) ?這裡的全域 (Global)，指的是可以在任何地方取用它的意思，更簡單的說，如果不在 function 的範圍中那就是指全域。">
+  <meta name="description" content="上一篇文章中，我們了解到 JavaScript 動態型別和強制轉型不好的地方，那他們的用處是在哪呢 ? 讓我來談談存在  (Existence) 和布林 (Booleans)。布林 (Booleans)我們先將一些值透過 Boolean 這個內建 function 來轉換，像是： 注意：不推薦使用內建 function，但很適合拿來展示用。">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="全域執行環境和全域物件">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/07/global_environment&object/index.html">
+<meta property="og:title" content="存在和布林 (Existence And Booleans)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/25/existence-and-booleans/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="關於執行環境我們在之前已經有一小部分的認識，今天要來了解執行環境中的全域執行環境及其所建立的全域物件。在開始了解全域執行環境及全域物件時，我們先來了解什麼是全域? 什麼是全域 (Global) ?這裡的全域 (Global)，指的是可以在任何地方取用它的意思，更簡單的說，如果不在 function 的範圍中那就是指全域。">
+<meta property="og:description" content="上一篇文章中，我們了解到 JavaScript 動態型別和強制轉型不好的地方，那他們的用處是在哪呢 ? 讓我來談談存在  (Existence) 和布林 (Booleans)。布林 (Booleans)我們先將一些值透過 Boolean 這個內建 function 來轉換，像是： 注意：不推薦使用內建 function，但很適合拿來展示用。">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-09T05:11:37.088Z">
+<meta property="og:updated_time" content="2019-10-25T06:56:55.581Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="全域執行環境和全域物件">
-<meta name="twitter:description" content="關於執行環境我們在之前已經有一小部分的認識，今天要來了解執行環境中的全域執行環境及其所建立的全域物件。在開始了解全域執行環境及全域物件時，我們先來了解什麼是全域? 什麼是全域 (Global) ?這裡的全域 (Global)，指的是可以在任何地方取用它的意思，更簡單的說，如果不在 function 的範圍中那就是指全域。">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/07/global_environment&object/">
+<meta name="twitter:title" content="存在和布林 (Existence And Booleans)">
+<meta name="twitter:description" content="上一篇文章中，我們了解到 JavaScript 動態型別和強制轉型不好的地方，那他們的用處是在哪呢 ? 讓我來談談存在  (Existence) 和布林 (Booleans)。布林 (Booleans)我們先將一些值透過 Boolean 這個內建 function 來轉換，像是： 注意：不推薦使用內建 function，但很適合拿來展示用。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/25/existence-and-booleans/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>全域執行環境和全域物件 | apeiros0's Blog</title>
+  <title>存在和布林 (Existence And Booleans) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/07/global_environment&object/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/25/existence-and-booleans/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">全域執行環境和全域物件
+        <h2 class="post-title" itemprop="name headline">存在和布林 (Existence And Booleans)
 
           
         </h2>
@@ -301,19 +301,11 @@
                 
               
 
-              <time title="創建時間：2019-10-07 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-07T00:00:00+08:00">2019-10-07</time>
+              <time title="創建時間：2019-10-25 00:00:00 / 修改時間：14:56:55" itemprop="dateCreated datePublished" datetime="2019-10-25T00:00:00+08:00">2019-10-25</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2019-10-09 13:11:37" itemprop="dateModified" datetime="2019-10-09T13:11:37+08:00">2019-10-09</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -341,44 +333,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>關於執行環境我們在之前已經有一小部分的認識，今天要來了解執行環境中的全域執行環境及其所建立的全域物件。</p><p>在開始了解全域執行環境及全域物件時，我們先來了解什麼是全域? </p><h2 id="什麼是全域-Global"><a href="#什麼是全域-Global" class="headerlink" title="什麼是全域 (Global) ?"></a>什麼是全域 (Global) ?</h2><p>這裡的全域 (Global)，指的是<strong>可以在任何地方取用它</strong>的意思，更簡單的說，如果<strong>不在 function 的範圍中那就是指全域</strong>。</p><a id="more"></a>
+        <p>上一篇文章中，我們了解到 JavaScript 動態型別和強制轉型不好的地方，那他們的用處是在哪呢 ? 讓我來談談存在  (Existence) 和布林 (Booleans)。</p><h2 id="布林-Booleans"><a href="#布林-Booleans" class="headerlink" title="布林 (Booleans)"></a>布林 (Booleans)</h2><p>我們先將一些值透過 Boolean 這個內建 function 來轉換，像是：</p><blockquote>
+<p>注意：不推薦使用內建 function，但很適合拿來展示用。</p>
+</blockquote><a id="more"></a>
 
 
-<p>舉例來說：<br>在下方的程式碼中，變數 b 在 function a 中，所以變數 b 不是全域，而 function a 就是在全域中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="string">"local"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Boolean</span>(<span class="literal">undefined</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="literal">null</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="string">""</span>);   <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
-<p>反之，變數 b 在 function a 外，所以變數 b 是全域，function a 也同樣在全域中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="string">"global"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="全域執行環境-Global-Execution-Context"><a href="#全域執行環境-Global-Execution-Context" class="headerlink" title="全域執行環境 (Global Execution Context)"></a>全域執行環境 (Global Execution Context)</h2><p>又稱 基礎執行環境 (base execution context) 會在每次 JavaScript 程式執行時產生，它會自動生成 <strong>全域物件 (Global Object)</strong> 和 <strong>this 變數</strong>給你，而你的程式會被包在全域執行環境中。</p>
-<h2 id="全域物件-Global-Object"><a href="#全域物件-Global-Object" class="headerlink" title="全域物件 (Global Object)"></a>全域物件 (Global Object)</h2><p>現在打開瀏覽器的開發者工具 (按下 <code>F12</code> 或是 <code>Ctrl + Shift + i</code>)，點擊 Console 視窗，觀察全域執行環境裡有什麼，剛剛有提到全域執行環境會生成全域物件和 this 變數，先輸入 <code>this</code>，會發現一個名為 Window 的物件，如下所示：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Window &#123;<span class="attr">parent</span>: Window, <span class="attr">postMessage</span>: ƒ, <span class="attr">blur</span>: ƒ, <span class="attr">focus</span>: ƒ, <span class="attr">close</span>: ƒ, …&#125;</span><br></pre></td></tr></table></figure>
-
-<p>由於這是在瀏覽器執行 JavaScript，所以這個 Window 物件指的是瀏覽器的視窗，有趣的是，當我輸入 <code>window</code> 時，也會出現一樣的結果。</p>
-<p>那麼，這個 Window 物件是什麼呢?</p>
+<p><code>undefined</code>、<code>null</code>、<code>&quot;&quot;</code> 這些都表示不存在，會轉型成 <code>false</code>，既然知道有這個特性，我們能好好利用，讓我們寫一些程式來舉例：</p>
+<p>我們建立變數 a，透過 if 條件式來判斷，如果 a 有值就輸出 <code>Something is there !</code>。</p>
 <blockquote>
-<p>Window 物件是<strong>瀏覽器的全域物件 (Global Object)</strong>，在 JavaScript 執行時，永遠只會有一個全域物件。</p>
+<p>補充：在 <code>if ()</code> 條件式中，在 <code>()</code> 內的東西會轉換成 boolean (<code>true</code> 或 <code>false</code>)。</p>
 </blockquote>
-<ul>
-<li><p>補充：如果在伺服器上執行 node.js (JavaScript 的伺服器) 的話，這個全域物件指的將不是 Window 物件，而是名為 Global 的物件。</p>
-</li>
-<li><p>補充：如果我在瀏覽器開啟新的分頁，那便會產生新的全域物件，也就是說，每個分頁的全域物件都是獨立的，都擁有屬於自己的全域執行環境。</p>
-</li>
-</ul>
-<hr>
-<p>現在我們認識到全域執行環境會建立全域物件 (Window 物件)，只要是在全域執行環境內，任何程式都能取用，同時，全域執行環境還建立了 this 變數，<strong>在全域 (Global Level) 中，this 變數等同於全域物件 (Window 物件)</strong>。</p>
-<p>現在來透過程式更加了解全域物件，<br>在這個的例子中，提到 function a 和 變數 b 都是在全域中，這是因為 JavaScript 在執行時，我建立的變數 b 和 function a 不在 function 裡面，他們便會和全域物件連結在一起，</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="string">"global"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 這裡的 a 會被轉換成 boolean</span></span><br><span class="line"><span class="keyword">if</span> (a) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Something is there !'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>所以，當我在 Console 視窗輸入 <code>b</code> 的話，會顯示 <code>&quot;global&quot;</code>，而我再輸入 <code>window.b</code> 也同樣會顯示 <code>&quot;global&quot;</code>，因為變數 b 被加入到全域物件中。</p>
-<hr>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>當 JavaScript 程式執行時，會建立全域執行環境，其中包括：</p>
-<ul>
-<li><strong>全域物件</strong> (Global Object，由 JavaScript 建立，是執行環境的一部份，如果程式碼不在 function 內，那就是在全域物件中)</li>
-<li><strong>this 變數</strong> (在全域執行環境中，this 等於全域物件)</li>
-<li><strong>外部環境</strong> (Outer Environment，後面便會看到，在執行 function 時相當重要)</li>
-<li><strong>你的程式碼</strong></li>
-</ul>
+<p>當程式執行完，什麼都不會出現，這是因為執行環境的創造階段會賦予變數 <code>undefined</code>， <code>undefined</code> 會轉型成 <code>false</code>，所以我們可透過強制轉型來檢查 a 是否存在，如果 a 等於 <code>null</code> 或 <code>&quot;&quot;</code> 同樣會被轉型成 <code>false</code>。</p>
+<p>那如果 a 有值呢 ?<br>a 會轉型成 <code>true</code>，所以會顯示 <code>Something is there !</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"></span><br><span class="line">a = <span class="string">"Hi"</span>; <span class="comment">// 轉形成 true，可以用 Boolean("Hi") 來測試</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 這裡的 a 會被轉換成 boolean</span></span><br><span class="line"><span class="keyword">if</span> (a) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Something is there !'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們可以利用強制轉型的特性來檢查變數是否有值，除了 <code>undefined</code>、<code>null</code>、<code>&quot;&quot;</code> 的值之外，但現在有個問題，當我們使用數字 0 來判斷時，0 會轉型成 <code>false</code>，因此我們可以加上 <code>||</code> (or) 來多一個條件判斷，這樣就能避免 0 顯示 <code>false</code> 的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"></span><br><span class="line">a = <span class="number">0</span>; <span class="comment">// 會轉型成 false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 加入 a === 0 來判斷</span></span><br><span class="line"><span class="keyword">if</span> (a || a === <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Something is there !'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>補充：<code>||</code> 相依性為 5；<code>===</code> 的相依性為 10，所以 <code>===</code> 會優先執行。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"></span><br><span class="line">a = <span class="number">0</span>; <span class="comment">// 會轉型成 false</span></span><br><span class="line"></span><br><span class="line">(a || a === <span class="number">0</span>)</span><br><span class="line">-&gt; (a || <span class="literal">true</span>) </span><br><span class="line">-&gt; (<span class="literal">false</span> || <span class="literal">true</span>) <span class="comment">// || (or) 只要一方為 true，結果就為 true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我們可以透過強制轉型來檢查東西是否存在，與條件式搭配使用。</p>
 
     </div>
 
@@ -404,8 +385,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/06/name_value_pairs_and_object/" rel="next" title="Name/Value 配對和物件">
-                  <i class="fa fa-chevron-left"></i> Name/Value 配對和物件
+                <a href="/JavaScript/2019/10/24/comparison-operators/" rel="next" title="比較運算子 (Comparison Operators)">
+                  <i class="fa fa-chevron-left"></i> 比較運算子 (Comparison Operators)
                 </a>
               
             </div>
@@ -413,10 +394,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/08/creation_and_hoisiting/" rel="prev" title="創造和提升 (Hoisiting)">
-                  創造和提升 (Hoisiting) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -471,7 +448,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是全域-Global"><span class="nav-number">1.</span> <span class="nav-text">什麼是全域 (Global) ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全域執行環境-Global-Execution-Context"><span class="nav-number">2.</span> <span class="nav-text">全域執行環境 (Global Execution Context)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全域物件-Global-Object"><span class="nav-number">3.</span> <span class="nav-text">全域物件 (Global Object)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">4.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#布林-Booleans"><span class="nav-number">1.</span> <span class="nav-text">布林 (Booleans)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -617,9 +594,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/07/global_environment&object/";
-    this.page.identifier = "JavaScript/2019/10/07/global_environment&object/";
-    this.page.title = '全域執行環境和全域物件';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/25/existence-and-booleans/";
+    this.page.identifier = "JavaScript/2019/10/25/existence-and-booleans/";
+    this.page.title = '存在和布林 (Existence And Booleans)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
