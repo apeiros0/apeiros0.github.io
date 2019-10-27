@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="昨天我們已經了解什麼是運算子，今天我們來認識運算子的優先性 (precedence) 和相依性 (associativity) 吧 !優先性 (precedence) 優先性表示哪個運算子會被優先呼叫。 在同一行程式中，如果不只有一個運算子時，運算子會依優先性高低被呼叫，而 JavaScript 會先處理高優先性的運算子，然後依序到低優先性的運算子。">
+  <meta name="description" content="今天我們回顧一下運算子的強制轉型，並利用這個特性來做一些事吧 !我們先建立一個 greet function，並設定一個 name 的參數，接著呼叫 greet function，傳入一些值，將結果輸出。12345function greet (name) &amp;#123;  console.log(&apos;Hello, &apos; + name);&amp;#125;greet(&apos;apeiros0&apos;);">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="運算子的優先性 (Precedence) 和相依性 (Associativity)">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/22/operator-precedence-and-associativity/index.html">
+<meta property="og:title" content="預設值 (Default Values)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/27/default-values/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="昨天我們已經了解什麼是運算子，今天我們來認識運算子的優先性 (precedence) 和相依性 (associativity) 吧 !優先性 (precedence) 優先性表示哪個運算子會被優先呼叫。 在同一行程式中，如果不只有一個運算子時，運算子會依優先性高低被呼叫，而 JavaScript 會先處理高優先性的運算子，然後依序到低優先性的運算子。">
+<meta property="og:description" content="今天我們回顧一下運算子的強制轉型，並利用這個特性來做一些事吧 !我們先建立一個 greet function，並設定一個 name 的參數，接著呼叫 greet function，傳入一些值，將結果輸出。12345function greet (name) &amp;#123;  console.log(&apos;Hello, &apos; + name);&amp;#125;greet(&apos;apeiros0&apos;);">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-22T03:30:35.154Z">
+<meta property="og:updated_time" content="2019-10-27T14:11:49.135Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="運算子的優先性 (Precedence) 和相依性 (Associativity)">
-<meta name="twitter:description" content="昨天我們已經了解什麼是運算子，今天我們來認識運算子的優先性 (precedence) 和相依性 (associativity) 吧 !優先性 (precedence) 優先性表示哪個運算子會被優先呼叫。 在同一行程式中，如果不只有一個運算子時，運算子會依優先性高低被呼叫，而 JavaScript 會先處理高優先性的運算子，然後依序到低優先性的運算子。">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/22/operator-precedence-and-associativity/">
+<meta name="twitter:title" content="預設值 (Default Values)">
+<meta name="twitter:description" content="今天我們回顧一下運算子的強制轉型，並利用這個特性來做一些事吧 !我們先建立一個 greet function，並設定一個 name 的參數，接著呼叫 greet function，傳入一些值，將結果輸出。12345function greet (name) &amp;#123;  console.log(&apos;Hello, &apos; + name);&amp;#125;greet(&apos;apeiros0&apos;);">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/27/default-values/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>運算子的優先性 (Precedence) 和相依性 (Associativity) | apeiros0's Blog</title>
+  <title>預設值 (Default Values) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/22/operator-precedence-and-associativity/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/27/default-values/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">運算子的優先性 (Precedence) 和相依性 (Associativity)
+        <h2 class="post-title" itemprop="name headline">預設值 (Default Values)
 
           
         </h2>
@@ -301,7 +301,7 @@
                 
               
 
-              <time title="創建時間：2019-10-22 08:53:28 / 修改時間：11:30:35" itemprop="dateCreated datePublished" datetime="2019-10-22T08:53:28+08:00">2019-10-22</time>
+              <time title="創建時間：2019-10-27 00:00:00 / 修改時間：22:11:49" itemprop="dateCreated datePublished" datetime="2019-10-27T00:00:00+08:00">2019-10-27</time>
             </span>
           
             
@@ -333,40 +333,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>昨天我們已經了解什麼是運算子，今天我們來認識運算子的優先性 (precedence) 和相依性 (associativity) 吧 !</p><h2 id="優先性-precedence"><a href="#優先性-precedence" class="headerlink" title="優先性 (precedence)"></a>優先性 (precedence)</h2><blockquote>
-<p>優先性表示哪個運算子會被優先呼叫。</p>
-</blockquote><p>在同一行程式中，如果不只有一個運算子時，運算子會依優先性高低被呼叫，而 JavaScript 會先處理高優先性的運算子，然後依序到低優先性的運算子。</p><a id="more"></a>
+        <p>今天我們回顧一下運算子的強制轉型，並利用這個特性來做一些事吧 !</p><p>我們先建立一個 <code>greet</code> function，並設定一個 name 的參數，接著呼叫 <code>greet</code> function，傳入一些值，將結果輸出。</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello, '</span> + name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet(<span class="string">'apeiros0'</span>);</span><br></pre></td></tr></table></figure><a id="more"></a>
 
 
-<h3 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h3><p>在下方的範例中，我們知道數學有一套計算的順序，當然，JavaScript 同樣也有，這邊呼叫兩個運算子的 function ( <code>+</code> 和 <code>*</code> )，而我們知道 JavaScript 是同步執行，但不會同時計算它們，JavaScript 會先呼叫一個 function，再來呼叫另一個 function，但哪個會先被呼叫呢 ?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span> + <span class="number">4</span> * <span class="number">5</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
 
-<p>首先，JavaScript 會先用運算子的優先性判斷，在判斷之前，我們需要先知道 JavaScript 運算子的優先性是如何，這部分我們可以在 <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Operator_Precedence" target="_blank" rel="noopener">MDN</a> 找到運算子的優先性，在表格中，數字越高代表會優先被呼叫。</p>
+<p>程式執行後，我們知道結果為 <code>Hello, apeiros0</code>，那如果呼叫 <code>greet</code> function 時沒有傳入參數呢 ?</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(name);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello, '</span> + name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet();</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 和其他程式語言不同，它會當作 name 沒有任何東西，所以會輸出 <code>Hello, undefined</code>，這是因為 function 被呼叫時，執行環境建立，而 name 變數在 function 內被創造，先被賦予 <code>undefined</code>，之後執行階段再賦予值。</p>
+<p>而在 <code>console.log</code> 中有使用 <code>+</code> 運算子，當字串與 name 作為參數時，name 會被強制轉型成字串，所以 <code>undefined</code> 會被轉成字串連接在一起，最後輸出 <code>Hello, undefined</code>。</p>
+<p>但我們總不可能將 <code>undefined</code> 作為值輸出，該怎麼做才能解決這個問題呢 ?</p>
+<h2 id="預設值-Default-Values"><a href="#預設值-Default-Values" class="headerlink" title="預設值 (Default Values)"></a>預設值 (Default Values)</h2><p>我們可以給 name 參數一個預設值，關於這部分有兩個方法可以使用：</p>
+<h3 id="ES6-語法"><a href="#ES6-語法" class="headerlink" title="ES6 語法"></a>ES6 語法</h3><p>我們可以直接賦予 name 參數一個值當作預設值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">name = <span class="string">'apeiros0'</span></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello, '</span> + name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet();</span><br></pre></td></tr></table></figure>
+
+<h3 id="OR-運算子"><a href="#OR-運算子" class="headerlink" title="|| (OR) 運算子"></a><code>||</code> (OR) 運算子</h3><p>使用 <code>||</code> 運算子是比較常見的做法，<code>||</code> 運算子不只會回傳 <code>true</code> 或 <code>false</code>，還可以回傳被強制轉型成 <code>true</code> 的值，如果兩個值都為 <code>true</code>，會回傳第一個為 <code>true</code> 的值，這也是為什麼能用 <code>||</code> 運算子來設定預設值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">false</span> || <span class="literal">true</span>;     <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">undefined</span> || <span class="string">'Hi'</span>; <span class="comment">// 回傳 Hi</span></span><br><span class="line"></span><br><span class="line"><span class="string">'Hello'</span> || <span class="string">'Hi'</span>;   <span class="comment">// 回傳 Hello</span></span><br><span class="line"></span><br><span class="line"><span class="number">0</span> || <span class="number">1</span>;            <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="literal">null</span> || <span class="string">'Hi'</span>;      <span class="comment">// 回傳 Hi</span></span><br><span class="line"></span><br><span class="line"><span class="string">''</span> || <span class="string">'Hi'</span>;        <span class="comment">// 回傳 Hi</span></span><br></pre></td></tr></table></figure>
+
+<p>所以，如果沒有傳入參數給 function，name 參數是 <code>undefuned</code>，而透過 <code>||</code> 運算子會將為 <code>true</code> 的 <code>apeiros0</code> 賦予給 name，最後輸出 <code>Hello, apeiros0</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  name = name || <span class="string">'apeiros0'</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello, '</span> + name); <span class="comment">// Hello, apeiros0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet();</span><br></pre></td></tr></table></figure>
+
+<p>如果有傳入參數，會將第一個為 <code>true</code> 的值賦予給 name，所以這裡的 <code>Stark</code> 會先輩賦予給 name。</p>
 <blockquote>
-<p>補充：在表格中有 <code>...</code> 這是指程式碼 (operator 的參數) 的意思。</p>
+<p>補充：<code>||</code> 運算子的優先性 (5) 比 <code>=</code> 運算子 (3) 的優先性高，所以 <code>||</code> 會優先執行。</p>
 </blockquote>
-<p>所以，在範例中有 <code>+</code> 和 <code>*</code> 的運算子，<code>*</code> 的優先性為 14，而 <code>+</code> 的優先性為 13，我們知道高優先性會先被呼叫，因此 <code>*</code> 會優先被呼叫，然後回傳一個值，再與 <code>+</code> 做運算。</p>
-<blockquote>
-<p>補充：其實 <code>=</code> 也是運算子，主要是將值設定到變數中</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 4 * 5 會優先被呼叫，回傳 20，然後 3 + 20 再被呼叫，回傳 23。</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span> + <span class="number">4</span> * <span class="number">5</span>; <span class="comment">// step 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span> + <span class="number">20</span>; <span class="comment">// step 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">23</span>; <span class="comment">// step 3</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
-
-<h2 id="相依性-associativity"><a href="#相依性-associativity" class="headerlink" title="相依性 (associativity)"></a>相依性 (associativity)</h2><blockquote>
-<p>相依性表示運算子被呼叫的順序，有分為左相依性 (從左到右的相依性) 和右相依性 (從右到左的相依性)。</p>
-</blockquote>
-<p>當同一行程式中，我們有多個相同優先性的運算子時，我們就要看相依性是如何，來判斷是從左到右還是從右到左呼叫。</p>
-<h3 id="範例-1"><a href="#範例-1" class="headerlink" title="範例"></a>範例</h3><p>下方的範例中我們有多個優先性相同的運算子，他們最後都會相等，但這三個的值會分別是什麼呢 ?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>, b = <span class="number">4</span>, c = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">a = b = c;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"><span class="built_in">console</span>.log(c);</span><br></pre></td></tr></table></figure>
-
-<p>執行後，會發現結果都是 <code>5</code>，這與 <code>=</code> 的相依性有關，我們回到 <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Operator_Precedence" target="_blank" rel="noopener">MDN</a> 的表格，可以看到相依性 (Associativity) 的欄位，相依性有分為從左至右，代表從左邊開始執行，和從右至左，代表從右邊開始執行，而我們使用的是 <code>=</code> 運算子，他的相依性為右相依 (從右到左)。</p>
-<p>這裡有個有趣的點，我們知道 <code>+</code> 和 <code>*</code> 這類的運算子會傳入左右的參數，運算後，回傳結果給你，但 <code>=</code> 是指派一個值給變數，它會回傳給你什麼呢 ?</p>
-<p>在下方的範例，<code>b = c</code> 的 b 會被設定為 c 的值，然後回傳右邊的參數給你，所以我們知道 <code>=</code> 的左邊會被賦予值，右邊是值，然後 <code>=</code> 執行時會回傳右邊的值給你。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>, b = <span class="number">4</span>, c = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b = c); <span class="comment">// return 5，可以這樣想像 b = c = 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ----</span></span><br><span class="line"><span class="comment">// = 是右相依</span></span><br><span class="line">a = b = c; <span class="comment">// step 1，賦予 b = 5，並覆蓋 b 的值，回傳 5 回來</span></span><br><span class="line"></span><br><span class="line">a = <span class="number">5</span>; <span class="comment">// step 2，賦予 a = 5，並覆蓋 a 的值</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 5</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 5</span></span><br><span class="line"><span class="built_in">console</span>.log(c); <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  name = name || <span class="string">'apeiros0'</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello, '</span> + name); <span class="comment">// Hello, Stark</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet(<span class="string">'Stark'</span>);</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>注意：在 <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Operator_Precedence" target="_blank" rel="noopener">MDN</a> 表格最上面，有稱作 Grouping 的運算子，我們可以放一些東西在 <code>( ... )</code> 中，與其他運算子不同的是，它負責分出一個群組，並優先執行，所以在 <code>( ... )</code> 中的東西永遠都會最優先被執行，因為它的優先性是最高的。</p>
+<p>注意：我們得注意數字 0，如果我們傳入 0，會被轉成 <code>false</code>，不會輸出 0。</p>
 </blockquote>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>運算子的優先性可以幫助我們決定誰要先被呼叫，相依性也是，在多個運算子且有相同優先性時能發揮很好的作用。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我們可以透過 ES6 或是 <code>||</code> 運算子這兩種方式來設定預設值，而 <code>||</code> 運算子的方法是透過強制轉型將為 <code>true</code> 的值回傳給你，但我們仍須注意數字 0，因為 0 會被轉為 <code>false</code>，不會顯示原本的值。</p>
 
     </div>
 
@@ -392,8 +388,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/21/operators/" rel="next" title="運算子 (Operators)">
-                  <i class="fa fa-chevron-left"></i> 運算子 (Operators)
+                <a href="/JavaScript/2019/10/25/existence-and-booleans/" rel="next" title="存在和布林 (Existence And Booleans)">
+                  <i class="fa fa-chevron-left"></i> 存在和布林 (Existence And Booleans)
                 </a>
               
             </div>
@@ -401,10 +397,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/23/coercion/" rel="prev" title="強制轉型 (Coercion)">
-                  強制轉型 (Coercion) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -459,7 +451,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#優先性-precedence"><span class="nav-number">1.</span> <span class="nav-text">優先性 (precedence)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#範例"><span class="nav-number">1.1.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相依性-associativity"><span class="nav-number">2.</span> <span class="nav-text">相依性 (associativity)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#範例-1"><span class="nav-number">2.1.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#預設值-Default-Values"><span class="nav-number">1.</span> <span class="nav-text">預設值 (Default Values)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6-語法"><span class="nav-number">1.1.</span> <span class="nav-text">ES6 語法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OR-運算子"><span class="nav-number">1.2.</span> <span class="nav-text">|| (OR) 運算子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -605,9 +597,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/22/operator-precedence-and-associativity/";
-    this.page.identifier = "JavaScript/2019/10/22/operator-precedence-and-associativity/";
-    this.page.title = '運算子的優先性 (Precedence) 和相依性 (Associativity)';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/27/default-values/";
+    this.page.identifier = "JavaScript/2019/10/27/default-values/";
+    this.page.title = '預設值 (Default Values)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
