@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天來了解在 JavaScript 中變數 (variables) 的基本資料型別吧 !當我們宣告變數時，不用特別宣告變數的資料型別，JavaScript 會自動幫我們判定資料的型別，而在 JavaScript 中有六種純值 (primitive types，又稱基本型別)，在談這六種純值之前，我們先來聊聊什麼是純值。">
+  <meta name="description" content="今天我們要來談談那些大型的框架 (framework, e.g. Angular.js) 或函式庫 (library, e.g. jQuery) 是如何應用我們在課程中所學過的東西，我們就先針對上一篇文章的預設值來討論吧 !預設值我們可以透過先前所學的，像是預設值、執行環境和全域環境來了解那些有名的框架和函式庫中的程式碼，舉例來說：">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="純值 (Primitive Types)">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/20/primitive-types/index.html">
+<meta property="og:title" content="Framework Aside：預設值 (Default Values)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/28/framework-aside-default-values/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天來了解在 JavaScript 中變數 (variables) 的基本資料型別吧 !當我們宣告變數時，不用特別宣告變數的資料型別，JavaScript 會自動幫我們判定資料的型別，而在 JavaScript 中有六種純值 (primitive types，又稱基本型別)，在談這六種純值之前，我們先來聊聊什麼是純值。">
+<meta property="og:description" content="今天我們要來談談那些大型的框架 (framework, e.g. Angular.js) 或函式庫 (library, e.g. jQuery) 是如何應用我們在課程中所學過的東西，我們就先針對上一篇文章的預設值來討論吧 !預設值我們可以透過先前所學的，像是預設值、執行環境和全域環境來了解那些有名的框架和函式庫中的程式碼，舉例來說：">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-20T09:43:07.945Z">
+<meta property="og:updated_time" content="2019-10-28T03:02:59.313Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="純值 (Primitive Types)">
-<meta name="twitter:description" content="今天來了解在 JavaScript 中變數 (variables) 的基本資料型別吧 !當我們宣告變數時，不用特別宣告變數的資料型別，JavaScript 會自動幫我們判定資料的型別，而在 JavaScript 中有六種純值 (primitive types，又稱基本型別)，在談這六種純值之前，我們先來聊聊什麼是純值。">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/20/primitive-types/">
+<meta name="twitter:title" content="Framework Aside：預設值 (Default Values)">
+<meta name="twitter:description" content="今天我們要來談談那些大型的框架 (framework, e.g. Angular.js) 或函式庫 (library, e.g. jQuery) 是如何應用我們在課程中所學過的東西，我們就先針對上一篇文章的預設值來討論吧 !預設值我們可以透過先前所學的，像是預設值、執行環境和全域環境來了解那些有名的框架和函式庫中的程式碼，舉例來說：">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/28/framework-aside-default-values/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>純值 (Primitive Types) | apeiros0's Blog</title>
+  <title>Framework Aside：預設值 (Default Values) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/20/primitive-types/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/28/framework-aside-default-values/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">純值 (Primitive Types)
+        <h2 class="post-title" itemprop="name headline">Framework Aside：預設值 (Default Values)
 
           
         </h2>
@@ -301,7 +301,7 @@
                 
               
 
-              <time title="創建時間：2019-10-20 00:00:00 / 修改時間：17:43:07" itemprop="dateCreated datePublished" datetime="2019-10-20T00:00:00+08:00">2019-10-20</time>
+              <time title="創建時間：2019-10-28 00:00:00 / 修改時間：11:02:59" itemprop="dateCreated datePublished" datetime="2019-10-28T00:00:00+08:00">2019-10-28</time>
             </span>
           
             
@@ -333,50 +333,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天來了解在 JavaScript 中變數 (variables) 的基本資料型別吧 !</p><p>當我們宣告變數時，不用特別宣告變數的資料型別，JavaScript 會自動幫我們判定資料的型別，而在 JavaScript 中有六種純值 (primitive types，又稱基本型別)，在談這六種純值之前，我們先來聊聊什麼是純值。</p><a id="more"></a>
+        <p>今天我們要來談談那些大型的框架 (framework, e.g. Angular.js) 或函式庫 (library, e.g. jQuery) 是如何應用我們在課程中所學過的東西，我們就先針對上一篇文章的預設值來討論吧 !</p><h2 id="預設值"><a href="#預設值" class="headerlink" title="預設值"></a>預設值</h2><p>我們可以透過先前所學的，像是預設值、執行環境和全域環境來了解那些有名的框架和函式庫中的程式碼，舉例來說：</p><a id="more"></a>
 
-<h2 id="純值-Primitive-Types"><a href="#純值-Primitive-Types" class="headerlink" title="純值 (Primitive Types)"></a>純值 (Primitive Types)</h2><blockquote>
-<p>純值是指一種資料的型別，表示一個單一值。</p>
-</blockquote>
-<p>換句話說，純值並不是物件 (object)，因為物件是 Name/Value 配對的組合，而純值只是一個值 (single value)。</p>
-<h2 id="六種基本型別"><a href="#六種基本型別" class="headerlink" title="六種基本型別"></a>六種基本型別</h2><h3 id="Undefined"><a href="#Undefined" class="headerlink" title="Undefined"></a>Undefined</h3><blockquote>
-<p>Undefined 表示還不存在。</p>
-</blockquote>
-<p>這是 JavaScript 給所有變數的初始值，直到你賦予變數一個值之後，才不是 <code>undefined</code>。</p>
-<blockquote>
-<p>注意：我們不應該用 <code>undefined</code> 來設定值。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="literal">undefined</span>; <span class="comment">// 不要這樣做，a 會表示還沒設定值</span></span><br></pre></td></tr></table></figure>
+<p>我們有一個 index.html 檔，可以參照到 app.js 檔，我們還有 lib1.js 和 lib2.js 函式庫 (或框架) 要匯入專案。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html 檔 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span>...<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"lib1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"lib2.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"app.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Null"><a href="#Null" class="headerlink" title="Null"></a>Null</h3><blockquote>
-<p>Null 也表示不存在。</p>
-</blockquote>
-<p>null 適合拿來設定值，來表示變數不存在或沒有值，所以如果要表示值還不存在，不要用 <code>undefined</code>，用 <code>null</code> 比較好。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p>在 lib1.js 中，我們來設定個變數 <code>libraryName</code>，賦予 <code>Lib 1</code> 的值，這是由某個人所寫出來的函式庫。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib1.js 檔</span></span><br><span class="line"><span class="keyword">var</span> libraryName = <span class="string">'Lib 1'</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h3><blockquote>
-<p>Boolean 表示 <code>true</code> 或 <code>false</code>。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="literal">true</span>; <span class="comment">// 或 false</span></span><br></pre></td></tr></table></figure>
+<p>而 lib2.ks 是由另一個人所寫出來的函式庫，同樣的也設定了 <code>libraryName</code> 變數，但賦予的是不同的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib2.js 檔</span></span><br><span class="line"><span class="keyword">var</span> libraryName = <span class="string">'Lib 2'</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><blockquote>
-<p>Number 表示數字。</p>
-</blockquote>
-<p>在 JavaScript 中，唯一一種表示數字的型別，它是浮點數，代表所有的 number 都有小數點跟在後面，這與其它程式語言有很大的不同，其他程式語言會有表示整數和表示浮點數的型別，但在 JavaScript 只有一種型別，那就是 number。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>; <span class="comment">// 實際上是浮點數，可與浮點數直接計算。</span></span><br></pre></td></tr></table></figure>
+<p>在 app.js 中，我們將 <code>libraryName</code> 變數輸出，那麼，當程式執行時，會發生什麼事呢 ?。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js 檔</span></span><br><span class="line"><span class="built_in">console</span>.log(libraryName);</span><br></pre></td></tr></table></figure>
 
-<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><blockquote>
-<p>String 是由字元所組成，可用 <code>&#39;&#39;</code> 和 <code>&quot;&quot;</code> 來表示字串。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'a'</span>; <span class="comment">// 或 "a"</span></span><br></pre></td></tr></table></figure>
+<p>這裡我們要先來了解，當 JavaScript 檔案執行時，三個 <code>&lt;script&gt;</code> 標籤不會建立新的執行環境，<strong>實際上它們會把程式碼堆疊在對方上面，然後執行堆疊好的 JavaScript，就好像他們在同一個檔案中</strong>，也就是說，在產生 JavaScript 環境時，會結合並最小化 JavaScript 程式碼成為一個檔案，所以這三個檔案不會互相衝突是很重要的事。</p>
+<h3 id="產生的問題"><a href="#產生的問題" class="headerlink" title="產生的問題"></a>產生的問題</h3><p>當我們執行上面的範例時，會發現結果為 <code>Lib 2</code>，因為這些變數都是全域執行環境裡的全域變數，在瀏覽器中會與 window 物件連結，所以 <code>lib2.js</code> 的變數會將 <code>lib1.js</code> 變數覆蓋，導致 <code>app.js</code> 輸出時顯示 <code>lib2.js</code> 的變數。</p>
+<p>這在函式庫 (或框架) 中是很不尋常的事，可能會讓他們互相衝突，或是不小心取代另一個函式庫 (或框架) 。</p>
+<p>那我們該如何解決這個問題呢 ?</p>
+<h3 id="解決辦法"><a href="#解決辦法" class="headerlink" title="解決辦法"></a>解決辦法</h3><p>我們回到 <code>lib2.js</code> 來檢查 <code>libraryName</code> 是否已經在全域物件中，可以透過 <code>||</code> 運算子和設定 <code>window</code> 來檢查，如果在 <code>window</code> 物件中有 <code>libraryName</code> 變數，就不做任何事，如果沒有，就透過 <code>||</code> 運算子設定預設值 (沒有設定預設值就會是 <code>undefined</code>)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib1.js 檔</span></span><br><span class="line"><span class="keyword">var</span> libraryName = <span class="string">'Lib 1'</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h3><blockquote>
-<p>Symbol 在 ES6 會使用到。</p>
-</blockquote>
-<p>還在建立中，並沒有被全部瀏覽器所支援。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="built_in">Symbol</span>(<span class="string">'a'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lib2.js 檔</span></span><br><span class="line"><span class="built_in">window</span>.libraryName = <span class="built_in">window</span>.libraryName || <span class="string">'Lib 2'</span>;</span><br></pre></td></tr></table></figure>
 
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>以上就是 JavaScript 六種基本資料型別，我們了解了純值，以及 JavaScript 是動態型別 (會立刻知道變數的型別是什麼)，而之後我們會談到另一個主題，了解這些主題後，對在 JavaScript 中常遇到的問題會很有幫助。</p>
+<p>修改完後重新執行，發現結果變成 <code>Lib 1</code>，因為 <code>lib1.js</code> 的 <code>libraryName</code> 先被執行，被放到全域物件中，所以當 <code>lib2.js</code> 執行時，會透過 <code>||</code> 運算子判斷是否有 <code>libraryName</code> 變數，藉由這個方式，我們可以減少函式庫 / 框架的互相衝突。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>在大部分的函式庫 (或框架) 中，可以看到某一行程式像這樣，這其實是在設定物件或定義函式庫 function 的集合，避免影響到其他函式庫，所以當看到程式像這樣時，這是在檢查全域的命名空間 (global namespace) 或全域物件看是否有名稱重複，避免產生衝突或覆蓋其他函式庫。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.libraryName = <span class="built_in">window</span>.libraryName || <span class="string">'Lib 2'</span>;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -402,8 +385,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/18/type-and-javascript/" rel="next" title="型別和 JavaScript">
-                  <i class="fa fa-chevron-left"></i> 型別和 JavaScript
+                <a href="/JavaScript/2019/10/27/default-values/" rel="next" title="預設值 (Default Values)">
+                  <i class="fa fa-chevron-left"></i> 預設值 (Default Values)
                 </a>
               
             </div>
@@ -411,10 +394,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/21/operators/" rel="prev" title="運算子 (Operators)">
-                  運算子 (Operators) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -469,7 +448,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#純值-Primitive-Types"><span class="nav-number">1.</span> <span class="nav-text">純值 (Primitive Types)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六種基本型別"><span class="nav-number">2.</span> <span class="nav-text">六種基本型別</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Undefined"><span class="nav-number">2.1.</span> <span class="nav-text">Undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null"><span class="nav-number">2.2.</span> <span class="nav-text">Null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean"><span class="nav-number">2.3.</span> <span class="nav-text">Boolean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number"><span class="nav-number">2.4.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">2.5.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Symbol"><span class="nav-number">2.6.</span> <span class="nav-text">Symbol</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#預設值"><span class="nav-number">1.</span> <span class="nav-text">預設值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#產生的問題"><span class="nav-number">1.1.</span> <span class="nav-text">產生的問題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解決辦法"><span class="nav-number">1.2.</span> <span class="nav-text">解決辦法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -615,9 +594,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/20/primitive-types/";
-    this.page.identifier = "JavaScript/2019/10/20/primitive-types/";
-    this.page.title = '純值 (Primitive Types)';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/28/framework-aside-default-values/";
+    this.page.identifier = "JavaScript/2019/10/28/framework-aside-default-values/";
+    this.page.title = 'Framework Aside：預設值 (Default Values)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
