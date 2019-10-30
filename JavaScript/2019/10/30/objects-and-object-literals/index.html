@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。變數環境 (variables environment)何謂變數環境 變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，每個執行環境都有屬於自己的變數環境，">
+  <meta name="description" content="上一篇文章中，我們有提到用 new Object() 來建立物件不是最好的方法，今天就讓我們來談談物件和物件實體語法 (Objects Snd Object Literals) 吧 !物件實體語法 (Object Literals)在 JavaScript 中，做一件事有很多種的方法，除了使用 new Object() 來建立物件外，還有更簡單的方法能建立物件，那就是使用物件實體語法 — {} 來">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="function, context 和 變數環境">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/index.html">
+<meta property="og:title" content="物件和物件實體語法 (Objects Snd Object Literals)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/30/objects-and-object-literals/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。變數環境 (variables environment)何謂變數環境 變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，每個執行環境都有屬於自己的變數環境，">
+<meta property="og:description" content="上一篇文章中，我們有提到用 new Object() 來建立物件不是最好的方法，今天就讓我們來談談物件和物件實體語法 (Objects Snd Object Literals) 吧 !物件實體語法 (Object Literals)在 JavaScript 中，做一件事有很多種的方法，除了使用 new Object() 來建立物件外，還有更簡單的方法能建立物件，那就是使用物件實體語法 — {} 來">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-15T03:02:18.017Z">
+<meta property="og:updated_time" content="2019-10-30T02:40:48.354Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="function, context 和 變數環境">
-<meta name="twitter:description" content="今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。變數環境 (variables environment)何謂變數環境 變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，每個執行環境都有屬於自己的變數環境，">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/">
+<meta name="twitter:title" content="物件和物件實體語法 (Objects Snd Object Literals)">
+<meta name="twitter:description" content="上一篇文章中，我們有提到用 new Object() 來建立物件不是最好的方法，今天就讓我們來談談物件和物件實體語法 (Objects Snd Object Literals) 吧 !物件實體語法 (Object Literals)在 JavaScript 中，做一件事有很多種的方法，除了使用 new Object() 來建立物件外，還有更簡單的方法能建立物件，那就是使用物件實體語法 — {} 來">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/30/objects-and-object-literals/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>function, context 和 變數環境 | apeiros0's Blog</title>
+  <title>物件和物件實體語法 (Objects Snd Object Literals) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/30/objects-and-object-literals/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">function, context 和 變數環境
+        <h2 class="post-title" itemprop="name headline">物件和物件實體語法 (Objects Snd Object Literals)
 
           
         </h2>
@@ -301,19 +301,11 @@
                 
               
 
-              <time title="創建時間：2019-10-14 21:51:10" itemprop="dateCreated datePublished" datetime="2019-10-14T21:51:10+08:00">2019-10-14</time>
+              <time title="創建時間：2019-10-30 00:00:00 / 修改時間：10:40:48" itemprop="dateCreated datePublished" datetime="2019-10-30T00:00:00+08:00">2019-10-30</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2019-10-15 11:02:18" itemprop="dateModified" datetime="2019-10-15T11:02:18+08:00">2019-10-15</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -341,29 +333,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天我們來了解另一個 JavaScript 進階的觀念：變數環境 (variables environment)。</p><h2 id="變數環境-variables-environment"><a href="#變數環境-variables-environment" class="headerlink" title="變數環境 (variables environment)"></a>變數環境 (variables environment)</h2><h3 id="何謂變數環境"><a href="#何謂變數環境" class="headerlink" title="何謂變數環境"></a>何謂變數環境</h3><blockquote>
-<p>變數環境 (variables environment) 是指建立變數的位置，而在 JavaScript 中，<strong>每個執行環境都有屬於自己的變數環境</strong>，</p>
-</blockquote><a id="more"></a>
+        <p>上一篇文章中，我們有提到用 <code>new Object()</code> 來建立物件不是最好的方法，今天就讓我們來談談物件和物件實體語法 (Objects Snd Object Literals) 吧 !</p><h2 id="物件實體語法-Object-Literals"><a href="#物件實體語法-Object-Literals" class="headerlink" title="物件實體語法 (Object Literals)"></a>物件實體語法 (Object Literals)</h2><p>在 JavaScript 中，做一件事有很多種的方法，除了使用 <code>new Object()</code> 來建立物件外，還有更簡單的方法能建立物件，那就是使用物件實體語法 — <code>{}</code> 來建立物件。</p><a id="more"></a>
 
-<p>簡單來說，就是每個執行環境都有一個建立變數的地方。</p>
-<h3 id="了解變數環境"><a href="#了解變數環境" class="headerlink" title="了解變數環境"></a>了解變數環境</h3><p>我們透過範例程式碼來了解變數環境吧 !</p>
-<p>在下方的程式碼中，分別有 function a 和 function b，而在全域環境有一個 myVar 變數，a 和 b 中也分別有屬於自己的 myVar，那麼在這段範例中 myVar 的值會是什麼呢 ?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar = <span class="number">2</span>;</span><br><span class="line">  b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myVar = <span class="number">1</span>;</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：<code>{}</code> 不是運算子，當 JavaScript 解析語法時，看到 <code>{}</code>，而你又沒有與 function, if 或 for 迴圈一起使用時，它會認為你在建立物件。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>現在程式開始執行，全域執行環境被建立，myVar 變數被加入到記憶體中 (function 也是)，而<strong>對全域執行環境來說，變數環境就是指全域物件 (瀏覽器的 window)</strong>，所以 myVar 變數會被加入到全域物件中，當執行到 <code>myVar = 1</code> 時，myVar 便會得到 1 的值，接下來便是 function a 被呼叫，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---------------------------------------</span><br><span class="line">|     全域執行環境     |   myVar = 1   |</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+<p>除了建立物件外，我們還能初始化物件，可以同時建立屬性和方法在 <code>{}</code> 中，如果要增加一組 Name/Value，我們能使用 <code>:</code> 來建立，就像 <code>name: value</code> 這樣，而要增加多組 Name/Value，我們能使用 <code>,</code> 隔開，來增加另一組 Name/Value，舉例來說：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123; <span class="attr">firstName</span>: <span class="string">'apeiros'</span>, <span class="attr">lastName</span>: <span class="string">'0'</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person);</span><br></pre></td></tr></table></figure>
 
-<p>當 function a 被呼叫時，建立新的執行環境，變數環境也會一起生成，myVar 會被放到新建立的變數環境中，這是因為每個執行環境都有屬於自己的變數環境，接著執行到 <code>myVar = 2</code>，新的變數環境中的 myVar 便會被賦予 2 的值，接著呼叫 function b，b 也會做相同的事。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---------------------------------------</span><br><span class="line">|     a 的執行環境     |   myVar = 2   |</span><br><span class="line">---------------------------------------</span><br><span class="line">|     全域執行環境     |   myVar = 1   |</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+<p>這和使用 <code>new Object()</code> 來建立物件，並透過 <code>=</code> 來賦予值是一樣的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">person.firstName = <span class="string">'apeiros'</span>;</span><br><span class="line">person.lastName = <span class="string">'0'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person);</span><br></pre></td></tr></table></figure>
 
-<p>而 function a 和 function b 唯一不同的地方是 b 的 myVar 沒有被賦予值，所以值為 <code>undefined</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-----------------------------------------------</span><br><span class="line">|     b 的執行環境     |   myVar = undefined   |</span><br><span class="line">-----------------------------------------------</span><br><span class="line">|     a 的執行環境     |   myVar = 2           |</span><br><span class="line">-----------------------------------------------</span><br><span class="line">|     全域執行環境     |   myVar = 1           |</span><br><span class="line">-----------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 中，不管是空白鍵、tab 鍵或 enter 鍵，都會將你的程式碼視為同一行，所以我們能改寫上方的範例，提高程式碼的易讀性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  firstName: <span class="string">'apeiros'</span>,</span><br><span class="line">  lastName: <span class="string">'0'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person);</span><br></pre></td></tr></table></figure>
 
-<p>這裡的變數都被定義在自己的執行環境中，我們會分別在不同的執行環境看到不同變數，所以即使 myVar 被宣告三次，但他們分別都在不同的執行環境中，沒有任何關聯，現在我們分別把 myVar 印出來驗證看看吧。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar;</span><br><span class="line">  <span class="built_in">console</span>.log(myVar); <span class="comment">// undefined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(myVar); <span class="comment">// 2</span></span><br><span class="line">  b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myVar = <span class="number">1</span>; <span class="comment">// 會被加入到全域物件中</span></span><br><span class="line"><span class="built_in">console</span>.log(myVar); <span class="comment">// 1</span></span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
+<p>除了純值之外，我們也能在物件中增加新的物件，方式與使用物件實體語法一樣。</p>
+<blockquote>
+<p>補充：<code>{}</code> 比使用 <code>new Object()</code> 還快上許多，也是建議使用的方式來快速建立物件。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  firstName: <span class="string">'apeiros'</span>,</span><br><span class="line">  lastName: <span class="string">'0'</span>,</span><br><span class="line">  address: &#123;</span><br><span class="line">    street: <span class="string">'111 Main St.'</span>,</span><br><span class="line">    city: <span class="string">'New York'</span>,</span><br><span class="line">    state: <span class="string">'NY'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person);</span><br></pre></td></tr></table></figure>
 
-<p>得到的結果分別為 <code>1</code>、<code>2</code>、<code>undefined</code>，代表每個執行環境都有自己的 myVar 變數，而且不會互相影響彼此。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>當執行環境建立時，都會生成變數環境，變數環境會存放我們所建立的變數，不同執行環境的變數即便名稱相同，也不會影響彼此，因為他們分別在不同的地方執行，自然也不會互相影響，了解變數環境的概念後，我們就能了解後面其他的 JavaScript 觀念囉。</p>
+<h3 id="任何地方都能建立物件"><a href="#任何地方都能建立物件" class="headerlink" title="任何地方都能建立物件"></a>任何地方都能建立物件</h3><p>我們已經了解 <code>{}</code> 是如何運作，<code>{}</code> 能快速建立物件和變數，也能在 function 呼叫時快速建立，就像我們傳入字串和數字一樣，舉例來說：</p>
+<p>我新增一個 <code>apeiros</code> 個人資訊的物件，並建立一個 greet function 能打招呼，我們的 function 需要知道物件的 <code>firstName</code> 才能打招呼，所以當我傳入 <code>apeiros</code> 物件時，會回傳我 <code>Hi, apeiros</code> 的結果。</p>
+<p>另外，我們也可以在呼叫 function 的同時，建立物件並當作參數傳入，就如同傳入字串或數字一樣。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> apeiros = &#123;</span><br><span class="line">  firstName: <span class="string">'apeiros'</span>,</span><br><span class="line">  lastName: <span class="string">'0'</span>,</span><br><span class="line">  address: &#123;</span><br><span class="line">    street: <span class="string">'111 Main St.'</span>,</span><br><span class="line">    city: <span class="string">'New York'</span>,</span><br><span class="line">    state: <span class="string">'NY'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">person</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hi, '</span> + person.firstName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet(apeiros);</span><br><span class="line"></span><br><span class="line">greet(&#123; <span class="attr">firstName</span>: <span class="string">'Mary'</span>, <span class="attr">lastName</span>: <span class="string">'Doe'</span> &#125;); <span class="comment">// 呼叫的同時會快速建立物件</span></span><br><span class="line"></span><br><span class="line">greet(<span class="string">"apeiros"</span>); <span class="comment">// function 呼叫時，字串也建立了</span></span><br></pre></td></tr></table></figure>
+
+<p>我們也能混合 <code>.</code> 運算子和 <code>{}</code> 物件實體語法來快速建立物件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apeiros.address2 = &#123;</span><br><span class="line">  street: <span class="string">'222 Main St.'</span>,</span><br><span class="line">  city: <span class="string">'New York'</span>,</span><br><span class="line">  state: <span class="string">'NY'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為什麼 <code>.</code> 運算子和 <code>{}</code> 物件實體語法能運作呢 ?</p>
+<p>因為我們所寫的程式碼不是直接被處理，而是會被 JavaScript 轉換成電腦懂得指令，所以不論是 <code>{}</code> 或 <code>.</code> 運算子都是一樣的，它們在 JavaScript 底層就是在建立物件和找到物件的屬性或方法，所以我用什麼語法對 JavaScript 沒有任何差別，都是在建立同樣的東西。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>了解物件的實體語法，我們能用更快速、簡單易懂的方式建立物件。</p>
 
     </div>
 
@@ -389,8 +391,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/13/function_invocation_and_execution_stack/" rel="next" title="function 呼叫和執行堆">
-                  <i class="fa fa-chevron-left"></i> function 呼叫和執行堆
+                <a href="/JavaScript/2019/10/29/objects-and-functions/" rel="next" title="物件和 function (Objects And Functions)">
+                  <i class="fa fa-chevron-left"></i> 物件和 function (Objects And Functions)
                 </a>
               
             </div>
@@ -398,10 +400,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/15/the_scope_chain/" rel="prev" title="範圍鏈 (The Scope Chain)">
-                  範圍鏈 (The Scope Chain) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -456,7 +454,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#變數環境-variables-environment"><span class="nav-number">1.</span> <span class="nav-text">變數環境 (variables environment)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#何謂變數環境"><span class="nav-number">1.1.</span> <span class="nav-text">何謂變數環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#了解變數環境"><span class="nav-number">1.2.</span> <span class="nav-text">了解變數環境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#物件實體語法-Object-Literals"><span class="nav-number">1.</span> <span class="nav-text">物件實體語法 (Object Literals)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任何地方都能建立物件"><span class="nav-number">1.1.</span> <span class="nav-text">任何地方都能建立物件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -602,9 +600,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/14/function_context_and_variable_environments/";
-    this.page.identifier = "JavaScript/2019/10/14/function_context_and_variable_environments/";
-    this.page.title = 'function, context 和 變數環境';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/30/objects-and-object-literals/";
+    this.page.identifier = "JavaScript/2019/10/30/objects-and-object-literals/";
+    this.page.title = '物件和物件實體語法 (Objects Snd Object Literals)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
