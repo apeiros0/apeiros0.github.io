@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天來了解 JavaScript 中的單執行緒 (Single Threaded) 和同步執行 (Synchronous Execution)。單執行緒 (Single Threaded) 單執行緒 (Single Threaded) 表示一次執行一個指令，簡單來說，就是 JavaScript 一次只做一件事。">
+  <meta name="description" content="今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。先讓我們來認識什麼是命名空間 (Namespaces) 吧 !命名空間 (Namespaces) 命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="單執行緒和同步執行">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/11/single_threaded_and_synchronous_execution/index.html">
+<meta property="og:title" content="Framework Aside：偽裝名空間 (Faking Namespaces)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天來了解 JavaScript 中的單執行緒 (Single Threaded) 和同步執行 (Synchronous Execution)。單執行緒 (Single Threaded) 單執行緒 (Single Threaded) 表示一次執行一個指令，簡單來說，就是 JavaScript 一次只做一件事。">
+<meta property="og:description" content="今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。先讓我們來認識什麼是命名空間 (Namespaces) 吧 !命名空間 (Namespaces) 命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-13T16:33:10.671Z">
+<meta property="og:updated_time" content="2019-10-31T04:16:23.493Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="單執行緒和同步執行">
-<meta name="twitter:description" content="今天來了解 JavaScript 中的單執行緒 (Single Threaded) 和同步執行 (Synchronous Execution)。單執行緒 (Single Threaded) 單執行緒 (Single Threaded) 表示一次執行一個指令，簡單來說，就是 JavaScript 一次只做一件事。">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/11/single_threaded_and_synchronous_execution/">
+<meta name="twitter:title" content="Framework Aside：偽裝名空間 (Faking Namespaces)">
+<meta name="twitter:description" content="今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。先讓我們來認識什麼是命名空間 (Namespaces) 吧 !命名空間 (Namespaces) 命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>單執行緒和同步執行 | apeiros0's Blog</title>
+  <title>Framework Aside：偽裝名空間 (Faking Namespaces) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/11/single_threaded_and_synchronous_execution/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">單執行緒和同步執行
+        <h2 class="post-title" itemprop="name headline">Framework Aside：偽裝名空間 (Faking Namespaces)
 
           
         </h2>
@@ -301,19 +301,11 @@
                 
               
 
-              <time title="創建時間：2019-10-11 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-11T00:00:00+08:00">2019-10-11</time>
+              <time title="創建時間：2019-10-31 00:00:00 / 修改時間：12:16:23" itemprop="dateCreated datePublished" datetime="2019-10-31T00:00:00+08:00">2019-10-31</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2019-10-14 00:33:10" itemprop="dateModified" datetime="2019-10-14T00:33:10+08:00">2019-10-14</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -341,19 +333,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天來了解 JavaScript 中的單執行緒 (Single Threaded) 和同步執行 (Synchronous Execution)。</p><h2 id="單執行緒-Single-Threaded"><a href="#單執行緒-Single-Threaded" class="headerlink" title="單執行緒 (Single Threaded)"></a>單執行緒 (Single Threaded)</h2><blockquote>
-<p>單執行緒 (Single Threaded) 表示一次執行一個指令，簡單來說，就是 JavaScript 一次只做一件事。</p>
+        <p>今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。</p><p>先讓我們來認識什麼是命名空間 (Namespaces) 吧 !</p><h2 id="命名空間-Namespaces"><a href="#命名空間-Namespaces" class="headerlink" title="命名空間 (Namespaces)"></a>命名空間 (Namespaces)</h2><blockquote>
+<p>命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。</p>
 </blockquote><a id="more"></a>
 
-<p>在我們的程式碼中有許多的指令 (commands)，單執行緒便是一次只執行一個指令。舉例來說，假設我有一個 function a 和 function b，不論我是先呼叫 a，還是先呼叫 b，JavaScript 一次都只會執行一個 function，不會同時執行兩個 function。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Called b'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先呼叫 a，再呼叫 b</span></span><br><span class="line">a();</span><br><span class="line">b();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先呼叫 b，再呼叫 a</span></span><br><span class="line">b();</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
 
-<p>補充：在瀏覽器中，不單單只有 JavaScript 引擎，還會有其他不同的引擎在同時執行，所以瀏覽器是屬於多執行緒 (Multi-thread)，一次能做許多不同的事，這與後面會談到的非同步有很大的關係。</p>
-<h2 id="同步執行-Synchronous-Execution"><a href="#同步執行-Synchronous-Execution" class="headerlink" title="同步執行 (Synchronous Execution)"></a>同步執行 (Synchronous Execution)</h2><blockquote>
-<p>同步執行 (Synchronous Execution) 表示會依照程式碼的順序，從上到下一次執行一行程式碼。</p>
-</blockquote>
-<p>同步 (Synchronous) 在程式語言中表示一次執行一行而且會依照順序。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>從單執行緒和同步執行，我們了解到 JavaScript 會依照順序執行，而且一次只會做一件事。</p>
+<p>但這裡有個問題，JavaScript 沒有命名空間，如果不知道什麼是命名空間，我們將會帶你認識；如果知道什麼是命名空間，會發現 JavaScript 可以透過物件做偽裝，不需要命名空間的功能。</p>
+<p>舉例來說：<br>我們有兩個 greet 變數，值分別是 <code>Hello</code> 和 <code>Hola</code>，當我們輸出 greet 時，會有什麼結果呢 ?</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> greet = <span class="string">'Hello'</span>;</span><br><span class="line"><span class="keyword">var</span> greet = <span class="string">'Hola'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(greet);</span><br></pre></td></tr></table></figure>
+
+<p>我們會知道在創造階段 greet 變數會被設為 <code>undefined</code>，然後在執行階段，程式碼會被依順序逐行執行，所以結果為 <code>Hola</code>。</p>
+<p>但如果這兩個 greet 變數分別在不同的 JavaScript 檔案、函式庫或框架中，就會產生一些問題，由於我們分別設定 greet 變數，加上是在全域執行環境中，會導致後一個變數覆寫前一個變數。</p>
+<p>而透過命名空間可以幫助我們解決這些問題，因為命名空間有容器可以分開裝著這些 greet 變數，但問題是 JavaScript 沒有命名空間，我們該怎麼辦 ?</p>
+<h2 id="偽裝命名空間-Faking-Namespaces"><a href="#偽裝命名空間-Faking-Namespaces" class="headerlink" title="偽裝命名空間 (Faking Namespaces)"></a>偽裝命名空間 (Faking Namespaces)</h2><p>我們可以藉由建立一個物件，成為屬性、方法和我們想使用的東西的容器，來偽裝命名空間。</p>
+<p>以上面的範例為例，我們使用物件實體語法分別給 english 和 spanish 變數建立物件，把這些物件當作容器，分別設定 greet 屬性給他們，雖然它們的屬性相同，但不會產生衝突、不會覆寫。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// english 和 spanish 變數成為一個容器，不會與其他 JavaScript 檔案和變數因全域命名空間而產生衝突</span></span><br><span class="line"><span class="keyword">var</span> english = &#123;&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">english.greet = <span class="string">'Hello'</span>;</span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="保持不同物件的層級"><a href="#保持不同物件的層級" class="headerlink" title="保持不同物件的層級"></a>保持不同物件的層級</h3><p>如果我們想在 english 物件中加入 greetings 的命名空間，在 greetings 物件中我想新增不同的問候語，但我不能直接使用 <code>english.greetings.greet</code> 加入，這會出現 <code>Uncaught TypeError: Cannot set property ... of undefined</code> 的錯誤訊息。</p>
+<p>這是因為 <code>.</code> 運算子的關係，由於 <code>.</code> 運算子是左相依性，所以會先執行 <code>english.greetings</code>，由於我們沒有建立 <code>english.greetings</code>，所以會回傳 <code>undefined</code>，最後變成 <code>undefined.greet</code>，而我們都知道 <code>undefined</code> 並非物件，所以才會出現錯誤訊息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> english = &#123;&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">english.greetings.greet = <span class="string">'Hello'</span>; <span class="comment">// 這樣是不可以的</span></span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>所以我們必須先建立 <code>english.greetings</code> 的物件，才能使用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> english = &#123;&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">english.greetings = &#123;&#125;;  <span class="comment">// 必須先建立物件才行</span></span><br><span class="line"></span><br><span class="line">english.greetings.greet = <span class="string">'Hello'</span>; <span class="comment">// 這樣是不可以的</span></span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>或是我們直接在 <code>english</code> 物件初始化 <code>greetings</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> english = &#123;</span><br><span class="line">  greetings: &#123; <span class="comment">// 或是直接初始化物件</span></span><br><span class="line">    greet: <span class="string">'Hello'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>偽裝命名空間我們可以想像成一個容器，裝著不同的的屬性 (e.g. 純值、物件或方法)，透過獨立每個容器，我們可以避免與其他程式產生衝突。</p>
 
     </div>
 
@@ -379,8 +385,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/10/code_execution/" rel="next" title="程式執行">
-                  <i class="fa fa-chevron-left"></i> 程式執行
+                <a href="/JavaScript/2019/10/30/objects-and-object-literals/" rel="next" title="物件和物件實體語法 (Objects Snd Object Literals)">
+                  <i class="fa fa-chevron-left"></i> 物件和物件實體語法 (Objects Snd Object Literals)
                 </a>
               
             </div>
@@ -388,10 +394,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/13/function_invocation_and_execution_stack/" rel="prev" title="function 呼叫和執行堆">
-                  function 呼叫和執行堆 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -446,7 +448,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#單執行緒-Single-Threaded"><span class="nav-number">1.</span> <span class="nav-text">單執行緒 (Single Threaded)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步執行-Synchronous-Execution"><span class="nav-number">2.</span> <span class="nav-text">同步執行 (Synchronous Execution)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命名空間-Namespaces"><span class="nav-number">1.</span> <span class="nav-text">命名空間 (Namespaces)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偽裝命名空間-Faking-Namespaces"><span class="nav-number">2.</span> <span class="nav-text">偽裝命名空間 (Faking Namespaces)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#保持不同物件的層級"><span class="nav-number">2.1.</span> <span class="nav-text">保持不同物件的層級</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -592,9 +594,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/11/single_threaded_and_synchronous_execution/";
-    this.page.identifier = "JavaScript/2019/10/11/single_threaded_and_synchronous_execution/";
-    this.page.title = '單執行緒和同步執行';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/";
+    this.page.identifier = "JavaScript/2019/10/31/framework-aside-faking-namespaces/";
+    this.page.title = 'Framework Aside：偽裝名空間 (Faking Namespaces)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
