@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '複製',
+      copy_success: '複製成功',
+      copy_failure: '複製失敗'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="今天我們來討論 JavaScript 最基本、最重要的觀念，從只會使用 JavaScript 到深入了解它，我們就先來介紹 — first-class functions 吧 ! 本篇重點：在 JavaScript 中，functions 是物件 First-Class Functions (頭等函式)">
+<meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="functions 是物件 (Functions Are Objects)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/03/functions-are-objects/index.html">
+<meta property="og:site_name" content="apeiros0&#39;s Blog">
+<meta property="og:description" content="今天我們來討論 JavaScript 最基本、最重要的觀念，從只會使用 JavaScript 到深入了解它，我們就先來介紹 — first-class functions 吧 ! 本篇重點：在 JavaScript 中，functions 是物件 First-Class Functions (頭等函式)">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2019-11-03T16:45:59.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="functions 是物件 (Functions Are Objects)">
+<meta name="twitter:description" content="今天我們來討論 JavaScript 最基本、最重要的觀念，從只會使用 JavaScript 到深入了解它，我們就先來介紹 — first-class functions 吧 ! 本篇重點：在 JavaScript 中，functions 是物件 First-Class Functions (頭等函式)">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/03/functions-are-objects/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>functions 是物件 (Functions Are Objects) | apeiros0's Blog</title>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-149403450-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">apeiros0's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔<span class="badge">26</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/apeiros0" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/03/functions-are-objects/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="apeiros0">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="apeiros0's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">functions 是物件 (Functions Are Objects)
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              
+                
+              
+
+              <time title="創建時間：2019-11-03 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-03T00:00:00+08:00">2019-11-03</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2019-11-04 00:45:59" itemprop="dateModified" datetime="2019-11-04T00:45:59+08:00">2019-11-04</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天我們來討論 JavaScript 最基本、最重要的觀念，從只會使用 JavaScript 到深入了解它，我們就先來介紹 — first-class functions 吧 !</p><blockquote>
+<p>本篇重點：<strong>在 JavaScript 中，functions 是物件</strong></p>
+</blockquote><h2 id="First-Class-Functions-頭等函式"><a href="#First-Class-Functions-頭等函式" class="headerlink" title="First-Class Functions (頭等函式)"></a>First-Class Functions (頭等函式)</h2><a id="more"></a>
+
+<p>在所有程式語言中，JavaScript 不是唯一有 First-Class Functions 的程式語言，任何對其他的型別 (像是物件、字串、數值、布林) 所做的事，都能對 function 做，像是：</p>
+<ul>
+<li><p>指派 function 為變數的值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>將 function 當作參數傳入另一個 function</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">  cb();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line">fn(fn2);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用實體語法快速建立 function</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br><span class="line"><span class="keyword">var</span> fn_obj = <span class="keyword">new</span> fn();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>First-Class Functions 改變我們寫程式的方式，讓我們用不同的方式解決問題。</p>
+<h3 id="functions-是物件"><a href="#functions-是物件" class="headerlink" title="functions 是物件"></a>functions 是物件</h3><p>當我們說 JavaScript 的 functions 是物件時，function object 是什麼樣的呢 ?</p>
+<p>function object 就像 JavaScript 的其他物件一樣，它會在記憶體中，是一個特殊的物件，它擁有所有物件的特色，和一些其他的屬性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--------------------------</span><br><span class="line">|        Function        |</span><br><span class="line">|  (一個特殊的 function)  |</span><br><span class="line">--------------------------</span><br></pre></td></tr></table></figure>
+
+<p>這部分也是大家常常驚訝的一件事，function 可以有屬性和方法，因為 function 只是個物件，所以我們能連接純值 (Primitive) 到 Name/Value 配對，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                  --------------------------</span><br><span class="line">                  |        Function        |</span><br><span class="line">      ----------  |  (一個特殊的 function)  |</span><br><span class="line">      |           --------------------------</span><br><span class="line">      ↓</span><br><span class="line">---------------</span><br><span class="line">|  Primitive  |</span><br><span class="line">---------------</span><br></pre></td></tr></table></figure>
+
+<p>也可以連結到物件，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                  --------------------------</span><br><span class="line">                  |        Function        |</span><br><span class="line">      ----------  |  (一個特殊的 function)  |</span><br><span class="line">      |           --------------------------</span><br><span class="line">      ↓                ↓</span><br><span class="line">---------------   ------------</span><br><span class="line">|  Primitive  |   |  Object  |</span><br><span class="line">---------------   ------------</span><br></pre></td></tr></table></figure>
+
+<p>和連接到其他 function，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                  --------------------------</span><br><span class="line">                  |        Function        |</span><br><span class="line">      ----------  |  (一個特殊的 function)  |</span><br><span class="line">      |           --------------------------</span><br><span class="line">      ↓                ↓               ↓</span><br><span class="line">---------------   ------------   --------------</span><br><span class="line">|  Primitive  |   |  Object  |   |  function  |</span><br><span class="line">---------------   ------------   --------------</span><br></pre></td></tr></table></figure>
+
+<p>function object 還有一些隱藏的特殊屬性，這當中有兩個最為重要，其中一個是 <strong>NAME 屬性</strong>，JavaScript 的 function 不一定要有名稱，可以是匿名的 (anonymous) ，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                  --------------------------</span><br><span class="line">                  |        Function        |</span><br><span class="line">      ----------  |  (一個特殊的 function)  |-------------------</span><br><span class="line">      |           --------------------------                  |</span><br><span class="line">      ↓                ↓               ↓                      ↓</span><br><span class="line">---------------   ------------   --------------   -------------------------</span><br><span class="line">|  Primitive  |   |  Object  |   |  function  |   |  NAME  (可以是匿名的)  |</span><br><span class="line">---------------   ------------   --------------   -------------------------</span><br></pre></td></tr></table></figure>
+
+<p>另一個是 <strong>CODE 屬性</strong>，我們在 function 中所寫的程式碼都會放在這個屬性中，會成為 function object 的特殊屬性，所以我們所寫的程式並非 function 本身，只是 function object 其中的一個屬性，而  CODE 屬性最特別的是，它是能<strong>呼叫的 (invocable)</strong>，代表我們能執行這個 function 程式碼，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">                  --------------------------</span><br><span class="line">                  |        Function        |</span><br><span class="line">      ----------  |  (一個特殊的 function)  |---------------------------------------</span><br><span class="line">      |           --------------------------                  |                   |  invocable ()</span><br><span class="line">      ↓                ↓               ↓                      ↓                   ↓</span><br><span class="line">---------------   ------------   --------------   -------------------------   ----------</span><br><span class="line">|  Primitive  |   |  Object  |   |  function  |   |  NAME  (可以是匿名的)  |   |  CODE  |</span><br><span class="line">---------------   ------------   --------------   -------------------------   ----------</span><br></pre></td></tr></table></figure>
+
+<h3 id="範例程式"><a href="#範例程式" class="headerlink" title="範例程式"></a>範例程式</h3><p>我們可以把 function 想像成物件，而程式碼就是那個物件的屬性之一，我們就透過範例來了解吧 !</p>
+<p>我們有一個 greet 的 function，可以輸出 <code>hi</code>，我們知道在 JavaScript 中，function 是物件，所以我們可以用 <code>.</code> 運算子來建立屬性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet.language = <span class="string">'english'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我們新增一個屬性給 function，在其他的程式語言中，這是不可能辦到的事情，但在 JavaScript，function 是物件，而我們寫的程式碼只是物件的屬性之一。</p>
+<p>如果我們輸出 <code>greet</code>，會得到我們寫的 function 的文字，在這情況中，沒有什麼用，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(greet);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 輸出後會得到這段文字</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但如果我們用 <code>.</code> 運算子找出 function 的屬性，就可以輸出 <code>language</code> 這個屬性，它就存在於記憶體中，是 function 的屬性，就像我們可以在物件中擁有屬性一樣。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(greet.language);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 得到 english</span><br><span class="line">english</span><br></pre></td></tr></table></figure>
+
+<p>所以當我們建立 greet function，它會被放到記憶體中，然後有 NAME 屬性，值是 <code>greet</code>，是我們幫 function 命名的；還有 CODE 屬性，包含我們所寫的程式碼，也就是 function 的內容，如果我們使用 <code>()</code> 來呼叫 greet，就會呼叫 CODE 屬性，讓它執行，建立執行環境，以此類推，就像下方這樣，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  --------------------------</span><br><span class="line">  |        Function        |</span><br><span class="line">  --------------------------</span><br><span class="line">     ↓                   ↓   invocable ()</span><br><span class="line">-----------      ------------------------</span><br><span class="line">|  NAME   |      |  CODE                |</span><br><span class="line">|  greet  |      |  console.log(&apos;hi&apos;);  |</span><br><span class="line">-----------      ------------------------</span><br></pre></td></tr></table></figure>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>function 在記憶體中有特定的位置，可以有自己的屬性和方法，因為在 JavaScript 中，functions 是物件。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/克服-JavaScript-奇怪部分筆記/" rel="tag"><i class="fa fa-tag"></i> 克服 JavaScript 奇怪部分筆記</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/JavaScript/2019/11/01/json_and-object-literals/" rel="next" title="JSON 和物件實體語法 (JSON And Object Literals)">
+                  <i class="fa fa-chevron-left"></i> JSON 和物件實體語法 (JSON And Object Literals)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#First-Class-Functions-頭等函式"><span class="nav-number">1.</span> <span class="nav-text">First-Class Functions (頭等函式)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#functions-是物件"><span class="nav-number">1.1.</span> <span class="nav-text">functions 是物件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#範例程式"><span class="nav-number">1.2.</span> <span class="nav-text">範例程式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">apeiros0</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分類</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">標籤</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/apeiros0" title="GitHub &rarr; https://github.com/apeiros0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">apeiros0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function disqus_config() {
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/03/functions-are-objects/";
+    this.page.identifier = "JavaScript/2019/11/03/functions-are-objects/";
+    this.page.title = 'functions 是物件 (Functions Are Objects)';};
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-apeiros0-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+</body>
+</html>
