@@ -1,5 +1,5 @@
 ---
-title: Framework Aside：偽裝名空間 (Faking Namespaces)
+title: Framework Aside:偽裝名空間 (Faking Namespaces)
 categories: JavaScript
 tags:
   - 克服 JavaScript 奇怪部分筆記
