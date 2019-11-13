@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天我們花點時間來談談物件實體語法常見的錯誤，以及使用 JSON 時所遇到的問題。我們就先來了解什麼是 JSON 吧 !JSON (JavaScript Object Notation)JSON 是被物件實體語法 (object literals syntax) 所啟發，所以才稱為 JavaScript Object Notation，它看起來與物件實體語法很像，所以常會有人搞混，導致遇到一些錯誤">
+  <meta name="description" content="今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。Function Overloading (重載函式)在其他的程式語言 (C#, C++, Java) 都有 function overloading 的">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JSON 和物件實體語法 (JSON And Object Literals)">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/01/json_and-object-literals/index.html">
+<meta property="og:title" content="Framework Aside：Function Overloading">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天我們花點時間來談談物件實體語法常見的錯誤，以及使用 JSON 時所遇到的問題。我們就先來了解什麼是 JSON 吧 !JSON (JavaScript Object Notation)JSON 是被物件實體語法 (object literals syntax) 所啟發，所以才稱為 JavaScript Object Notation，它看起來與物件實體語法很像，所以常會有人搞混，導致遇到一些錯誤">
+<meta property="og:description" content="今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。Function Overloading (重載函式)在其他的程式語言 (C#, C++, Java) 都有 function overloading 的">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-11-01T03:42:38.590Z">
+<meta property="og:updated_time" content="2019-11-13T05:03:52.449Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JSON 和物件實體語法 (JSON And Object Literals)">
-<meta name="twitter:description" content="今天我們花點時間來談談物件實體語法常見的錯誤，以及使用 JSON 時所遇到的問題。我們就先來了解什麼是 JSON 吧 !JSON (JavaScript Object Notation)JSON 是被物件實體語法 (object literals syntax) 所啟發，所以才稱為 JavaScript Object Notation，它看起來與物件實體語法很像，所以常會有人搞混，導致遇到一些錯誤">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/01/json_and-object-literals/">
+<meta name="twitter:title" content="Framework Aside：Function Overloading">
+<meta name="twitter:description" content="今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。Function Overloading (重載函式)在其他的程式語言 (C#, C++, Java) 都有 function overloading 的">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>JSON 和物件實體語法 (JSON And Object Literals) | apeiros0's Blog</title>
+  <title>Framework Aside：Function Overloading | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/01/json_and-object-literals/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">JSON 和物件實體語法 (JSON And Object Literals)
+        <h2 class="post-title" itemprop="name headline">Framework Aside：Function Overloading
 
           
         </h2>
@@ -301,7 +301,7 @@
                 
               
 
-              <time title="創建時間：2019-11-01 00:00:00 / 修改時間：11:42:38" itemprop="dateCreated datePublished" datetime="2019-11-01T00:00:00+08:00">2019-11-01</time>
+              <time title="創建時間：2019-11-13 00:00:00 / 修改時間：13:03:52" itemprop="dateCreated datePublished" datetime="2019-11-13T00:00:00+08:00">2019-11-13</time>
             </span>
           
             
@@ -333,37 +333,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天我們花點時間來談談物件實體語法常見的錯誤，以及使用 JSON 時所遇到的問題。</p><p>我們就先來了解什麼是 JSON 吧 !</p><h2 id="JSON-JavaScript-Object-Notation"><a href="#JSON-JavaScript-Object-Notation" class="headerlink" title="JSON (JavaScript Object Notation)"></a>JSON (JavaScript Object Notation)</h2><p>JSON 是被物件實體語法 (object literals syntax) 所啟發，所以才稱為 JavaScript Object Notation，它看起來與物件實體語法很像，所以常會有人搞混，導致遇到一些錯誤，先讓我們回顧一下物件要怎麼建立。</p><a id="more"></a>
+        <p>今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。</p><h2 id="Function-Overloading-重載函式"><a href="#Function-Overloading-重載函式" class="headerlink" title="Function Overloading (重載函式)"></a>Function Overloading (重載函式)</h2><p>在其他的程式語言 (C#, C++, Java) 都有 function overloading 的概念，這表示我們能讓相同名稱的 function 能夠擁有不同數量的參數，這在 JavaScript 是不行的，因為 function 是物件 (即是參數的數量不同，還是會參照到同一個位址)，所以 JavaScript 沒有這類處理 function 的功能。</p><a id="more"></a>
 
+<p>不過沒有 function overloading 也不用擔心，因為 first-class function 給了 JavaScript 許多的選擇，但如果我們想用不同數量參數的方式呼叫同一個 function，我們該怎麼做 ?</p>
+<h2 id="JavaScript-模仿-Function-Overloading"><a href="#JavaScript-模仿-Function-Overloading" class="headerlink" title="JavaScript 模仿 Function Overloading"></a>JavaScript 模仿 Function Overloading</h2><p>我們有一個 greet function，如果不想每次都傳入 <code>language</code>，在上一章節我們知道可以使用預設參數，讓在 function 裡的程式碼來決定要在何種情境下使用哪一種 <code>language</code>，所以我們先給 <code>language</code> 預設值 <code>en</code>，如果 <code>language</code> 為 <code>en</code> 時，我們就輸出 <code>Hello + name</code>；為 <code>es</code> 時，就輸出 <code>Hola + name</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">firstname, lastname, language</span>) </span>&#123;</span><br><span class="line">  language = language || <span class="string">'en'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (language === <span class="string">'en'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hello '</span> + firstname + lastname);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (language === <span class="string">'es'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hola '</span> + firstname + lastname);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>我們可以建立一個物件的實體，有許多不同的屬性，這在 JavaScript 是有效的，可以被輸出，那 JSON 是怎麼演化而來的呢 ?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Object</span></span><br><span class="line"><span class="keyword">var</span> objectLiterals = &#123;</span><br><span class="line">  firstName: <span class="string">'Mary'</span>,</span><br><span class="line">  isAProgrammer: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(objectLiterals);</span><br></pre></td></tr></table></figure>
+<p>當我們要呼叫時，分別傳入不同的 <code>language</code>，執行時便會出現不同的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">greet(<span class="string">'apeiros'</span>, <span class="string">'0'</span>, <span class="string">'en'</span>);</span><br><span class="line"><span class="comment">// Hello apeiros0</span></span><br><span class="line"></span><br><span class="line">greet(<span class="string">'apeiros'</span>, <span class="string">'0'</span>, <span class="string">'es'</span>);</span><br><span class="line"><span class="comment">// Hola apeiros0</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="JSON-由來"><a href="#JSON-由來" class="headerlink" title="JSON 由來"></a>JSON 由來</h3><p>在幾年前，網路的資料傳輸格式有很多種，而曾有一段時間是透過 XML 格式來傳送，就像下方這樣，資料的兩旁有標籤，而伺服器會的到這些資訊，並解析。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">object</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">firstName</span>&gt;</span>Mary<span class="tag">&lt;/<span class="name">firstName</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">isAProgrammer</span>&gt;</span>true<span class="tag">&lt;/<span class="name">isAProgrammer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但我們可能會想讓 function 有其他不同版本，讓我們呼叫時，不必傳入過多的參數，這該怎麼辦呢 ?</p>
+<p>我們可以新增兩個 function，greetEnglish 和 greetSpanish，分別帶有不同的默認參數 (<code>en</code>, <code>es</code>)，並透過呼叫 greet 帶入默認參數來做到，透過呼叫這兩個 function，我們就不必考慮要傳入什麼 <code>language</code>，直接呼叫這兩個 function 即可，他們可以傳入我們想要的參數。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greetEnglish</span> (<span class="params">firstname, lastname</span>) </span>&#123;</span><br><span class="line">  greet(firstname, lastname, <span class="string">'en'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greetSpanish</span> (<span class="params">firstname, lastname</span>) </span>&#123;</span><br><span class="line">  greet(firstname, lastname, <span class="string">'es'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greetEnglish(<span class="string">'apeiros'</span>, <span class="string">'0'</span>);</span><br><span class="line">greetSpanish(<span class="string">'apeiros'</span>, <span class="string">'0'</span>);</span><br></pre></td></tr></table></figure>
 
-<p>但問題是，在處理下載的時候，下載速度會受到速度、資料量、頻寬的影響，那些標籤，會讓你的資料量變得龐大，我們只是傳送一小部分資料，就要寄送相同的屬性名稱兩次，如果處理的資料量一大，就會影響到下載的頻寬。</p>
-<p>之後 JSON 出現，大家都認為它是一種不錯的資料傳輸方式，就像下方這樣，所以現在我們幾乎都是使用 JSON 格式來傳送資料。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  firstName: <span class="string">"Mary"</span>,</span><br><span class="line">  isAProgrammer: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="屬性必須在-quot-quot-中"><a href="#屬性必須在-quot-quot-中" class="headerlink" title="屬性必須在 &quot;&quot; 中"></a>屬性必須在 <code>&quot;&quot;</code> 中</h3><p>JSON 只是一串資料，與物件實體語法類似，除了有一小部分的差異外，舉例來說，屬性必須包在 <code>&quot;&quot;</code> 裡，這對物件實體語法也是有效的。</p>
-<p>在物件實體語法中，屬性<strong>可以</strong>被包覆在 <code>&quot;&quot;</code> 裡，但在 JSON 中，它們<strong>必須</strong>包覆在 <code>&quot;&quot;</code> 當中，所以如果你有解析 JSON 的程式或函式庫，像是 PHP 或 ASP.NET，當它們解析 JSON 時，會預期屬性會被包覆在 <code>&quot;&quot;</code> 當中。</p>
-<blockquote>
-<p>補充：JSON 是物件實體語法的子集合，只要在 JSON 中有效的，在物件實體語法中也是有效的，但不是所有的物件實體語法在 JSON 中都是有效的，這也是大家常搞混的部分。</p>
-</blockquote>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"firstName"</span>: <span class="string">"Mary"</span>,</span><br><span class="line">  <span class="attr">"isAProgrammer"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>注意：JSON 的最後一個屬性不能有 <code>,</code></strong></p>
-</blockquote>
-<h3 id="透過-JavaScript-轉換"><a href="#透過-JavaScript-轉換" class="headerlink" title="透過 JavaScript 轉換"></a>透過 JavaScript 轉換</h3><p>JSON 有比較嚴謹的規則，它不是 JavaScript 的一部份，但它可以簡單地讓 JavaScript 解析，JavaScript 有內建的功能可以轉換 JSON，像是：</p>
-<p>使用 <code>JOSN.stringify(Object)</code> 將物件轉換成 JSON 字串。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Object</span></span><br><span class="line"><span class="keyword">var</span> objectLiterals = &#123;</span><br><span class="line">  firstName: <span class="string">'Mary'</span>,</span><br><span class="line">  isAProgrammer: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(objectLiterals));</span><br></pre></td></tr></table></figure>
-
-<p>如果有 JSON 的字串，可以使用 <code>JSON.parse(String)</code> 轉換成 JavaSvript 的物件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jsonValue = <span class="built_in">JSON</span>.parse(<span class="string">'&#123; "firstName": "Mary", "isAProgrammer": true &#125;'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(jsonValue);</span><br></pre></td></tr></table></figure>
-
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>物件和 JSON 是不同的東西，JavaScript 有讓你轉換兩者的功能，JSON 對於使用 <code>&quot;&quot;</code> 比較嚴格，所以在使用 JSON 時要注意在屬性加上 <code>&quot;&quot;</code>，否則會出現錯誤。</p>
+<p>這是一個簡單處理 function 呼叫的方式，我們之後還會看到另一種，如果了解 JavaScript 的框架或函式庫，我們有時會看到像這類的方式，讓框架或函式庫更為好用。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>在 JavaScript 中沒有 function overloading 的概念，但我們可以新增其他的 function 傳入不同的參數到相同的 function 中，來模仿 function overloading。</p>
 
     </div>
 
@@ -389,8 +373,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/31/framework-aside-faking-namespaces/" rel="next" title="Framework Aside:偽裝名空間 (Faking Namespaces)">
-                  <i class="fa fa-chevron-left"></i> Framework Aside:偽裝名空間 (Faking Namespaces)
+                <a href="/JavaScript/2019/11/12/arguments-and-spread/" rel="next" title="參數與展開 (Arguments And Spread)">
+                  <i class="fa fa-chevron-left"></i> 參數與展開 (Arguments And Spread)
                 </a>
               
             </div>
@@ -398,10 +382,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/11/03/functions-are-objects/" rel="prev" title="functions 是物件 (Functions Are Objects)">
-                  functions 是物件 (Functions Are Objects) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -456,7 +436,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON-JavaScript-Object-Notation"><span class="nav-number">1.</span> <span class="nav-text">JSON (JavaScript Object Notation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-由來"><span class="nav-number">1.1.</span> <span class="nav-text">JSON 由來</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屬性必須在-quot-quot-中"><span class="nav-number">1.2.</span> <span class="nav-text">屬性必須在 &quot;&quot; 中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#透過-JavaScript-轉換"><span class="nav-number">1.3.</span> <span class="nav-text">透過 JavaScript 轉換</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Overloading-重載函式"><span class="nav-number">1.</span> <span class="nav-text">Function Overloading (重載函式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-模仿-Function-Overloading"><span class="nav-number">2.</span> <span class="nav-text">JavaScript 模仿 Function Overloading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -602,9 +582,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/01/json_and-object-literals/";
-    this.page.identifier = "JavaScript/2019/11/01/json_and-object-literals/";
-    this.page.title = 'JSON 和物件實體語法 (JSON And Object Literals)';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/";
+    this.page.identifier = "JavaScript/2019/11/13/function-overloading/";
+    this.page.title = 'Framework Aside：Function Overloading';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
