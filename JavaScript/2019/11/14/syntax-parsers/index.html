@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。Function Overloading (重載函式)在其他的程式語言 (C#, C++, Java) 都有 function overloading 的">
+  <meta name="description" content="先前我們已經討論過語法解析器的主題，今天我們要來加深這部分的觀念，這對之後出現的東西相當重要。語法解析器 (Syntax Parsers)我們的程式碼不會被電腦直接執行，而是有個中介程式 (intermediate program) 在程式碼和電腦中間轉換我們的程式碼為電腦懂的指令，瀏覽器的 JavaScript 引擎就是在做這件事，它包含許多的東西，其中一個就是語法解析器，會讀取我們的程式碼，並">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Framework Aside：Function Overloading">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/index.html">
+<meta property="og:title" content="語法解析器 (Syntax Parsers)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/14/syntax-parsers/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。Function Overloading (重載函式)在其他的程式語言 (C#, C++, Java) 都有 function overloading 的">
+<meta property="og:description" content="先前我們已經討論過語法解析器的主題，今天我們要來加深這部分的觀念，這對之後出現的東西相當重要。語法解析器 (Syntax Parsers)我們的程式碼不會被電腦直接執行，而是有個中介程式 (intermediate program) 在程式碼和電腦中間轉換我們的程式碼為電腦懂的指令，瀏覽器的 JavaScript 引擎就是在做這件事，它包含許多的東西，其中一個就是語法解析器，會讀取我們的程式碼，並">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-11-13T05:03:52.449Z">
+<meta property="og:updated_time" content="2019-11-14T02:10:06.903Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Framework Aside：Function Overloading">
-<meta name="twitter:description" content="今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。Function Overloading (重載函式)在其他的程式語言 (C#, C++, Java) 都有 function overloading 的">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/">
+<meta name="twitter:title" content="語法解析器 (Syntax Parsers)">
+<meta name="twitter:description" content="先前我們已經討論過語法解析器的主題，今天我們要來加深這部分的觀念，這對之後出現的東西相當重要。語法解析器 (Syntax Parsers)我們的程式碼不會被電腦直接執行，而是有個中介程式 (intermediate program) 在程式碼和電腦中間轉換我們的程式碼為電腦懂的指令，瀏覽器的 JavaScript 引擎就是在做這件事，它包含許多的東西，其中一個就是語法解析器，會讀取我們的程式碼，並">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/14/syntax-parsers/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>Framework Aside：Function Overloading | apeiros0's Blog</title>
+  <title>語法解析器 (Syntax Parsers) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/14/syntax-parsers/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Framework Aside：Function Overloading
+        <h2 class="post-title" itemprop="name headline">語法解析器 (Syntax Parsers)
 
           
         </h2>
@@ -301,7 +301,7 @@
                 
               
 
-              <time title="創建時間：2019-11-13 00:00:00 / 修改時間：13:03:52" itemprop="dateCreated datePublished" datetime="2019-11-13T00:00:00+08:00">2019-11-13</time>
+              <time title="創建時間：2019-11-14 00:00:00 / 修改時間：10:10:06" itemprop="dateCreated datePublished" datetime="2019-11-14T00:00:00+08:00">2019-11-14</time>
             </span>
           
             
@@ -333,21 +333,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天我們再次來討論如何將我們所學的應用到框架或函式庫中，我們先花一些時間來了解 JavaScript 所沒有，但其他程式語言有的，以及為何對 JavaScript 不重要的東西，這個東西是 function overloading (重載函式)。</p><h2 id="Function-Overloading-重載函式"><a href="#Function-Overloading-重載函式" class="headerlink" title="Function Overloading (重載函式)"></a>Function Overloading (重載函式)</h2><p>在其他的程式語言 (C#, C++, Java) 都有 function overloading 的概念，這表示我們能讓相同名稱的 function 能夠擁有不同數量的參數，這在 JavaScript 是不行的，因為 function 是物件 (即是參數的數量不同，還是會參照到同一個位址)，所以 JavaScript 沒有這類處理 function 的功能。</p><a id="more"></a>
+        <p>先前我們已經討論過語法解析器的主題，今天我們要來加深這部分的觀念，這對之後出現的東西相當重要。</p><h2 id="語法解析器-Syntax-Parsers"><a href="#語法解析器-Syntax-Parsers" class="headerlink" title="語法解析器 (Syntax Parsers)"></a>語法解析器 (Syntax Parsers)</h2><p>我們的程式碼不會被電腦直接執行，而是有個中介程式 (intermediate program) 在程式碼和電腦中間轉換我們的程式碼為電腦懂的指令，瀏覽器的 JavaScript 引擎就是在做這件事，它包含許多的東西，其中一個就是語法解析器，會讀取我們的程式碼，並確認是否有效。</p><a id="more"></a>
 
-<p>不過沒有 function overloading 也不用擔心，因為 first-class function 給了 JavaScript 許多的選擇，但如果我們想用不同數量參數的方式呼叫同一個 function，我們該怎麼做 ?</p>
-<h2 id="JavaScript-模仿-Function-Overloading"><a href="#JavaScript-模仿-Function-Overloading" class="headerlink" title="JavaScript 模仿 Function Overloading"></a>JavaScript 模仿 Function Overloading</h2><p>我們有一個 greet function，如果不想每次都傳入 <code>language</code>，在上一章節我們知道可以使用預設參數，讓在 function 裡的程式碼來決定要在何種情境下使用哪一種 <code>language</code>，所以我們先給 <code>language</code> 預設值 <code>en</code>，如果 <code>language</code> 為 <code>en</code> 時，我們就輸出 <code>Hello + name</code>；為 <code>es</code> 時，就輸出 <code>Hola + name</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span> (<span class="params">firstname, lastname, language</span>) </span>&#123;</span><br><span class="line">  language = language || <span class="string">'en'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (language === <span class="string">'en'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hello '</span> + firstname + lastname);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (language === <span class="string">'es'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hola '</span> + firstname + lastname);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>舉例來說：</p>
+<p>如果語法解析器逐個字元檢查程式碼看到 <code>r</code> 的話，它會假設我們可能要寫 <code>return</code> 陳述式，所以會預期接下來是 <code>e</code>，然後逐個字元接著進行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re</span><br></pre></td></tr></table></figure>
 
-<p>當我們要呼叫時，分別傳入不同的 <code>language</code>，執行時便會出現不同的結果。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">greet(<span class="string">'apeiros'</span>, <span class="string">'0'</span>, <span class="string">'en'</span>);</span><br><span class="line"><span class="comment">// Hello apeiros0</span></span><br><span class="line"></span><br><span class="line">greet(<span class="string">'apeiros'</span>, <span class="string">'0'</span>, <span class="string">'es'</span>);</span><br><span class="line"><span class="comment">// Hola apeiros0</span></span><br></pre></td></tr></table></figure>
+<p>如果看到非預期的東西，會顯示錯誤訊息；如果看到預期的有效語法，會接著繼續下去，它知道我們要做什麼，然後遇到 <code>;</code> 時就結束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return;</span><br></pre></td></tr></table></figure>
 
-<p>但我們可能會想讓 function 有其他不同版本，讓我們呼叫時，不必傳入過多的參數，這該怎麼辦呢 ?</p>
-<p>我們可以新增兩個 function，greetEnglish 和 greetSpanish，分別帶有不同的默認參數 (<code>en</code>, <code>es</code>)，並透過呼叫 greet 帶入默認參數來做到，透過呼叫這兩個 function，我們就不必考慮要傳入什麼 <code>language</code>，直接呼叫這兩個 function 即可，他們可以傳入我們想要的參數。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greetEnglish</span> (<span class="params">firstname, lastname</span>) </span>&#123;</span><br><span class="line">  greet(firstname, lastname, <span class="string">'en'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greetSpanish</span> (<span class="params">firstname, lastname</span>) </span>&#123;</span><br><span class="line">  greet(firstname, lastname, <span class="string">'es'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greetEnglish(<span class="string">'apeiros'</span>, <span class="string">'0'</span>);</span><br><span class="line">greetSpanish(<span class="string">'apeiros'</span>, <span class="string">'0'</span>);</span><br></pre></td></tr></table></figure>
-
-<p>這是一個簡單處理 function 呼叫的方式，我們之後還會看到另一種，如果了解 JavaScript 的框架或函式庫，我們有時會看到像這類的方式，讓框架或函式庫更為好用。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>在 JavaScript 中沒有 function overloading 的概念，但我們可以新增其他的 function 傳入不同的參數到相同的 function 中，來模仿 function overloading。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>語法解析器是 JavaScript 引擎的一部份，會逐個字元檢查我們的程式碼，做一些假設，遵守一些規則，甚至能在執行前改變我們的程式碼，這就是發生在 JavaScript 的情況，用這種方式思考 JavaScript 引擎如何讀取程式碼非常重要，逐個字元、使用一些規則判斷與法是否有效、確定你要做什麼，這就是程式碼執行前所發生的事，所以才能在執行前對程式碼做一些改變。</p>
 
     </div>
 
@@ -373,8 +368,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/11/12/arguments-and-spread/" rel="next" title="參數與展開 (Arguments And Spread)">
-                  <i class="fa fa-chevron-left"></i> 參數與展開 (Arguments And Spread)
+                <a href="/JavaScript/2019/11/13/function-overloading/" rel="next" title="Framework Aside：Function Overloading">
+                  <i class="fa fa-chevron-left"></i> Framework Aside：Function Overloading
                 </a>
               
             </div>
@@ -382,10 +377,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/11/14/syntax-parsers/" rel="prev" title="語法解析器 (Syntax Parsers)">
-                  語法解析器 (Syntax Parsers) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -440,7 +431,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Overloading-重載函式"><span class="nav-number">1.</span> <span class="nav-text">Function Overloading (重載函式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-模仿-Function-Overloading"><span class="nav-number">2.</span> <span class="nav-text">JavaScript 模仿 Function Overloading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#語法解析器-Syntax-Parsers"><span class="nav-number">1.</span> <span class="nav-text">語法解析器 (Syntax Parsers)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -586,9 +577,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/13/function-overloading/";
-    this.page.identifier = "JavaScript/2019/11/13/function-overloading/";
-    this.page.title = 'Framework Aside：Function Overloading';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/14/syntax-parsers/";
+    this.page.identifier = "JavaScript/2019/11/14/syntax-parsers/";
+    this.page.title = '語法解析器 (Syntax Parsers)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
