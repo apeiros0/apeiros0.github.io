@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
+  <meta name="description" content="當我們遇到 Dangerous Aside 的單元，代表我們要警告一些程式語言真正危險的地方，沒有程式語言是完美的，我們已經看過幾個 JavaScript 需要注意的地方，但這個單元要講的是真正危險的地方，會非常容易犯錯，也很難追蹤，是我們一定要避免的情況，此次的 Dangerous Aside 與 JavaScript 的語法解析器和它的自動插入分號 (Automatic Semicolon I">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript 和 undefined">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/index.html">
+<meta property="og:title" content="Dangerous Aside：自動插入分號 (Automatic Semicolon Insertion)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/15/dangerous-aside-automatic-semicolon-insertion/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
+<meta property="og:description" content="當我們遇到 Dangerous Aside 的單元，代表我們要警告一些程式語言真正危險的地方，沒有程式語言是完美的，我們已經看過幾個 JavaScript 需要注意的地方，但這個單元要講的是真正危險的地方，會非常容易犯錯，也很難追蹤，是我們一定要避免的情況，此次的 Dangerous Aside 與 JavaScript 的語法解析器和它的自動插入分號 (Automatic Semicolon I">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-09T08:05:21.801Z">
+<meta property="og:updated_time" content="2019-11-15T04:27:01.236Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript 和 undefined">
-<meta name="twitter:description" content="在上一回中，我們有提到 undefined，今天我們來詳細了解 undefined 是什麼吧 !undefined undefined 是 JavaScript 內建的一個特殊的值，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。 我們可以用下方的範例來驗證 undefined 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 a is u">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/">
+<meta name="twitter:title" content="Dangerous Aside：自動插入分號 (Automatic Semicolon Insertion)">
+<meta name="twitter:description" content="當我們遇到 Dangerous Aside 的單元，代表我們要警告一些程式語言真正危險的地方，沒有程式語言是完美的，我們已經看過幾個 JavaScript 需要注意的地方，但這個單元要講的是真正危險的地方，會非常容易犯錯，也很難追蹤，是我們一定要避免的情況，此次的 Dangerous Aside 與 JavaScript 的語法解析器和它的自動插入分號 (Automatic Semicolon I">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/15/dangerous-aside-automatic-semicolon-insertion/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>JavaScript 和 undefined | apeiros0's Blog</title>
+  <title>Dangerous Aside：自動插入分號 (Automatic Semicolon Insertion) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/15/dangerous-aside-automatic-semicolon-insertion/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">JavaScript 和 undefined
+        <h2 class="post-title" itemprop="name headline">Dangerous Aside：自動插入分號 (Automatic Semicolon Insertion)
 
           
         </h2>
@@ -301,7 +301,7 @@
                 
               
 
-              <time title="創建時間：2019-10-09 00:00:00 / 修改時間：16:05:21" itemprop="dateCreated datePublished" datetime="2019-10-09T00:00:00+08:00">2019-10-09</time>
+              <time title="創建時間：2019-11-15 00:00:00 / 修改時間：12:27:01" itemprop="dateCreated datePublished" datetime="2019-11-15T00:00:00+08:00">2019-11-15</time>
             </span>
           
             
@@ -333,32 +333,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>在上一回中，我們有提到 <code>undefined</code>，今天我們來詳細了解 <code>undefined</code> 是什麼吧 !</p><h2 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h2><blockquote>
-<p>undefined 是 JavaScript 內建的一個<strong>特殊的值</strong>，表示變數還尚未被設定，它實際上會佔據記憶體的空間，而在創造階段，會設定給變數的值。</p>
-</blockquote><p>我們可以用下方的範例來驗證 <code>undefined</code> 是 JavaScript 內建的值，當 if 條件式判斷時，其執行結果為 <code>a is undefined</code>，這也代表 a 與 <code>undefined</code> 都是在指 <code>undefined</code> 這個特殊值。</p><a id="more"></a>
-
-
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="comment">// === 代表比較嚴謹的判斷</span></span><br><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>當我們遇到 Dangerous Aside 的單元，代表我們要警告一些程式語言真正危險的地方，沒有程式語言是完美的，我們已經看過幾個 JavaScript 需要注意的地方，但這個單元要講的是真正危險的地方，會非常容易犯錯，也很難追蹤，是我們一定要避免的情況，此次的 Dangerous Aside 與 JavaScript 的語法解析器和它的自動插入分號 (Automatic Semicolon Insertion) 有關。</p><a id="more"></a>
+<h2 id="自動插入分號-Automatic-Semicolon-Insertion"><a href="#自動插入分號-Automatic-Semicolon-Insertion" class="headerlink" title="自動插入分號 (Automatic Semicolon Insertion)"></a>自動插入分號 (Automatic Semicolon Insertion)</h2><p>JavaScript 的語法解析器會盡可能幫我們做一些事，也許有人已經發現 <code>;</code> 在 JavaScript 不是必要的，我們不一定需要 <code>;</code>，為什麼呢 ?</p>
+<p>這是因為 JavaScript 引擎幫我們做一些事，會知道程式語言在期待什麼，會知道語法該長什麼樣子，而當我們結束一行程式碼，按下 Enter 時，會出現 <code>↓</code> (carriage return)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span>↓</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>注意：這裡的 undefined 並非字串，是一個特殊的值。</p>
+<p><code>↓</code> 是我們看不見的字元，但它確實存在，所以語法解析器看到它，知道它是什麼</p>
 </blockquote>
-<p>如果我們賦予值給變數 a，會發現結果為 <code>a is defined</code>，代表現在的 a 並不是 <code>undefined</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"Called a"</span>;</span><br><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在遇到 <code>↓</code> (carriage return) 時，語法解析器會自動幫我們插入分號，任何語法解析器預期有 <code>;</code> 的地方，會幫我們補上，我們可以不用自己打出來，不是真的不需要分號，而是 JavaScript 引擎會幫我們在該放的地方補上。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+
+<p>雖然自動加入分號很方便，但這個單元的主要想提醒<strong>永遠要記得打 <code>;</code></strong>，因為我們不會想讓 JavaScript 引擎幫我們決定，要確保程式碼是自己想要的樣子，否則會引發一些問題。</p>
+<h3 id="引發的問題"><a href="#引發的問題" class="headerlink" title="引發的問題"></a>引發的問題</h3><p>以 <code>return</code> 為例，自動插入分號會引起很大的問題，舉例來說：</p>
+<p>我們建立一個 getPerson function，它會回傳一個簡單的物件，並呼叫 getPerson，輸出回傳的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPerson</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">  &#123;</span><br><span class="line">    firstname: <span class="string">'apeiros0'</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getPerson());</span><br></pre></td></tr></table></figure>
+
+<p>執行後，我們發現結果為 <code>undefined</code>，為什麼會這樣 ?</p>
+<p>這是因為自動插入分號，JavaScript 引擎在 <code>return</code> 關鍵字後發現 <code>↓</code> (carriage return)，它會自動加上 <code>;</code>，所以當執行 getPerson 時，會是下方的樣子，語法解析器改變我們的程式碼，由於物件被放在新的一行上，導致 JavaScript 引擎在 <code>return</code> 後加上 <code>;</code>，<code>return;</code> 會直接回傳，離開 getPerson，然後我們就會得到 <code>undefined</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPerson</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span>; <span class="comment">// ← 自動插入分號了</span></span><br><span class="line">  &#123;</span><br><span class="line">    firstname: <span class="string">'apeiros0'</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解決辦法"><a href="#解決辦法" class="headerlink" title="解決辦法"></a>解決辦法</h3><p>如果要解決這部分的問題，我們要告訴語法解析器，我們正在做什麼，預防它自動幫我們插入分號，所以我們可以直接在 <code>return</code> 後方使用物件實體語法，這樣語法解析器就會知道我們要使用物件實體語法，看到 <code>{</code> 後的 <code>↓</code> (carriage return，按下 Enter 會產生) 就不會自動插入 <code>;</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPerson</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="comment">// 把 &#123; 放到 return 後方，就不會自動插入分號</span></span><br><span class="line">    firstname: <span class="string">'apeiros0'</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p><strong>注意：永遠不要在宣告變數時，設定值為 <code>undefined</code>，這會很難分辨是 JavaScript 幫你設定的，還是是你自己設定的。</strong></p>
+<p>補充：可能有人注意到，我們每次都會把 <code>{}</code> 放在 function、for 迴圈、if 陳述式的同一行中，這不是必要的，但這樣做可以保證不會有任何錯誤產生。</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="literal">undefined</span>; <span class="comment">// Bad</span></span><br><span class="line"><span class="keyword">var</span> a; <span class="comment">// Good，永遠保持這樣設定</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="is-not-defined"><a href="#is-not-defined" class="headerlink" title="is not defined"></a>is not defined</h2><p>如果我們把上面範例的 <code>var a;</code> 拿掉，執行時會顯示 <code>Uncaught ReferenceError: a is not defined</code> 的錯誤訊息。</p>
-<p>這是因為在創造階段時，沒有找到 <code>var a</code>，所以 a 沒有被加入到記憶體中，而在執行階段時，便會跳出「參照不到這個值：a 沒有被定義」的錯誤訊息。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a === <span class="literal">undefined</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is undefined'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'a is defined'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="undefined-與-is-not-defined-有什麼不同"><a href="#undefined-與-is-not-defined-有什麼不同" class="headerlink" title="undefined 與 is not defined 有什麼不同 ?"></a>undefined 與 is not defined 有什麼不同 ?</h2><ul>
-<li><code>undefined</code> 是 JavaScript 中一個特殊的值。</li>
-<li><code>is not defined</code> 代表變數沒有被加入到記憶體中，導致在執行階段跳出錯誤訊息。</li>
-</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>當我們按下 Enter 後會產生 <code>↓</code>，而語法解析器就會自動幫我們插入分號，雖然方便，但會產生一些問題，所以我們要自己加上分號，盡量避免問題產生，這很危險也很難追蹤。</p>
 
     </div>
 
@@ -384,8 +385,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/08/creation_and_hoisiting/" rel="next" title="創造和提升 (Hoisiting)">
-                  <i class="fa fa-chevron-left"></i> 創造和提升 (Hoisiting)
+                <a href="/JavaScript/2019/11/14/syntax-parsers/" rel="next" title="語法解析器 (Syntax Parsers)">
+                  <i class="fa fa-chevron-left"></i> 語法解析器 (Syntax Parsers)
                 </a>
               
             </div>
@@ -393,10 +394,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/10/code_execution/" rel="prev" title="程式執行">
-                  程式執行 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -451,7 +448,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">undefined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-not-defined"><span class="nav-number">2.</span> <span class="nav-text">is not defined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined-與-is-not-defined-有什麼不同"><span class="nav-number">3.</span> <span class="nav-text">undefined 與 is not defined 有什麼不同 ?</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自動插入分號-Automatic-Semicolon-Insertion"><span class="nav-number">1.</span> <span class="nav-text">自動插入分號 (Automatic Semicolon Insertion)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引發的問題"><span class="nav-number">1.1.</span> <span class="nav-text">引發的問題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解決辦法"><span class="nav-number">1.2.</span> <span class="nav-text">解決辦法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">2.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -597,9 +594,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/09/js_and_undefined/";
-    this.page.identifier = "JavaScript/2019/10/09/js_and_undefined/";
-    this.page.title = 'JavaScript 和 undefined';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/15/dangerous-aside-automatic-semicolon-insertion/";
+    this.page.identifier = "JavaScript/2019/11/15/dangerous-aside-automatic-semicolon-insertion/";
+    this.page.title = 'Dangerous Aside：自動插入分號 (Automatic Semicolon Insertion)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
