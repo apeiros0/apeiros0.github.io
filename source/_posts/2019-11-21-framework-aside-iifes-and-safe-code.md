@@ -1,5 +1,5 @@
 ---
-title: Framework Aside： IIFE 和安全程式碼 (IIFEs And Safe Code)
+title: Framework Aside：IIFE 和安全程式碼 (IIFEs And Safe Code)
 categories: JavaScript
 tags:
   - 克服 JavaScript 奇怪部分筆記
