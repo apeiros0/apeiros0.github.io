@@ -1,5 +1,5 @@
 ---
-title: 了解閉包 (Understanding Closures) (一)
+title: 了解閉包 (一) (Understanding Closures Part 1)
 categories: JavaScript
 tags:
   - 克服 JavaScript 奇怪部分筆記
