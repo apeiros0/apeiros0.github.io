@@ -57,33 +57,29 @@
   };
 </script>
 
-  <meta name="description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
-<meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Scope, ES6 和 let">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/index.html">
+  <meta name="keywords" content="notes, coding, blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="apeiros0&#39;s Blog">
+<meta property="og:url" content="https://apeiros0.github.io/page/5/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-16T03:32:47.910Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Scope, ES6 和 let">
-<meta name="twitter:description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/">
+<meta name="twitter:title" content="apeiros0&#39;s Blog">
+  <link rel="canonical" href="https://apeiros0.github.io/page/5/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
+    isHome: true,
+    isPost: false,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>Scope, ES6 和 let | apeiros0's Blog</title>
+  <title>apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -269,11 +265,11 @@
             
 
   <div class="posts-expand">
-      
+        
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/04/execution&lexical-environment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,8 +281,9 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Scope, ES6 和 let
-
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/JavaScript/2019/10/04/execution&lexical-environment/" class="post-title-link" itemprop="url">語法解析器、執行環境與詞彙環境</a>
           
         </h2>
 
@@ -301,11 +298,19 @@
                 
               
 
-              <time title="創建時間：2019-10-16 00:00:00 / 修改時間：11:32:47" itemprop="dateCreated datePublished" datetime="2019-10-16T00:00:00+08:00">2019-10-16</time>
+              <time title="創建時間：2019-10-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-04T00:00:00+08:00">2019-10-04</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2019-10-09 13:11:33" itemprop="dateModified" datetime="2019-10-09T13:11:33+08:00">2019-10-09</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -333,89 +338,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。</p><p>講了這麼多，你知道 Scope 是什麼嗎 ?</p><h2 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h2><blockquote>
-<p>Scope 表示變數可以被取用的範圍。</p>
-</blockquote><p>如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。</p><a id="more"></a>
-
-
-
-<p>舉例來說，在下方的程式碼中，function a 會分別建立各自的執行環境，而裡面的變數是不會互相影響，因為他們分別在不同的記憶體中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
-
-<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>ES6，又稱 ECMAScript 6 或 ECMAScript 2015，引用了新的宣告變數方法 <code>let</code>。</p>
-<h3 id="與-var-不同之處"><a href="#與-var-不同之處" class="headerlink" title="與 var 不同之處"></a>與 <code>var</code> 不同之處</h3><p><code>let</code> 可以像 <code>var</code> 一樣使用，但並沒有取代 <code>var</code>，它讓 JavaScript 引擎使用一個叫做<strong>區塊範圍 (block scoping)</strong> 的東西，而在宣告變數時，能像 <code>var</code> 一樣使用，變數仍會被放到記憶體中，設值為 <code>undefined</code>，不同的是，在執行階段直到 <code>let</code> 那一行被執行時，才能使用 <code>let</code> 所宣告的變數，如果在 <code>let</code> 之前取用便會出現錯誤 (他仍在記憶體中，只是 JavaScript 引擎 不讓你取用)。</p>
-<p>在下方的範例中，如果我在 <code>let c</code> 之前就取用 c 的話，此時便會出現錯誤。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(c); <span class="comment">// error</span></span><br><span class="line"><span class="keyword">let</span> c = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="在區塊中宣告"><a href="#在區塊中宣告" class="headerlink" title="在區塊中宣告"></a>在區塊中宣告</h3><p>當我們在區塊 (block) 中宣告 <code>let</code> 時，表示變數只能在這個區塊中使用，而在區塊外取用的話，便會出現錯誤訊息。如果我們有迴圈正在執行，使用 <code>let</code> 宣告變數，每次在迴圈中，<strong>變數在記憶體中都是不同的</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// error: a is not defined</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>補充：區塊指的是 <code>{ ... }</code>，像是在 <code>if () { ... }</code>、<code>for () { ... }</code>、<code>function () { ... }</code> 裡面。</p>
-</blockquote>
-
+          <hr><p>今天是第一次寫有關部落格的文章，我想重新複習有關 JavaScript 的觀念，如果有任何錯，還請麻煩指正，謝謝!</p><p>課程來源：<a href="https://www.udemy.com/course/javascriptjs/" target="_blank" rel="noopener">JavaScript 全攻略：克服 JS 的奇怪部分</a></p><hr><p>要了解 JavaScript，就必須得先從他是如何解讀程式碼，以及如何運作開始了解，首先先從一些名詞解釋開始</p><h2 id="語法解析器-Syntax-Parsers"><a href="#語法解析器-Syntax-Parsers" class="headerlink" title="語法解析器 (Syntax Parsers)"></a>語法解析器 (Syntax Parsers)</h2>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/JavaScript/2019/10/04/execution&lexical-environment/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
     </div>
 
     
     
     
-        
-      
-
       <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/克服-JavaScript-奇怪部分筆記/" rel="tag"><i class="fa fa-tag"></i> 克服 JavaScript 奇怪部分筆記</a>
-            
-          </div>
-        
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/JavaScript/2019/10/15/the_scope_chain/" rel="next" title="範圍鏈 (The Scope Chain)">
-                  <i class="fa fa-chevron-left"></i> 範圍鏈 (The Scope Chain)
-                </a>
-              
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/10/17/asynchronous-more-than-at-a-time/" rel="prev" title="什麼是非同步回呼 ?">
-                  什麼是非同步回呼 ? <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
+          <div class="post-eof"></div>
         
       </footer>
-    
   </article>
   
   
   
 
+    
   </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
+
 
 
           </div>
           
-    
-    
-  <div class="comments" id="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-    </div>
-  </div>
-  
-  
 
         </div>
           
@@ -428,11 +388,6 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -445,8 +400,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scope"><span class="nav-number">1.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#let"><span class="nav-number">2.</span> <span class="nav-text">let</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#與-var-不同之處"><span class="nav-number">2.1.</span> <span class="nav-text">與 var 不同之處</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在區塊中宣告"><span class="nav-number">2.2.</span> <span class="nav-text">在區塊中宣告</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
@@ -589,27 +542,6 @@
 
   
 
-<script>
-  function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/";
-    this.page.identifier = "JavaScript/2019/10/16/scope-es6-and-let/";
-    this.page.title = 'Scope, ES6 和 let';};
-  function loadComments() {
-    if (window.DISQUS) {
-      DISQUS.reset({
-        reload: true,
-        config: disqus_config
-      });
-    } else {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://https-apeiros0-github-io.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', '' + +new Date());
-      (d.head || d.body).appendChild(s);
-    }
-  }
-    window.addEventListener('load', loadComments, false);
-  
-</script>
 
 </body>
 </html>

@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。先讓我們來認識什麼是命名空間 (Namespaces) 吧 !命名空間 (Namespaces) 命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。">
+  <meta name="description" content="我們在寫 JavaScript 程式時，可能已經使用過 Closure, first-class function 和執行環境這些概念，像是 setTimeout() 或 jQuery 的事件，今天我們就來談談閉包和回呼 (Closures And Callbacks) 吧 !範例程式如果曾寫過像下方的範例程式碼，代表已經曾使用過 Closure 或函式表達式。">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Framework Aside:偽裝名空間 (Faking Namespaces)">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/index.html">
+<meta property="og:title" content="閉包和回呼 (Closures And Callbacks)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/26/closures-and-callbacks/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。先讓我們來認識什麼是命名空間 (Namespaces) 吧 !命名空間 (Namespaces) 命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。">
+<meta property="og:description" content="我們在寫 JavaScript 程式時，可能已經使用過 Closure, first-class function 和執行環境這些概念，像是 setTimeout() 或 jQuery 的事件，今天我們就來談談閉包和回呼 (Closures And Callbacks) 吧 !範例程式如果曾寫過像下方的範例程式碼，代表已經曾使用過 Closure 或函式表達式。">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-11-13T03:43:28.715Z">
+<meta property="og:updated_time" content="2019-11-26T14:51:06.985Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Framework Aside:偽裝名空間 (Faking Namespaces)">
-<meta name="twitter:description" content="今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。先讓我們來認識什麼是命名空間 (Namespaces) 吧 !命名空間 (Namespaces) 命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/">
+<meta name="twitter:title" content="閉包和回呼 (Closures And Callbacks)">
+<meta name="twitter:description" content="我們在寫 JavaScript 程式時，可能已經使用過 Closure, first-class function 和執行環境這些概念，像是 setTimeout() 或 jQuery 的事件，今天我們就來談談閉包和回呼 (Closures And Callbacks) 吧 !範例程式如果曾寫過像下方的範例程式碼，代表已經曾使用過 Closure 或函式表達式。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/26/closures-and-callbacks/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>Framework Aside:偽裝名空間 (Faking Namespaces) | apeiros0's Blog</title>
+  <title>閉包和回呼 (Closures And Callbacks) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/26/closures-and-callbacks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Framework Aside:偽裝名空間 (Faking Namespaces)
+        <h2 class="post-title" itemprop="name headline">閉包和回呼 (Closures And Callbacks)
 
           
         </h2>
@@ -301,19 +301,11 @@
                 
               
 
-              <time title="創建時間：2019-10-31 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-31T00:00:00+08:00">2019-10-31</time>
+              <time title="創建時間：2019-11-26 00:00:00 / 修改時間：22:51:06" itemprop="dateCreated datePublished" datetime="2019-11-26T00:00:00+08:00">2019-11-26</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2019-11-13 11:43:28" itemprop="dateModified" datetime="2019-11-13T11:43:28+08:00">2019-11-13</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -341,33 +333,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天讓我們來談談該如何應用我們所學的知識，了解那些知名函式庫或框架常出現的東西，在經過前面的運算子和物件實體語法後，我們要來討論偽裝名空間 (Faking Namespaces)。</p><p>先讓我們來認識什麼是命名空間 (Namespaces) 吧 !</p><h2 id="命名空間-Namespaces"><a href="#命名空間-Namespaces" class="headerlink" title="命名空間 (Namespaces)"></a>命名空間 (Namespaces)</h2><blockquote>
-<p>命名空間是指變數和 function 的容器，用來維持相同名稱的變數和 function 分離。</p>
-</blockquote><a id="more"></a>
+        <p>我們在寫 JavaScript 程式時，可能已經使用過 Closure, first-class function 和執行環境這些概念，像是 <code>setTimeout()</code> 或 jQuery 的事件，今天我們就來談談閉包和回呼 (Closures And Callbacks) 吧 !</p><h2 id="範例程式"><a href="#範例程式" class="headerlink" title="範例程式"></a>範例程式</h2><p>如果曾寫過像下方的範例程式碼，代表已經曾使用過 Closure 或函式表達式。</p><a id="more"></a>
 
+<h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a><code>setTimeout()</code></h3><p>我們先建立一個簡單的 function，叫做 sayHiLater，並在裡面新增 <code>greeting</code> 變數，值為 <code>Hi</code>，然後我們使用 JavaScript 內建的函式 <code>setTimeout()</code>，<code>setTimeout()</code> 會將 function 作為參數，並設定等待多少毫秒。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHiLater</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> greeting = <span class="string">'Hi'</span>;</span><br><span class="line"></span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(greeting);</span><br><span class="line">  &#125;, <span class="number">5000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>但這裡有個問題，JavaScript 沒有命名空間，如果不知道什麼是命名空間，我們將會帶你認識；如果知道什麼是命名空間，會發現 JavaScript 可以透過物件做偽裝，不需要命名空間的功能。</p>
-<p>舉例來說：<br>我們有兩個 greet 變數，值分別是 <code>Hello</code> 和 <code>Hola</code>，當我們輸出 greet 時，會有什麼結果呢 ?</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> greet = <span class="string">'Hello'</span>;</span><br><span class="line"><span class="keyword">var</span> greet = <span class="string">'Hola'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(greet);</span><br></pre></td></tr></table></figure>
+<p>然後呼叫 sayHiLater。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sayHiLater();</span><br></pre></td></tr></table></figure>
 
-<p>我們會知道在創造階段 greet 變數會被設為 <code>undefined</code>，然後在執行階段，程式碼會被依順序逐行執行，所以結果為 <code>Hola</code>。</p>
-<p>但如果這兩個 greet 變數分別在不同的 JavaScript 檔案、函式庫或框架中，就會產生一些問題，由於我們分別設定 greet 變數，加上是在全域執行環境中，會導致後一個變數覆寫前一個變數。</p>
-<p>而透過命名空間可以幫助我們解決這些問題，因為命名空間有容器可以分開裝著這些 greet 變數，但問題是 JavaScript 沒有命名空間，我們該怎麼辦 ?</p>
-<h2 id="偽裝命名空間-Faking-Namespaces"><a href="#偽裝命名空間-Faking-Namespaces" class="headerlink" title="偽裝命名空間 (Faking Namespaces)"></a>偽裝命名空間 (Faking Namespaces)</h2><p>我們可以藉由建立一個物件，成為屬性、方法和我們想使用的東西的容器，來偽裝命名空間。</p>
-<p>以上面的範例為例，我們使用物件實體語法分別給 english 和 spanish 變數建立物件，把這些物件當作容器，分別設定 greet 屬性給他們，雖然它們的屬性相同，但不會產生衝突、不會覆寫。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// english 和 spanish 變數成為一個容器，不會與其他 JavaScript 檔案和變數因全域命名空間而產生衝突</span></span><br><span class="line"><span class="keyword">var</span> english = &#123;&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">english.greet = <span class="string">'Hello'</span>;</span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+<p>在等待 5 秒後，會執行作為參數的 function，輸出 <code>Hi</code> 的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi</span><br></pre></td></tr></table></figure>
 
-<h3 id="保持不同物件的層級"><a href="#保持不同物件的層級" class="headerlink" title="保持不同物件的層級"></a>保持不同物件的層級</h3><p>如果我們想在 english 物件中加入 greetings 的命名空間，在 greetings 物件中我想新增不同的問候語，但我不能直接使用 <code>english.greetings.greet</code> 加入，這會出現 <code>Uncaught TypeError: Cannot set property ... of undefined</code> 的錯誤訊息。</p>
-<p>這是因為 <code>.</code> 運算子的關係，由於 <code>.</code> 運算子是左相依性，所以會先執行 <code>english.greetings</code>，由於我們沒有建立 <code>english.greetings</code>，所以會回傳 <code>undefined</code>，最後變成 <code>undefined.greet</code>，而我們都知道 <code>undefined</code> 並非物件，所以才會出現錯誤訊息。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> english = &#123;&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">english.greetings.greet = <span class="string">'Hello'</span>; <span class="comment">// 這樣是不可以的</span></span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="背後的函式表達式和-Closure"><a href="#背後的函式表達式和-Closure" class="headerlink" title="背後的函式表達式和 Closure"></a>背後的函式表達式和 Closure</h4><ul>
+<li><strong>函式表達式</strong></li>
+</ul>
+<p><code>setTimeout()</code> 可以接受兩個參數，一個是<strong>函式表達式 (函式物件)，我們將它作為參數傳入，這是在使用 first-class function 的概念，利用函式表達式建立 function</strong>；另一個參數是我們等待的時間。</p>
+<ul>
+<li><strong>Closure</strong></li>
+</ul>
+<p>當 sayHiLater 執行完，先前我們曾討論過 JavaScript 的非同步和 event loop，<code>setTimeout()</code> 會在 event table 計時 5 秒，5 秒過後，函式表達式會在 event queue 等待執行，JavaScript 引擎會檢查有沒有 function 在等待執行，然後就會執行函式表達式。</p>
+<p>執行函式表達式後，會發現 <code>greeting</code> 不在 function 中，因為 sayHiLater 已經執行結束，所以就輪到 Closure 出場，<code>greeting</code> 會透過範圍鏈尋找，而 <strong>Closure 幫我們保留 <code>greeting</code> 變數</strong>，所以我們 5 秒後仍可取用到 <code>greeting</code> 變數，即便 sayHiLater 已經執行完一段時間。</p>
+<h3 id="jQuery-事件"><a href="#jQuery-事件" class="headerlink" title="jQuery 事件"></a>jQuery 事件</h3><p>如果曾寫過這樣的程式碼：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"button"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</span><br></pre></td></tr></table></figure>
 
-<p>所以我們必須先建立 <code>english.greetings</code> 的物件，才能使用。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> english = &#123;&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">english.greetings = &#123;&#125;;  <span class="comment">// 必須先建立物件才行</span></span><br><span class="line"></span><br><span class="line">english.greetings.greet = <span class="string">'Hello'</span>; <span class="comment">// 這樣是不可以的</span></span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+<p><code>click()</code> 是一個 function，在 jQuery 的程式碼中，它接受另一個 function 在事件觸發時執行，這裡我們就使用了 first-class function，將 function 作為參數傳遞，並透過函式表達式來宣告 function。</p>
+<h2 id="Callback-回呼"><a href="#Callback-回呼" class="headerlink" title="Callback (回呼)"></a>Callback (回呼)</h2><p>當 <code>setTimeout()</code> 執行結束後，會執行作為參數的 function，這稱為 callback (回呼)，callback function (回呼函式)，換句話說，當 function 執行結束後，會呼叫作為參數的 function。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(greeting);</span><br><span class="line">&#125;, <span class="number">5000</span>);</span><br></pre></td></tr></table></figure>
 
-<p>或是我們直接在 <code>english</code> 物件初始化 <code>greetings</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> english = &#123;</span><br><span class="line">  greetings: &#123; <span class="comment">// 或是直接初始化物件</span></span><br><span class="line">    greet: <span class="string">'Hello'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;; <span class="comment">// english 的容器</span></span><br><span class="line"><span class="keyword">var</span> spanish = &#123;&#125;; <span class="comment">// spanish 的容器</span></span><br><span class="line"></span><br><span class="line">spanish.greet = <span class="string">'Hola'</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Callback Function 是當某個 function 執行完，會執行我們給它的 function，舉例來說，我們呼叫 functionA，給它 functionB，當 functionA 結束，會呼叫 functionB 給我們，functionA 呼叫 functionB 回來執行，這就是 Callback Function</p>
+</blockquote>
+<h3 id="建立-Callback-Function"><a href="#建立-Callback-Function" class="headerlink" title="建立 Callback Function"></a>建立 Callback Function</h3><p>我們建立一個 tellMeWhenDone 的 function，它接受 <code>callback</code> 參數，然後在裡面設定一些變數，當它結束時，會呼叫 <code>callback</code> 執行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tellMeWhenDone</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1000</span>;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line">  callback();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>偽裝命名空間我們可以想像成一個容器，裝著不同的的屬性 (e.g. 純值、物件或方法)，透過獨立每個容器，我們可以避免與其他程式產生衝突。</p>
+<p>之後我們呼叫 tellMeWhenDone，給它 callback function (呼叫後會執行的 function)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tellMeWhenDone(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'I am done!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">tellMeWhenDone(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'I also done!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -393,8 +394,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/30/objects-and-object-literals/" rel="next" title="物件和物件實體語法 (Objects Snd Object Literals)">
-                  <i class="fa fa-chevron-left"></i> 物件和物件實體語法 (Objects Snd Object Literals)
+                <a href="/JavaScript/2019/11/25/framework-aside-function-factories/" rel="next" title="Framework Aside：Function Factories">
+                  <i class="fa fa-chevron-left"></i> Framework Aside：Function Factories
                 </a>
               
             </div>
@@ -402,10 +403,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/JavaScript/2019/11/01/json_and-object-literals/" rel="prev" title="JSON 和物件實體語法 (JSON And Object Literals)">
-                  JSON 和物件實體語法 (JSON And Object Literals) <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -460,7 +457,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#命名空間-Namespaces"><span class="nav-number">1.</span> <span class="nav-text">命名空間 (Namespaces)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偽裝命名空間-Faking-Namespaces"><span class="nav-number">2.</span> <span class="nav-text">偽裝命名空間 (Faking Namespaces)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#保持不同物件的層級"><span class="nav-number">2.1.</span> <span class="nav-text">保持不同物件的層級</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#範例程式"><span class="nav-number">1.</span> <span class="nav-text">範例程式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setTimeout"><span class="nav-number">1.1.</span> <span class="nav-text">setTimeout()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#背後的函式表達式和-Closure"><span class="nav-number">1.1.1.</span> <span class="nav-text">背後的函式表達式和 Closure</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery-事件"><span class="nav-number">1.2.</span> <span class="nav-text">jQuery 事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Callback-回呼"><span class="nav-number">2.</span> <span class="nav-text">Callback (回呼)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-Callback-Function"><span class="nav-number">2.1.</span> <span class="nav-text">建立 Callback Function</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -606,9 +603,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/31/framework-aside-faking-namespaces/";
-    this.page.identifier = "JavaScript/2019/10/31/framework-aside-faking-namespaces/";
-    this.page.title = 'Framework Aside:偽裝名空間 (Faking Namespaces)';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/26/closures-and-callbacks/";
+    this.page.identifier = "JavaScript/2019/11/26/closures-and-callbacks/";
+    this.page.title = '閉包和回呼 (Closures And Callbacks)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
