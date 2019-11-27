@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '複製',
+      copy_success: '複製成功',
+      copy_failure: '複製失敗'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="今天我們討論三個 function 內建的方法 — call(), apply() 和 bind()。執行環境與 this在執行環境中有變數環境、外部環境參照、this 變數，我們已經在一些情況中看過 this 會指向全域物件，而在其他的情況下，如果 function 是物件中的方法，會指向包含 function 的物件。">
+<meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Call(), Apply() And Bind()">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/27/call-apply-and-bind/index.html">
+<meta property="og:site_name" content="apeiros0&#39;s Blog">
+<meta property="og:description" content="今天我們討論三個 function 內建的方法 — call(), apply() 和 bind()。執行環境與 this在執行環境中有變數環境、外部環境參照、this 變數，我們已經在一些情況中看過 this 會指向全域物件，而在其他的情況下，如果 function 是物件中的方法，會指向包含 function 的物件。">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2019-11-27T13:24:47.817Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Call(), Apply() And Bind()">
+<meta name="twitter:description" content="今天我們討論三個 function 內建的方法 — call(), apply() 和 bind()。執行環境與 this在執行環境中有變數環境、外部環境參照、this 變數，我們已經在一些情況中看過 this 會指向全域物件，而在其他的情況下，如果 function 是物件中的方法，會指向包含 function 的物件。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/27/call-apply-and-bind/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Call(), Apply() And Bind() | apeiros0's Blog</title>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-149403450-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">apeiros0's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類<span class="badge">1</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔<span class="badge">42</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/apeiros0" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/27/call-apply-and-bind/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="apeiros0">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="apeiros0's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">Call(), Apply() And Bind()
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              
+                
+              
+
+              <time title="創建時間：2019-11-27 00:00:00 / 修改時間：21:24:47" itemprop="dateCreated datePublished" datetime="2019-11-27T00:00:00+08:00">2019-11-27</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>今天我們討論三個 function 內建的方法 — <code>call()</code>, <code>apply()</code> 和 <code>bind()</code>。</p><h2 id="執行環境與-this"><a href="#執行環境與-this" class="headerlink" title="執行環境與 this"></a>執行環境與 <code>this</code></h2><p>在執行環境中有變數環境、外部環境參照、this 變數，我們已經在一些情況中看過 this 會指向全域物件，而在其他的情況下，如果 function 是物件中的方法，會指向包含 function 的物件。</p><a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Function Execution Context</span><br><span class="line">——————————————————————————————————————————</span><br><span class="line">|  Variable     |  this  |  Outer        |</span><br><span class="line">|  Environment  |        |  Environment  |</span><br><span class="line">——————————————————————————————————————————</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何控制-this-指向誰"><a href="#如何控制-this-指向誰" class="headerlink" title="如何控制 this 指向誰"></a>如何控制 <code>this</code> 指向誰</h2><p>JavaScript 有內建的 <code>call()</code>, <code>apply()</code> 和 <code>bind()</code> 方法能做到，我們先前有討論過 this，在 <a href="https://apeiros0.github.io/JavaScript/2019/11/08/objects-functions-and-this/">物件、函式和 this</a> 的章節中，但對 function 的語法並沒有完整的介紹，因為需要先了解 first-class function 的概念，接下來我們就來介紹 <code>call()</code>, <code>apply()</code> 和 <code>bind()</code> 吧 !</p>
+<h2 id="call-apply-bind-介紹"><a href="#call-apply-bind-介紹" class="headerlink" title="call(), apply(), bind() 介紹"></a><code>call()</code>, <code>apply()</code>, <code>bind()</code> 介紹</h2><p>我們已經知道 function 是特殊形態的物件，包含：</p>
+<ul>
+<li>NAME 屬性：沒有 NAME 就代表是匿名的</li>
+<li>CODE 屬性：包括程式碼，能被呼叫 (Invocable) 並執行程式。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">——————————————</span><br><span class="line">|  Function  |</span><br><span class="line">——————————————</span><br><span class="line">     ↓        ↘ Invocable ()</span><br><span class="line">——————————    ——————————</span><br><span class="line">|  NAME  |    |  CODE  |</span><br><span class="line">——————————    ——————————</span><br></pre></td></tr></table></figure>
+
+<p>而 JavaScript 的 function 都能取用一些特別的方法，因為 function 是物件，可以有自己的屬性和方法，也就是說，所有的 function 都有 <code>call</code>, <code>apply</code> 和 <code>bind</code> 方法，這三個方法都與 this 以及傳入的參數有關。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">                               ——————————————</span><br><span class="line">                —————————————  |  Function  |  ————————————</span><br><span class="line">             ／       |        ——————————————        |      ＼</span><br><span class="line">          ↙          ↓                ↓             ↓        ↘ Invocable ()</span><br><span class="line">————————————    —————————————    ————————————    ——————————    ——————————</span><br><span class="line">|  call()  |    |  apply()  |    |  bind()  |    |  NAME  |    |  CODE  |</span><br><span class="line">————————————    —————————————    ————————————    ——————————    ——————————</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h2><p>我們有一個 person 物件，包含 <code>firstname</code> 和 <code>lastname</code> 屬性，還有 <code>getFullName</code> 方法，會回傳 <code>fullname</code> 變數，值是透過 this 取得物件的屬性。</p>
+<p>由於 this 是物件的方法，所以 this 會指向 person 物件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">  firstname: <span class="string">'apeiros'</span>,</span><br><span class="line">  lastname: <span class="string">'0'</span>,</span><br><span class="line">  getFullName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fullname = <span class="keyword">this</span>.firstname + <span class="string">' '</span> + <span class="keyword">this</span>.lastname;</span><br><span class="line">    <span class="keyword">return</span> fullname;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>那 <code>call()</code>, <code>apply()</code> 和 <code>bind()</code> 要怎麼使用呢 ?</p>
+<p>假設我們有 <code>logName</code> 的函式表達式在 person 物件的外面，它接受兩個參數，然後輸出 <code>this.getFullName()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logName = <span class="function"><span class="keyword">function</span> (<span class="params">lang1, lang2</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Logged: '</span> + <span class="keyword">this</span>.getFullName());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">logName();</span><br></pre></td></tr></table></figure>
+
+<h3 id="bind"><a href="#bind" class="headerlink" title="bind()"></a><code>bind()</code></h3><p>我們建立新的函式表達式，叫做 <code>logPersonName</code>，然後使用 <code>logName</code> function 取得 <code>bind</code> 方法，這裡沒有先呼叫 <code>logName</code> 再設定 <code>bind</code>，是因為 <code>bind</code> 方法會回傳一個值，我們這裡是把 function 當作物件使用，然後呼叫物件的方法，所以這裡 <code>logName</code> 是函式物件，<code>bind</code> 是所有 function 內建的方法。</p>
+<p><code>bind</code> 方法的第一個參數需要傳入 this 指向的物件，它會回傳新的 function，會複製 <code>logName</code>，然後設定 person 為 this 指向的物件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logPersonName = logName.bind(person);</span><br></pre></td></tr></table></figure>
+
+<p>當呼叫 <code>logPersonName</code> 後，執行環境被建立，JavaScript 引擎會看到這是使用 <code>bind</code> 建立，然後在背後做一些設定，當引擎決定 this 變數時，會認定 this 是 person，這個被傳入給 <code>bind</code> 方法的物件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logPersonName();</span><br></pre></td></tr></table></figure>
+
+<p>我們呼叫 <code>logPersonName</code>，是在呼叫透過 <code>bind</code> 建立的 copy function，當要使用 this 時，將會是 <code>person</code> 物件，所以呼叫 <code>logPersonName</code> 便能成功輸出結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Logged: apeiros <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>我們也能在 <code>logName</code> 後直接使用 <code>bind</code> 方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logName = <span class="function"><span class="keyword">function</span> (<span class="params">lang1, lang2</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Logged: '</span> + <span class="keyword">this</span>.getFullName());</span><br><span class="line">&#125;.bind(person);</span><br><span class="line"></span><br><span class="line">logName();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong><code>bind</code> 方法會建立任何呼叫它的函式物件的 copy，而 this 變數會指向我們所傳入的物件 (是 by reference)</strong>。</p>
+</blockquote>
+<h4 id="傳入參數"><a href="#傳入參數" class="headerlink" title="傳入參數"></a>傳入參數</h4><p>我們也能透過 <code>bind</code> 傳入參數，先讓我們在 <code>logName</code> 將參數輸出</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logName = <span class="function"><span class="keyword">function</span> (<span class="params">lang1, lang2</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Logged: '</span> + <span class="keyword">this</span>.getFullName());</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Arguments: '</span> + lang1 + <span class="string">' '</span> + lang2);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'------------------'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> logPersonName = logName.bind(person);</span><br><span class="line">logPersonName();</span><br></pre></td></tr></table></figure>
+
+<p>呼叫後，我們會得到下方的結果，因為我們還沒傳入參數。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Logged: apeiros <span class="number">0</span></span><br><span class="line">Arguments: <span class="literal">undefined</span> <span class="literal">undefined</span></span><br><span class="line">------------------</span><br></pre></td></tr></table></figure>
+
+<p>我們在 <code>logPersonName</code> 傳入參數 <code>en</code>，我們這裡只是複製 <code>logName</code> function，它仍會接受一樣的參數。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logPersonName(<span class="string">'en'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>呼叫後，我們會得到下方的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Logged: apeiros <span class="number">0</span></span><br><span class="line">Arguments: en <span class="literal">undefined</span></span><br><span class="line">------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="call-和-apply"><a href="#call-和-apply" class="headerlink" title="call() 和 apply()"></a><code>call()</code> 和 <code>apply()</code></h3><p>接著我們來看 <code>call()</code> 和 <code>apply()</code>。</p>
+<h4 id="call"><a href="#call" class="headerlink" title="call()"></a><code>call()</code></h4><p>我們可透過 <code>call</code> 方法來呼叫 function，和透過 <code>()</code> 直接呼叫是一樣的，<code>call</code> 也能決定 this 變數指向的物件，而傳入 <code>call</code> 的第一個參數是 this 指向的地方。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 兩者是相同的</span></span><br><span class="line">logName.call(person);</span><br><span class="line">logName();</span><br></pre></td></tr></table></figure>
+
+<p>我們也能傳入參數。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logName.call(person, <span class="string">'en'</span>, <span class="string">'es'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>當程式執行時，結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Logged: apeiros <span class="number">0</span></span><br><span class="line">Arguments: en es</span><br><span class="line">------------------</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>與 <code>bind</code> 會建立 function 的 copy 不同，<code>bind</code> 不會執行 function，而 <code>call</code> 會直接執行 function，然後決定 this 變數會是什麼，剩下的則是傳給 function 的參數</strong>。</p>
+</blockquote>
+<h4 id="apply"><a href="#apply" class="headerlink" title="apply()"></a><code>apply()</code></h4><p>除了參數的部分，其餘與 <code>call</code> 相同。</p>
+<p>如果我們像 <code>call</code> 方法一樣直接傳入參數，會得到 <code>Uncaught TypeError: CreateListFromArrayLike called on non-object</code> 錯誤。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Error</span></span><br><span class="line">logName.apply(person, <span class="string">'en'</span>, <span class="string">'es'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>因為 <strong><code>apply</code> 方法是接受陣列作為參數</strong>，這是 <code>call</code> 和 <code>apply</code> 唯一的差別。</p>
+<blockquote>
+<p>陣列在數學運算方面比較實用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logName.apply(person, [<span class="string">'en'</span>, <span class="string">'es'</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>輸出的結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Logged: apeiros <span class="number">0</span></span><br><span class="line">Arguments: en es</span><br><span class="line">------------------</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>依據 function 的情況，我們有 <code>call</code> 和 <code>apply</code> 兩種選擇</strong>。</p>
+</blockquote>
+<h4 id="call-和-apply-的-IIFE"><a href="#call-和-apply-的-IIFE" class="headerlink" title="call 和 apply 的 IIFE"></a><code>call</code> 和 <code>apply</code> 的 IIFE</h4><p>我們可以透過 <code>call</code> 或 <code>apply</code> 來實現 IIFE，所有的 function 都能使用這兩個方法，只要告訴它 this 和傳入的參數是什麼即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">lang1, lang2</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Logged: '</span> + <span class="keyword">this</span>.getFullName());</span><br><span class="line">&#125;).apply(person, [<span class="string">'en'</span>, <span class="string">'es'</span>])</span><br></pre></td></tr></table></figure>
+
+<p>執行的結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Logged: apeiros <span class="number">0</span></span><br><span class="line">Arguments: en es</span><br><span class="line">------------------</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何應用"><a href="#如何應用" class="headerlink" title="如何應用"></a>如何應用</h2><p>我們透過兩個實例來了解 <code>call()</code>, <code>apply()</code> 和 <code>bind()</code> 如何應用。</p>
+<h3 id="Function-Borrowing-函式借用"><a href="#Function-Borrowing-函式借用" class="headerlink" title="Function Borrowing (函式借用)"></a>Function Borrowing (函式借用)</h3><p>以上面的範例為例，我們再建立一個物件 person2，這與 person 物件很像，只是這個物件沒有 <code>getFullName</code> 方法，我們要透過 <code>call</code> 或 <code>apply</code> 方法來實作 Function Borrowing。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person2 = &#123;</span><br><span class="line">  firstname: <span class="string">'Ben'</span>,</span><br><span class="line">  lastname: <span class="string">'Stark'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我們先取得 person 物件的 <code>getFullName</code> 方法，然後透過 <code>apply</code> 方法將 this 指向 person2 物件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.getFullName.apply(person2);</span><br></pre></td></tr></table></figure>
+
+<p>輸出的結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ben Stark</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>這裡是<strong>透過 <code>apply</code> 借用 function</strong>，<code>call</code> 方法也能做到相同的事，只要物件具有相似的屬性，就能從其他物件取得方法來使用。</p>
+</blockquote>
+<h3 id="Function-Currying"><a href="#Function-Currying" class="headerlink" title="Function Currying"></a>Function Currying</h3><p>function currying 與 <code>bind</code> 方法有關，因為會建立 function 的 copy，如果我們傳入參數給 <code>bind</code> 方法，會發生一些有趣的事。使用 <code>call</code> 或 <code>apply</code> 方法，僅僅只是傳遞參數，但使用 <code>bind</code> 方法可以建立 function 的 copy。</p>
+<p>我們先來建立新的 function 叫做 multiply，它會回傳兩個參數相乘的結果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">multiply</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再建立新的 function，叫做 multipleByTwo，然後使用 <code>bind</code> 方法建立 multiply 的 copy，這裡我們用不到 this，所以不用在意第一個參數是什麼，但我們要給它一個參數值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> multipleByTwo = multiply.bind(<span class="keyword">this</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我們知道 <code>bind</code> 方法不會執行 function，我們給它的參數會設定為 copy function 的永久參數值，所以我們設定 <code>bind</code> 第一個參數為 <code>2</code>，在這個 copy function 中，第一個參數永遠為 <code>2</code> (參數 <code>a</code> 永遠是 <code>2</code>)。</p>
+<p>這就像取得這個 function，設定 this 一樣，這裡直接設定 <code>a = 2</code>，這就是這裡在做的事。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 示意的函式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">multipleByTwo</span>(<span class="params">b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>bind</code> 方法會設定 <code>2</code> 給參數 <code>a</code>，然後我們呼叫 multipleByTwo，傳入 <code>3</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(multipleByTwo(<span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+
+<p>輸出的結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡是取得 multiply function 的 copy，this 會被設定好，然後設定第一個參數 (a) 的定值，當我們呼叫這個 copy function，無論我們傳遞什麼，都會是第二個參數 (b) 的值。</p>
+<p>如果將兩個參數都傳給 bind，會將兩個參數都設為定值，不論我們傳什麼給 copy function，結果都不會改變。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> multipleByTwo = multiply.bind(<span class="keyword">this</span>, <span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(multipleByTwo(<span class="number">123456789</span>));</span><br></pre></td></tr></table></figure>
+
+<p>結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我們不傳入參數給 <code>bind</code>，參數 <code>a</code> 和 <code>b</code> 就不會受到限制。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> multipleByTwo = multiply.bind(<span class="keyword">this</span>);</span><br><span class="line"><span class="built_in">console</span>.log(multipleByTwo(<span class="number">6</span>, <span class="number">6</span>));</span><br></pre></td></tr></table></figure>
+
+<p>結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">36</span></span><br></pre></td></tr></table></figure>
+
+<p>在這個範例中，我們是故意設定參數為定值，copy function 會有特定的預設參數，我們用一個 function 建立一個新 function，並設定預設參數，這就叫做 Currying。</p>
+<blockquote>
+<p><strong>Function Currying 是建立一個新的 copy function，帶有一些預設參數，這在數學運算非常實用</strong>。</p>
+</blockquote>
+<p>如果有函式庫需要做很多數學運算，能透過基本的 function，根據不同的預設參數建構不同的 function。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這就是 <code>call</code>, <code>apply</code> 和 <code>bind</code> 方法。</p>
+<ul>
+<li><code>call</code>, <code>apply</code> 方法會呼叫 function，並讓我們設定 this，這兩個方法是以不同方式傳遞參數。</li>
+<li><code>bind</code> 方法會建立 function 的 copy，並讓我們設定 this，還能讓我們設定預設參數 (永久的預設參數)。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/克服-JavaScript-奇怪部分筆記/" rel="tag"><i class="fa fa-tag"></i> 克服 JavaScript 奇怪部分筆記</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/JavaScript/2019/11/26/closures-and-callbacks/" rel="next" title="閉包和回呼 (Closures And Callbacks)">
+                  <i class="fa fa-chevron-left"></i> 閉包和回呼 (Closures And Callbacks)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#執行環境與-this"><span class="nav-number">1.</span> <span class="nav-text">執行環境與 this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何控制-this-指向誰"><span class="nav-number">2.</span> <span class="nav-text">如何控制 this 指向誰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call-apply-bind-介紹"><span class="nav-number">3.</span> <span class="nav-text">call(), apply(), bind() 介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程式範例"><span class="nav-number">4.</span> <span class="nav-text">程式範例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bind"><span class="nav-number">4.1.</span> <span class="nav-text">bind()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#傳入參數"><span class="nav-number">4.1.1.</span> <span class="nav-text">傳入參數</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#call-和-apply"><span class="nav-number">4.2.</span> <span class="nav-text">call() 和 apply()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#call"><span class="nav-number">4.2.1.</span> <span class="nav-text">call()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apply"><span class="nav-number">4.2.2.</span> <span class="nav-text">apply()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#call-和-apply-的-IIFE"><span class="nav-number">4.2.3.</span> <span class="nav-text">call 和 apply 的 IIFE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何應用"><span class="nav-number">5.</span> <span class="nav-text">如何應用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Borrowing-函式借用"><span class="nav-number">5.1.</span> <span class="nav-text">Function Borrowing (函式借用)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Currying"><span class="nav-number">5.2.</span> <span class="nav-text">Function Currying</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">6.</span> <span class="nav-text">總結</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">apeiros0</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分類</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">標籤</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/apeiros0" title="GitHub &rarr; https://github.com/apeiros0" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">apeiros0</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主題 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function disqus_config() {
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/27/call-apply-and-bind/";
+    this.page.identifier = "JavaScript/2019/11/27/call-apply-and-bind/";
+    this.page.title = 'Call(), Apply() And Bind()';};
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-apeiros0-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
+
+</body>
+</html>
