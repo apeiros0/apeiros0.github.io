@@ -57,19 +57,19 @@
   };
 </script>
 
-  <meta name="description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
+  <meta name="description" content="Underscore.js，是非常有名的 JavaScript 函式庫，可以幫助我們處理陣列和物件，還展示如何做出那些功能，這和我們之後要講的東西有關。我們稱這為開源教育 (open source education)，有免費、大量的 JavaScript 函式庫的程式碼供我們使用，這些被廣泛使用的框架和函式庫的原始碼都非常不錯，可以從中學習原始碼，不過還是得先了解 JavaScript 的進階概">
 <meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Scope, ES6 和 let">
-<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/index.html">
+<meta property="og:title" content="函式程式設計 (二) (Functional Programming Part2)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/11/29/functional-programming-part2/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
-<meta property="og:description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
+<meta property="og:description" content="Underscore.js，是非常有名的 JavaScript 函式庫，可以幫助我們處理陣列和物件，還展示如何做出那些功能，這和我們之後要講的東西有關。我們稱這為開源教育 (open source education)，有免費、大量的 JavaScript 函式庫的程式碼供我們使用，這些被廣泛使用的框架和函式庫的原始碼都非常不錯，可以從中學習原始碼，不過還是得先了解 JavaScript 的進階概">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2019-10-16T03:32:47.910Z">
+<meta property="og:updated_time" content="2019-12-01T13:31:44.786Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Scope, ES6 和 let">
-<meta name="twitter:description" content="到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。講了這麼多，你知道 Scope 是什麼嗎 ?Scope Scope 表示變數可以被取用的範圍。 如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。">
-  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/">
+<meta name="twitter:title" content="函式程式設計 (二) (Functional Programming Part2)">
+<meta name="twitter:description" content="Underscore.js，是非常有名的 JavaScript 函式庫，可以幫助我們處理陣列和物件，還展示如何做出那些功能，這和我們之後要講的東西有關。我們稱這為開源教育 (open source education)，有免費、大量的 JavaScript 函式庫的程式碼供我們使用，這些被廣泛使用的框架和函式庫的原始碼都非常不錯，可以從中學習原始碼，不過還是得先了解 JavaScript 的進階概">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/11/29/functional-programming-part2/">
 
 
 <script id="page-configurations">
@@ -83,7 +83,7 @@
   };
 </script>
 
-  <title>Scope, ES6 和 let | apeiros0's Blog</title>
+  <title>函式程式設計 (二) (Functional Programming Part2) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -273,7 +273,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/11/29/functional-programming-part2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="apeiros0">
@@ -285,7 +285,7 @@
       <meta itemprop="name" content="apeiros0's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Scope, ES6 和 let
+        <h2 class="post-title" itemprop="name headline">函式程式設計 (二) (Functional Programming Part2)
 
           
         </h2>
@@ -301,11 +301,19 @@
                 
               
 
-              <time title="創建時間：2019-10-16 00:00:00 / 修改時間：11:32:47" itemprop="dateCreated datePublished" datetime="2019-10-16T00:00:00+08:00">2019-10-16</time>
+              <time title="創建時間：2019-11-29 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-29T00:00:00+08:00">2019-11-29</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2019-12-01 21:31:44" itemprop="dateModified" datetime="2019-12-01T21:31:44+08:00">2019-12-01</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -333,26 +341,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>到現在，我們已經認識執行環境、變數環境、詞彙環境和外部環境，而這些最終定義了範圍鏈 (Scope Chain，每個正在執行的 function 都有的外部參照)。</p><p>講了這麼多，你知道 Scope 是什麼嗎 ?</p><h2 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h2><blockquote>
-<p>Scope 表示變數可以被取用的範圍。</p>
-</blockquote><p>如果有相同的 function 呼叫兩次，會各自產生執行環境，即便裡面的變數相同，但在記憶體中，他們是不同的變數。</p><a id="more"></a>
+        <p><a href="https://underscorejs.org/" target="_blank" rel="noopener">Underscore.js</a>，是非常有名的 JavaScript 函式庫，可以幫助我們處理陣列和物件，還展示如何做出那些功能，這和我們之後要講的東西有關。</p><p>我們稱這為<strong>開源教育 (open source education)</strong>，有免費、大量的 JavaScript 函式庫的程式碼供我們使用，這些被廣泛使用的框架和函式庫的原始碼都非常不錯，可以從中學習原始碼，不過還是得先了解 JavaScript 的進階概念才行。</p><a id="more"></a>
 
-
-
-<p>舉例來說，在下方的程式碼中，function a 會分別建立各自的執行環境，而裡面的變數是不會互相影響，因為他們分別在不同的記憶體中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> myVar = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
-
-<h2 id="let"><a href="#let" class="headerlink" title="let"></a>let</h2><p>ES6，又稱 ECMAScript 6 或 ECMAScript 2015，引用了新的宣告變數方法 <code>let</code>。</p>
-<h3 id="與-var-不同之處"><a href="#與-var-不同之處" class="headerlink" title="與 var 不同之處"></a>與 <code>var</code> 不同之處</h3><p><code>let</code> 可以像 <code>var</code> 一樣使用，但並沒有取代 <code>var</code>，它讓 JavaScript 引擎使用一個叫做<strong>區塊範圍 (block scoping)</strong> 的東西，而在宣告變數時，能像 <code>var</code> 一樣使用，變數仍會被放到記憶體中，設值為 <code>undefined</code>，不同的是，在執行階段直到 <code>let</code> 那一行被執行時，才能使用 <code>let</code> 所宣告的變數，如果在 <code>let</code> 之前取用便會出現錯誤 (他仍在記憶體中，只是 JavaScript 引擎 不讓你取用)。</p>
-<p>在下方的範例中，如果我在 <code>let c</code> 之前就取用 c 的話，此時便會出現錯誤。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(c); <span class="comment">// error</span></span><br><span class="line"><span class="keyword">let</span> c = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="在區塊中宣告"><a href="#在區塊中宣告" class="headerlink" title="在區塊中宣告"></a>在區塊中宣告</h3><p>當我們在區塊 (block) 中宣告 <code>let</code> 時，表示變數只能在這個區塊中使用，而在區塊外取用的話，便會出現錯誤訊息。如果我們有迴圈正在執行，使用 <code>let</code> 宣告變數，每次在迴圈中，<strong>變數在記憶體中都是不同的</strong>。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// error: a is not defined</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="下載"><a href="#下載" class="headerlink" title="下載"></a>下載</h2><p>Underscore.js 可以下載 <a href="https://underscorejs.org/underscore.js" target="_blank" rel="noopener">Development Version</a> 和 <a href="https://underscorejs.org/underscore-min.js" target="_blank" rel="noopener">Production Version</a>。</p>
+<p>我們要下載 Development Version，它含有很多的註解，可以透過註解了解程式是如何運作，或是到 <a href="https://underscorejs.org/docs/underscore.html" target="_blank" rel="noopener">Annotated Source</a>，它讓註解和程式碼分離，可以直接看 underscore.js 的程式碼。</p>
+<p>underscore.js 使用很多函式程式設計的概念，我們會看到它不斷傳入 <code>iteratee</code> 或 <code>predicate</code> 讓 function 能夠運作，其他的 function 也做了許多很棒的事。</p>
+<h2 id="Lodash"><a href="#Lodash" class="headerlink" title="Lodash"></a>Lodash</h2><p>也有另一個函式庫叫做 <a href="https://lodash.com/" target="_blank" rel="noopener">Lodash.js</a>，和 underscore 類似，但它有實作額外的功能，執行速度也比 underscore 快上許多。雖然兩者的重複性高，但<strong>比較推薦選擇 underscore 來學習，因為它的程式碼有註釋</strong>，是相當不錯的教材。</p>
 <blockquote>
-<p>補充：區塊指的是 <code>{ ... }</code>，像是在 <code>if () { ... }</code>、<code>for () { ... }</code>、<code>function () { ... }</code> 裡面。</p>
+<p>underscore 比 lodash 早出來，它提供原始碼給大家觀看，儘管 lodash 的程式效能比較好，但改進一個東西，比創造它還要簡單的多。</p>
 </blockquote>
+<h2 id="使用-underscore-函式庫"><a href="#使用-underscore-函式庫" class="headerlink" title="使用 underscore 函式庫"></a>使用 underscore 函式庫</h2><p><strong>先下載 underscore.js 到專案中</strong><br>在 underscore.js，我們能看到它的程式被包在 IIFE 中，所以裡面的程式碼不會和我們寫的程式產生衝突。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// underscore.js</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ....</span></span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+
+<p><strong>新增 index.html，引入 underscore.js**</strong><br>underscore 的 IIFE 包住整個 underscore 程式碼，執行後，我們在全域物件中便有物件能使用，物件和全域物件會最小化我們需要做的事，只要使用 <code>_</code> (物件的名稱，在 JavaScript 是有效的) 便能使用 underscore 的函式庫。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"underscore.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"app.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="map"><a href="#map" class="headerlink" title="_.map()"></a><code>_.map()</code></h3><p>如果我們要做類似之前的 map 功能，我們新增一個陣列 <code>arr6</code>，然後給它 <code>_.map()</code>，並傳入陣列和要運算的 function，並讓 function 回傳 <code>item * 5</code>，執行完會得到新的陣列。</p>
+<blockquote>
+<p>underscore 的 map 比我們上一章節寫的 map 好很多，它能在更多不同情境使用。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr6 = _.map(arr1, <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> item * <span class="number">5</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'arr6: '</span> + arr6);</span><br></pre></td></tr></table></figure>
+
+<p>結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr6: [<span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="filter"><a href="#filter" class="headerlink" title="_.filter()"></a><code>_.filter()</code></h3><p>我們還能使用 <code>_.filter()</code> 過濾陣列 (會回傳新的陣列)，傳入陣列和 function，function 會回傳可被 <code>2</code> 整除的項目，也就是說，會回傳 <code>item % 2 === 0</code> 為 <code>true</code> 的 <code>item</code> 回來。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr7 = _.filter([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>], <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> item % <span class="number">2</span> === <span class="number">0</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'arr7: '</span> + arr7);</span><br></pre></td></tr></table></figure>
+
+<p>結果如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr7: [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>underscore 和 lodash 函式庫提供我們許多的方法，他們都有使用函式程式設計的概念，摸索一下它們，看看它們的原始碼，會學到很多的東西。我們可以應用它們的概念到自己的程式中，該如何用 first-class function 的優點寫出乾淨的程式，讓其他程式設計師更容易地重複使用，就能寫更少的程式。</p>
 
     </div>
 
@@ -378,8 +397,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/JavaScript/2019/10/15/the_scope_chain/" rel="next" title="範圍鏈 (The Scope Chain)">
-                  <i class="fa fa-chevron-left"></i> 範圍鏈 (The Scope Chain)
+                <a href="/JavaScript/2019/11/27/call-apply-and-bind/" rel="next" title="Call(), Apply() And Bind()">
+                  <i class="fa fa-chevron-left"></i> Call(), Apply() And Bind()
                 </a>
               
             </div>
@@ -388,8 +407,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/JavaScript/2019/10/17/asynchronous-more-than-at-a-time/" rel="prev" title="什麼是非同步回呼 ?">
-                  什麼是非同步回呼 ? <i class="fa fa-chevron-right"></i>
+                <a href="/JavaScript/2019/11/29/functional-programming-part1/" rel="prev" title="函式程式設計 (一) (Functional Programming Part1)">
+                  函式程式設計 (一) (Functional Programming Part1) <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -445,7 +464,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scope"><span class="nav-number">1.</span> <span class="nav-text">Scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#let"><span class="nav-number">2.</span> <span class="nav-text">let</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#與-var-不同之處"><span class="nav-number">2.1.</span> <span class="nav-text">與 var 不同之處</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在區塊中宣告"><span class="nav-number">2.2.</span> <span class="nav-text">在區塊中宣告</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下載"><span class="nav-number">1.</span> <span class="nav-text">下載</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lodash"><span class="nav-number">2.</span> <span class="nav-text">Lodash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-underscore-函式庫"><span class="nav-number">3.</span> <span class="nav-text">使用 underscore 函式庫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-number">3.1.</span> <span class="nav-text">_.map()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#filter"><span class="nav-number">3.2.</span> <span class="nav-text">_.filter()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">4.</span> <span class="nav-text">總結</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -591,9 +610,9 @@
 
 <script>
   function disqus_config() {
-    this.page.url = "https://apeiros0.github.io/JavaScript/2019/10/16/scope-es6-and-let/";
-    this.page.identifier = "JavaScript/2019/10/16/scope-es6-and-let/";
-    this.page.title = 'Scope, ES6 和 let';};
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/11/29/functional-programming-part2/";
+    this.page.identifier = "JavaScript/2019/11/29/functional-programming-part2/";
+    this.page.title = '函式程式設計 (二) (Functional Programming Part2)';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
