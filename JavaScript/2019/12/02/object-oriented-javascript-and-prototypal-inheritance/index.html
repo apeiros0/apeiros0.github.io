@@ -57,15 +57,19 @@
   };
 </script>
 
-  <meta name="keywords" content="notes, coding, blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="apeiros0&#39;s Blog">
-<meta property="og:url" content="https://apeiros0.github.io/tags/克服-JavaScript-奇怪部分筆記/page/2/index.html">
+  <meta name="description" content="接下來的主題我們要來了解另一個 JavaScript 的重要觀念，它能增進我們 JavaScript 的開發能力，但它也是造成許多人混亂的主題，因為 JavaScript 在這部分和其他的程式語言有很大的不同。我們就來討論 JavaScript 的物件導向和原型繼承吧 !當我們談到 JavaScript 的物件導向時，我們主要是在關注物件的建立，因為這部份很容易搞不清楚，所以我們要先從繼承講起。">
+<meta name="keywords" content="克服 JavaScript 奇怪部分筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="物件導向和原型繼承 (Object Oriented JavaScript And Prototypal Inheritance)">
+<meta property="og:url" content="https://apeiros0.github.io/JavaScript/2019/12/02/object-oriented-javascript-and-prototypal-inheritance/index.html">
 <meta property="og:site_name" content="apeiros0&#39;s Blog">
+<meta property="og:description" content="接下來的主題我們要來了解另一個 JavaScript 的重要觀念，它能增進我們 JavaScript 的開發能力，但它也是造成許多人混亂的主題，因為 JavaScript 在這部分和其他的程式語言有很大的不同。我們就來討論 JavaScript 的物件導向和原型繼承吧 !當我們談到 JavaScript 的物件導向時，我們主要是在關注物件的建立，因為這部份很容易搞不清楚，所以我們要先從繼承講起。">
 <meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2019-12-02T15:15:12.520Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="apeiros0&#39;s Blog">
-  <link rel="canonical" href="https://apeiros0.github.io/tags/克服-JavaScript-奇怪部分筆記/page/2/">
+<meta name="twitter:title" content="物件導向和原型繼承 (Object Oriented JavaScript And Prototypal Inheritance)">
+<meta name="twitter:description" content="接下來的主題我們要來了解另一個 JavaScript 的重要觀念，它能增進我們 JavaScript 的開發能力，但它也是造成許多人混亂的主題，因為 JavaScript 在這部分和其他的程式語言有很大的不同。我們就來討論 JavaScript 的物件導向和原型繼承吧 !當我們談到 JavaScript 的物件導向時，我們主要是在關注物件的建立，因為這部份很容易搞不清楚，所以我們要先從繼承講起。">
+  <link rel="canonical" href="https://apeiros0.github.io/JavaScript/2019/12/02/object-oriented-javascript-and-prototypal-inheritance/">
 
 
 <script id="page-configurations">
@@ -73,13 +77,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>標籤: 克服 JavaScript 奇怪部分筆記 | apeiros0's Blog</title>
+  <title>物件導向和原型繼承 (Object Oriented JavaScript And Prototypal Inheritance) | apeiros0's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149403450-1"></script>
   <script>
@@ -261,346 +265,163 @@
         <div class="content-wrap">
             
 
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-  
-
           <div id="content" class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">克服 JavaScript 奇怪部分筆記<small>標籤</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://apeiros0.github.io/JavaScript/2019/12/02/object-oriented-javascript-and-prototypal-inheritance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="apeiros0">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="apeiros0's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">物件導向和原型繼承 (Object Oriented JavaScript And Prototypal Inheritance)
+
+          
         </h2>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              
+                
+              
+
+              <time title="創建時間：2019-12-02 00:00:00 / 修改時間：23:15:12" itemprop="dateCreated datePublished" datetime="2019-12-02T00:00:00+08:00">2019-12-02</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+        <p>接下來的主題我們要來了解另一個 JavaScript 的重要觀念，它能增進我們 JavaScript 的開發能力，但它也是造成許多人混亂的主題，因為 JavaScript 在這部分和其他的程式語言有很大的不同。我們就來討論 JavaScript 的物件導向和原型繼承吧 !</p><p>當我們談到 JavaScript 的物件導向時，我們主要是在關注物件的建立，因為這部份很容易搞不清楚，所以我們要先從繼承講起。</p><a id="more"></a>
 
-  
-  
+<h2 id="繼承-Inheritance"><a href="#繼承-Inheritance" class="headerlink" title="繼承 (Inheritance)"></a>繼承 (Inheritance)</h2><p>表示<strong>一個物件取用另一個物件的屬性和方法</strong>，在各個語言中，繼承的概念是不太相同的，我們只需了解基本的概念即可，也就是一個物件取用另一個物件的屬性和方法。假設我們有兩個物件，第一個物件繼承第二個物件，表示第一個物件能取用第二個物件的屬性和方法。</p>
+<p>那當我們談到古典繼承和原型繼承是什麼意思呢 ?</p>
+<h2 id="古典繼承-Classical-Inheritance"><a href="#古典繼承-Classical-Inheritance" class="headerlink" title="古典繼承 (Classical Inheritance)"></a>古典繼承 (Classical Inheritance)</h2><p>這是最著名和最受歡迎的東西，C# 和 Java 都有，可以分享物件的屬性和方法，這就是古典 (Classical)，表示很久以前這麼做，但認為只有這麼一種方法，認為它沒有缺點是錯的。</p>
+<ul>
+<li><p>古典繼承很口語化 (Verbose)<br>當我們建立很多大型物件，他們能互相繼承別人的屬性和方法。我們最終會得到很大的集合、樹狀的物件相互影響，但這會變得很難搞清楚它們會如何互相影響，即便這是個不錯的方法，也會很難弄清楚它們會如何互相影響，就像我們蓋了一件錯綜複雜的房子，當我們換燈泡時，馬桶會突然沖水一樣，這就是有時使用古典繼承的感覺。</p>
+</li>
+<li><p>古典繼承還有許多不同的關鍵字，我們需要學習這些關鍵字是什麼意思，並使用它們。</p>
+<ul>
+<li><code>friend</code></li>
+<li><code>protected</code></li>
+<li><code>public</code></li>
+<li><code>private</code></li>
+<li><code>interface</code></li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<h2 id="原型繼承-Prototypal-Inheritance"><a href="#原型繼承-Prototypal-Inheritance" class="headerlink" title="原型繼承 (Prototypal Inheritance)"></a>原型繼承 (Prototypal Inheritance)</h2><ul>
+<li><p>簡單 (Simple)</p>
+</li>
+<li><p>有彈性 (Flexible)</p>
+</li>
+<li><p>可擴充性 (Extensible)</p>
+</li>
+<li><p>簡單易懂 (Easy to Understand)</p>
+</li>
+</ul>
+<p>當我們談到 JavaScript 的原型繼承時，它和其他程式語言不同，我們需要了解它，一旦我們了解，就會知道它在共享物件的屬性和方法有多麼強大，後面的章節就讓我們來看看 JavaScript 怎麼用原型繼承做到 !</p>
 
-  
+    </div>
+
     
-    <div class="collection-year">
-      <h2 class="collection-header">2019</h2>
-    </div>
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-18T00:00:00+08:00"
-              content="2019-11-18">
-          11-18
-        </time>
-      </div>
-
-      <h3 class="post-title">
+    
+    
         
-          <a class="post-title-link" href="/JavaScript/2019/11/18/framework-aside-whitespace/" itemprop="url">
-            <span itemprop="name">Framework Aside：空格 (Whitespace)</span>
-          </a>
-        
-      </h3>
+      
 
-    </header>
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/克服-JavaScript-奇怪部分筆記/" rel="tag"><i class="fa fa-tag"></i> 克服 JavaScript 奇怪部分筆記</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/JavaScript/2019/11/29/functional-programming-part1/" rel="next" title="函式程式設計 (一) (Functional Programming Part1)">
+                  <i class="fa fa-chevron-left"></i> 函式程式設計 (一) (Functional Programming Part1)
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
   </article>
-
-
-
+  
   
   
 
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-15T00:00:00+08:00"
-              content="2019-11-15">
-          11-15
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/15/dangerous-aside-automatic-semicolon-insertion/" itemprop="url">
-            <span itemprop="name">Dangerous Aside：自動插入分號 (Automatic Semicolon Insertion)</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-14T00:00:00+08:00"
-              content="2019-11-14">
-          11-14
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/14/syntax-parsers/" itemprop="url">
-            <span itemprop="name">語法解析器 (Syntax Parsers)</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-13T00:00:00+08:00"
-              content="2019-11-13">
-          11-13
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/13/function-overloading/" itemprop="url">
-            <span itemprop="name">Framework Aside：Function Overloading</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-12T00:00:00+08:00"
-              content="2019-11-12">
-          11-12
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/12/arguments-and-spread/" itemprop="url">
-            <span itemprop="name">參數與展開 (Arguments And Spread)</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-11T00:00:00+08:00"
-              content="2019-11-11">
-          11-11
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/11/array-collections-of-anything/" itemprop="url">
-            <span itemprop="name">陣列：任何東西的集合 (Array Collections Of Anything)</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-08T00:00:00+08:00"
-              content="2019-11-08">
-          11-08
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/08/objects-functions-and-this/" itemprop="url">
-            <span itemprop="name">物件、函式和 this (Objects, Functions And this)</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-06T00:00:00+08:00"
-              content="2019-11-06">
-          11-06
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/06/by-value-vs-by-reference/" itemprop="url">
-            <span itemprop="name">By Value vs By Reference</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-04T00:00:00+08:00"
-              content="2019-11-04">
-          11-04
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/04/function-statements-and-function-expressions/" itemprop="url">
-            <span itemprop="name">function 陳述式與表達式 (Function Statements And Function Expressions)</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-03T00:00:00+08:00"
-              content="2019-11-03">
-          11-03
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaScript/2019/11/03/functions-are-objects/" itemprop="url">
-            <span itemprop="name">functions 是物件 (Functions Are Objects)</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-    </div>
   </div>
-  
-  
-  
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/克服-JavaScript-奇怪部分筆記/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/tags/克服-JavaScript-奇怪部分筆記/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/克服-JavaScript-奇怪部分筆記/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/tags/克服-JavaScript-奇怪部分筆記/page/5/">5</a><a class="extend next" rel="next" href="/tags/克服-JavaScript-奇怪部分筆記/page/3/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
-  </nav>
-
 
 
           </div>
           
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
 
         </div>
           
@@ -613,6 +434,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -625,6 +451,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#繼承-Inheritance"><span class="nav-number">1.</span> <span class="nav-text">繼承 (Inheritance)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#古典繼承-Classical-Inheritance"><span class="nav-number">2.</span> <span class="nav-text">古典繼承 (Classical Inheritance)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型繼承-Prototypal-Inheritance"><span class="nav-number">3.</span> <span class="nav-text">原型繼承 (Prototypal Inheritance)</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -767,6 +595,27 @@
 
   
 
+<script>
+  function disqus_config() {
+    this.page.url = "https://apeiros0.github.io/JavaScript/2019/12/02/object-oriented-javascript-and-prototypal-inheritance/";
+    this.page.identifier = "JavaScript/2019/12/02/object-oriented-javascript-and-prototypal-inheritance/";
+    this.page.title = '物件導向和原型繼承 (Object Oriented JavaScript And Prototypal Inheritance)';};
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-apeiros0-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+  
+</script>
 
 </body>
 </html>
